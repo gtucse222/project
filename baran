@@ -1,0 +1,53 @@
+ School{
+    1-Posts/Stack
+    2-Admin/linkedlist
+    3-students/binary tree
+    4-Teachers/binary tree
+    5-Guests/binary tree
+    6-Seminars
+    7-Groups
+    8-Messages
+    9-Campusmap
+    10-Foodlist 
+    Fill the variables from database
+ }
+ Post{
+    name/id
+    Date date
+    tag
+    content
+    like/dislikes
+    comment
+ 
+ }
+ Seminar{
+    Seminar id
+    seminar name
+    organizer
+    participants
+ }
+ Groups{
+    group id
+    group name 
+    organizer
+    participants
+ }
+ ?Messages{
+    sender 
+    receiver
+    message context
+ }
+ ?Campusmap{
+ }
+ Foodlist{
+    the menu number of week and day
+ }
+ Admin{
+    (userin erisebilecegi fonksiyonlar o usera ait objede olacak ve schooldaki gerekli objeleri mainde hangi kullanicinin fonksiyonunda kullanilacaksa o fonksiyona gonderilecek school objesi uzerinden
+    diger userlar da bu sekilde olacak sadece fonksiyonlar degisecek)
+    Adduser(2,3,4, add user)
+    Delete post(1, post id)
+    DeleteSeminar(seminar id)
+    DeleteGRoup(group id)
+ }
+ 
