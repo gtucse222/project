@@ -1,0 +1,17 @@
+post->        priority queue
+Users login-> firebase method
+Messages->    list
+User chats->  list
+all users list-> tree
+map ->    queue-graph
+seminar-> arrraylist
+gorup->   arraylist
+foodlist -> image
+
+
+System Modules -> Baran
+Class Diagram -> Muhammed 
+Sequence Diagram ->Fatih/Ozan
+Implementation Details-> Zafer/Elif
+Test Cases ->Hatice/Mertcan
+            6 Mayis Carsamba

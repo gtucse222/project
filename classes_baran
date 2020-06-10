@@ -1,0 +1,41 @@
+School{
+   1- Posts stack
+   2- Students/binary tree
+   3- Teachers/binary tree
+    Guests/binary tree
+    Foodlist
+    Seminars
+    Groups
+} 
+Posts{
+      name/id
+      Date date
+      tag
+      content
+      like/dislikes
+      comment
+    
+}
+Foodlist{
+    keeps the menu, number of week and dayof the week
+}
+Seminars{
+    Seminar id name
+    owner
+    participants
+    
+}
+Groups{
+      Group name/id
+      Group owner/teacher/student
+      participants
+      Group messages
+}
+Admin{
+    name surname\id
+    Admin functions
+    AdminDeleteStudent(2, student)
+}
+the other person classes
+kendi fonksiyonlarina sahip olacak use case diagramda belirtilen
+ve fonsiyonlarina school objesi uzerinden gerekli students teachers posts vs yapiyi alip mainde dolduracagiz 

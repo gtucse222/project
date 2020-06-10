@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <TextView
+            android:id="@+id/receiverMessageText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="40dp"
+            android:background="@drawable/message_receiver"
+            android:padding="10dp"
+            android:text="receiver" />
+
+    <TextView
+            android:id="@+id/reciverMessageTime"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_below="@id/receiverMessageText"
+            android:textSize="10sp"></TextView>
+
+    <TextView
+            android:id="@+id/senderMessageText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="@+id/receiverMessageText"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/message_sender"
+            android:padding="10dp"
+            android:text="sender" />
+
+    <TextView
+            android:id="@+id/senderMessageTime"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_below="@id/senderMessageText"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:textSize="10sp"></TextView>
+
+</RelativeLayout>

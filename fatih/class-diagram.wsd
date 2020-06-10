@@ -1,0 +1,122 @@
+@startuml
+
+skinparam shadowing false
+skinparam classfontcolor 157a6e
+skinparam classfontsize 11
+skinparam classbackgroundcolor eceff4
+skinparam classbordercolor 5e81ac
+skinparam classborderthickness 1
+skinparam classheaderbackgroundcolor d8dee9
+skinparam arrowcolor d08770
+
+
+class SchoolNetwork {
+  - users: ArrayList<User>
+}
+
+together {
+  class MainActivity {
+    +login()
+    +register()
+    +showAnnouncements()
+    +openTransportationActivity()
+    +openMessagingActivity()
+    +openFoodList()
+  }
+
+  class TransporatationActivity {
+    + viewMap()
+    + navigateToDepartment()
+  }
+
+  class MessagingActivity {
+    - chats: ArrayList<Chat>
+    + openChat()
+  }
+}
+
+class Chat {
+  - messages: ArrayList<Message>
+  + sendMessage();
+  + deleteMessage();
+}
+
+abstract class User {
+  - username: String
+  - password: String
+  - mail: String
+  - posts : ArrayList<Post>
+  - groups : ArrayList<Group>
+  + createGroup()
+  + joinGroup()
+  + createPost()
+  + showFeed()
+  + sendMessage()
+}
+
+class Admin {
+  + addTeacher()
+  + removeTeacher()
+  + removePost()
+  + addNewAdmin()
+}
+
+class Teacher {
+  - department: String
+  + removeStudentFromGroup()
+  + joinGroup()
+}
+
+class Student {
+  - department: String
+  + joinGroup()
+}
+
+class Announcement {
+}
+
+class Group {
+  - name: String
+  - description: String
+  - participants: ArrayList<User>
+  - messages: ArrayList<Message>
+}
+
+class Message {
+}
+
+class Post {
+  - likes: ArrayList<User>
+  - comments: ArrayList<Comment>
+  - tags: ArrayList<String>
+}
+
+class Comment {
+}
+
+interface Sharable {
+  - sender: User
+  - body: String
+  - date: Calendar
+}
+
+
+Admin -up-|> User
+Student -up-|> User
+Teacher -up-|> User
+
+Post .up.|> Sharable
+Comment .up.|> Sharable
+Announcement .up.|> Sharable
+Message .up.|> Sharable
+
+Sharable o-- User : sender
+
+
+right footer
+
+endfooter
+
+
+
+@enduml
