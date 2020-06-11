@@ -5,27 +5,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-    }
+        setContentView(R.layout.main);
 
-    public void login(View view) {
-        Intent intent1 = new Intent(this,loginActivity.class);
-        startActivity(intent1);
-    }
+        Button postTest = findViewById(R.id.postTest);
+        Button messagingTest = findViewById(R.id.messagingTest);
+        Button loginTest = findViewById(R.id.loginTest);
 
-    public void sample(View view) {
-        Intent intent = new Intent(this,sampleActivity.class);
-        startActivity(intent);
-    }
 
-    public void select(View view) {
-        Intent intent = new Intent(this,selectMembershipActivity.class);
-        startActivity(intent);
+        messagingTest.setOnClickListener(v -> startActivity(new Intent(this, MessagingActivity.class)));
+        postTest.setOnClickListener(v -> startActivity(new Intent(this, AddPostActivity.class)));
+        loginTest.setOnClickListener(v -> startActivity(new Intent(this, LoginMainActivity.class)));
     }
 }
