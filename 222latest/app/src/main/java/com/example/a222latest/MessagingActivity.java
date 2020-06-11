@@ -27,8 +27,8 @@ import java.util.List;
 
 public class MessagingActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    private String currentUserID;
-    private String friendID; //the person who will receive the messages
+    private String currentUserMail;
+    private String receiverEmail; //the person who will receive the messages
     private Button sendMessageButton;
     private EditText editMessage;
     private DatabaseReference messagesRef;
@@ -70,8 +70,6 @@ public class MessagingActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
 
@@ -82,8 +80,9 @@ public class MessagingActivity extends AppCompatActivity {
 
         // TEST
         logIn();
-        friendID = "67VsAFsrUGYl9Os5I6XFG6xpm982"; //normally this will get from intent
-//        friendID = getIntent().getExtras().get("friendUid").toString();
+        receiverEmail = "receiver@gtu.edu.tr"; //normally this will get from intent
+        receiverEmail = emailToId(receiverEmail);
+//        receiverEmail = getIntent().getExtras().get("emails").toString();
 
         messageAdapter = new MessageAdapter(messageList);
         recyclerView = findViewById(R.id.messageList);
@@ -93,7 +92,9 @@ public class MessagingActivity extends AppCompatActivity {
 
         messagesRef = FirebaseDatabase.getInstance().getReference().child("Messages");
 
-        currentUserID = mAuth.getCurrentUser().getUid();
+        currentUserMail = mAuth.getCurrentUser().getEmail();
+        // firebase doesn't allow character @
+        currentUserMail = emailToId(currentUserMail);
         sendMessageButton = findViewById(R.id.sendMessageButton);
         editMessage = findViewById(R.id.editMessage);
 
@@ -121,7 +122,7 @@ public class MessagingActivity extends AppCompatActivity {
         String currentTime = currentTimeFormat.format(calForTime.getTime());
 
         HashMap<String, Object> messageInfo = new HashMap<>();
-        messageInfo.put("sender", currentUserID);
+        messageInfo.put("sender", currentUserMail);
         messageInfo.put("message", message);
         messageInfo.put("date", currentDate);
         messageInfo.put("time", currentTime);
@@ -135,10 +136,10 @@ public class MessagingActivity extends AppCompatActivity {
      * @return conversation id
      */
     private String getConversationKey() {
-        if (currentUserID.compareTo(friendID) < 0) {
-            return currentUserID + "-" + friendID;
+        if (currentUserMail.compareTo(receiverEmail) < 0) {
+            return currentUserMail + "-" + receiverEmail;
         }
-        return friendID + "-" + currentUserID;
+        return receiverEmail + "-" + currentUserMail;
     }
 
 
@@ -175,6 +176,10 @@ public class MessagingActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    public static String emailToId(String email) {
+        return email.substring(0, email.indexOf("@"));
     }
 
 }

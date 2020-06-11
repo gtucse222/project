@@ -29,7 +29,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             receiverTimeText = v.findViewById(R.id.reciverMessageTime);
         }
 
-
     }
 
     public MessageAdapter(List<Message> messageList) {
@@ -48,8 +47,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
-        String currentUserId = mAuth.getCurrentUser().getUid();
+        String currentUserMail = mAuth.getCurrentUser().getEmail();
+        currentUserMail = MessagingActivity.emailToId(currentUserMail);
         Message message = messageList.get(position);
+        // Don't optimize here to set invisible inside if.
+        // It causes to bug (messages disappear when scrolling).
         holder.receiverMessageText.setVisibility(View.INVISIBLE);
         holder.senderMessageText.setVisibility(View.INVISIBLE);
         holder.senderTimeText.setText(message.getDate() + "  " + message.getTime());
@@ -57,7 +59,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         holder.senderTimeText.setVisibility(View.INVISIBLE);
         holder.receiverTimeText.setVisibility(View.INVISIBLE);
 
-        if (currentUserId.equals(message.getSender())) {
+        if (currentUserMail.equals(message.getSender())) {
             holder.senderMessageText.setVisibility(View.VISIBLE);
             holder.senderTimeText.setVisibility(View.VISIBLE);
             holder.senderMessageText.setBackgroundResource(R.drawable.message_sender);
