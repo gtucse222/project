@@ -93,7 +93,6 @@ public class MessagingActivity extends AppCompatActivity {
         messagesRef = FirebaseDatabase.getInstance().getReference().child("Messages");
 
         currentUserMail = mAuth.getCurrentUser().getEmail();
-        // firebase doesn't allow character @
         currentUserMail = emailToId(currentUserMail);
         sendMessageButton = findViewById(R.id.sendMessageButton);
         editMessage = findViewById(R.id.editMessage);
@@ -179,7 +178,8 @@ public class MessagingActivity extends AppCompatActivity {
     }
 
     public static String emailToId(String email) {
-        return email.substring(0, email.indexOf("@"));
+        //firebase doesn't allow @ and . characters
+        return email.substring(0, email.indexOf("@")).replace(".", "");
     }
 
 }
