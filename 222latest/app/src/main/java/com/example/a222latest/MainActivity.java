@@ -17,10 +17,12 @@ public class MainActivity extends AppCompatActivity {
         Button postTest = findViewById(R.id.postTest);
         Button messagingTest = findViewById(R.id.messagingTest);
         Button loginTest = findViewById(R.id.loginTest);
+        Button groupMessagingTest = findViewById(R.id.groupMessagingTest);
 
 
-        messagingTest.setOnClickListener(v -> startActivity(new Intent(this, MessagingActivity.class)));
+        messagingTest.setOnClickListener(v -> startActivity(new Intent(this, PrivateMessagingActivity.class)));
         postTest.setOnClickListener(v -> startActivity(new Intent(this, AddPostActivity.class)));
         loginTest.setOnClickListener(v -> startActivity(new Intent(this, LoginMainActivity.class)));
+        groupMessagingTest.setOnClickListener(v -> startActivity(new Intent(this, GroupMessagingActivity.class)));
     }
 }

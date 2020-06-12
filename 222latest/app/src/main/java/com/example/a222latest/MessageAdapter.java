@@ -1,5 +1,9 @@
 package com.example.a222latest;
 
+import android.graphics.Typeface;
+import android.text.SpannableString;
+import android.text.style.StyleSpan;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,7 +55,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         currentUserMail = MessagingActivity.emailToId(currentUserMail);
         Message message = messageList.get(position);
         // Don't optimize here to set invisible inside if.
-        // It causes to bug (messages disappear when scrolling).
+        // It causes a bug (messages disappear when scrolling).
         holder.receiverMessageText.setVisibility(View.INVISIBLE);
         holder.senderMessageText.setVisibility(View.INVISIBLE);
         holder.senderTimeText.setText(message.getDate() + "  " + message.getTime());
@@ -59,7 +63,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         holder.senderTimeText.setVisibility(View.INVISIBLE);
         holder.receiverTimeText.setVisibility(View.INVISIBLE);
 
-        if (currentUserMail.equals(message.getSender())) {
+        if (currentUserMail.equals(message.getSenderId())) {
             holder.senderMessageText.setVisibility(View.VISIBLE);
             holder.senderTimeText.setVisibility(View.VISIBLE);
             holder.senderMessageText.setBackgroundResource(R.drawable.message_sender);
@@ -68,7 +72,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             holder.receiverTimeText.setVisibility(View.VISIBLE);
             holder.receiverMessageText.setVisibility(View.VISIBLE);
             holder.receiverMessageText.setBackgroundResource(R.drawable.message_receiver);
-            holder.receiverMessageText.setText(message.getText());
+            String text = message.getSenderName() + "\n" + message.getText();
+            SpannableString spanString = new SpannableString(text);
+            spanString.setSpan(new StyleSpan(Typeface.BOLD), 0, text.indexOf('\n'), 0);
+            spanString.setSpan(new UnderlineSpan(), 0, text.indexOf('\n'), 0);
+            holder.receiverMessageText.setText(spanString);
         }
 
 

@@ -9,7 +9,9 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".LoginMainActivity"></activity>
+        <activity android:name=".PrivateMessagingActivity"></activity>
+        <activity android:name=".GroupMessagingActivity" />
+        <activity android:name=".LoginMainActivity" />
         <activity android:name=".AddPostActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

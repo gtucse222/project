@@ -1,5 +1,7 @@
 package com.example.a222latest;
 
+//TODO: add top bar: shows group name or receiver name
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,52 +27,18 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-public class MessagingActivity extends AppCompatActivity {
+public abstract class MessagingActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    private String currentUserMail;
-    private String receiverEmail; //the person who will receive the messages
+    protected String currentUserMail;
+    protected String currentUserName;
     private Button sendMessageButton;
     private EditText editMessage;
-    private DatabaseReference messagesRef;
+    protected DatabaseReference messagesRef;
     private final List<Message> messageList = new ArrayList<>();
     private LinearLayoutManager linearLayoutManager;
     private MessageAdapter messageAdapter;
     private RecyclerView recyclerView;
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        messagesRef.child(getConversationKey()).addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (dataSnapshot.exists()) {
-                    displayMessages(dataSnapshot);
-                }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (dataSnapshot.exists()) {
-                    displayMessages(dataSnapshot);
-                }
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
 
 
     @Override
@@ -80,28 +48,31 @@ public class MessagingActivity extends AppCompatActivity {
 
         // TEST
         logIn();
-        receiverEmail = "receiver@gtu.edu.tr"; //normally this will get from intent
-        receiverEmail = emailToId(receiverEmail);
-//        receiverEmail = getIntent().getExtras().get("emails").toString();
 
+        getFromIntent();
+        initalizeFields();
+        initalizeMessagesRef();
+    }
+
+    protected abstract void getFromIntent();
+    abstract protected void initalizeMessagesRef();
+
+    protected void initalizeFields() {
         messageAdapter = new MessageAdapter(messageList);
         recyclerView = findViewById(R.id.messageList);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(messageAdapter);
-
-        messagesRef = FirebaseDatabase.getInstance().getReference().child("Messages");
-
-        currentUserMail = mAuth.getCurrentUser().getEmail();
-        currentUserMail = emailToId(currentUserMail);
+        currentUserMail = emailToId(mAuth.getCurrentUser().getEmail());
+//        currentUserName = mAuth.getCurrentUser().getDisplayName();
+        currentUserName = "name surname";//FIXME
         sendMessageButton = findViewById(R.id.sendMessageButton);
         editMessage = findViewById(R.id.editMessage);
-
         sendMessageButton.setOnClickListener(v -> {
             sendMessage(editMessage.getText().toString());
         });
-
     }
+
 
     private void sendMessage(String message) {
         if (message.isEmpty()) return;
@@ -109,38 +80,32 @@ public class MessagingActivity extends AppCompatActivity {
         editMessage.setText("");
     }
 
-    private void saveMessageToDatabase(String conversationKey, String message) {
-        String messageKey = messagesRef.push().getKey();
+    protected abstract void saveMessageToDatabase(String conversationKey, String message);
 
-        Calendar calForDate = Calendar.getInstance();
-        SimpleDateFormat currentDateFormat = new SimpleDateFormat("MMM dd, yyyy");
-        String currentDate = currentDateFormat.format(calForDate.getTime());
+    protected HashMap<String, Object> buildMessageInfo(String message) {
+        HashMap<String, Object> messageInfo = new HashMap<>();
+        messageInfo.put("senderId", currentUserMail);
+        messageInfo.put("senderName", currentUserName);
+        messageInfo.put("message", message);
+        messageInfo.put("date", getCurrentDate());
+        messageInfo.put("time", getCurrentTime());
+        return messageInfo;
+    }
 
+    private String getCurrentTime() {
         Calendar calForTime = Calendar.getInstance();
         SimpleDateFormat currentTimeFormat = new SimpleDateFormat("HH:mm");
-        String currentTime = currentTimeFormat.format(calForTime.getTime());
-
-        HashMap<String, Object> messageInfo = new HashMap<>();
-        messageInfo.put("sender", currentUserMail);
-        messageInfo.put("message", message);
-        messageInfo.put("date", currentDate);
-        messageInfo.put("time", currentTime);
-
-        messagesRef.child(conversationKey).child(messageKey).updateChildren(messageInfo);
+        return currentTimeFormat.format(calForTime.getTime());
     }
 
-    /**
-     * Creates unique conversation key between 2 users
-     *
-     * @return conversation id
-     */
-    private String getConversationKey() {
-        if (currentUserMail.compareTo(receiverEmail) < 0) {
-            return currentUserMail + "-" + receiverEmail;
-        }
-        return receiverEmail + "-" + currentUserMail;
+    private String getCurrentDate() {
+        Calendar calForDate = Calendar.getInstance();
+        SimpleDateFormat currentDateFormat = new SimpleDateFormat("MMM dd, yyyy");
+        return currentDateFormat.format(calForDate.getTime());
     }
 
+
+    abstract protected String getConversationKey();
 
     private void logIn() {
         String email = "deneme@gmail.com";
@@ -156,17 +121,18 @@ public class MessagingActivity extends AppCompatActivity {
         });
     }
 
-    private void displayMessages(DataSnapshot dataSnapshot) {
+    protected void displayMessages(DataSnapshot dataSnapshot) {
         Iterator iterator = dataSnapshot.getChildren().iterator();
 
         while (iterator.hasNext()) {
 //             order is important (same as on database)
             String date = (String) ((DataSnapshot) iterator.next()).getValue();
             String text = (String) ((DataSnapshot) iterator.next()).getValue();
-            String sender = (String) ((DataSnapshot) iterator.next()).getValue();
+            String senderId = (String) ((DataSnapshot) iterator.next()).getValue();
+            String senderName = (String) ((DataSnapshot) iterator.next()).getValue();
             String time = (String) ((DataSnapshot) iterator.next()).getValue();
 
-            Message message = new Message(sender, text, date, time);
+            Message message = new Message(senderId, senderName, text, date, time);
             messageList.add(message);
             messageAdapter.notifyDataSetChanged();
 

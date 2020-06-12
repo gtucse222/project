@@ -51,6 +51,12 @@
                         android:layout_height="wrap_content"
                         android:text="Login Test" />
 
+                <Button
+                        android:id="@+id/groupMessagingTest"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Group messaging test" />
+
             </LinearLayout>
         </ScrollView>
     </RelativeLayout>

@@ -1,25 +1,35 @@
 package com.example.a222latest;
 
 public class Message {
-    private String sender, text, date, time;
+    private String senderId, text, date, time, senderName;
 
+    // don' delete this constructor, message adapter need this
     public Message() {
-
     }
 
-    public Message(String sender, String text, String date, String time) {
-        this.sender = sender;
+    public Message(String senderId, String senderName, String text, String date, String time) {
+        this.senderId = senderId;
+        this.senderName = senderName;
         this.text = text;
         this.date = date;
         this.time = time;
     }
 
-    public String getSender() {
-        return sender;
+
+    public String getSenderId() {
+        return senderId;
     }
 
-    public void setSender(String sender) {
-        this.sender = sender;
+    public void setSenderId(String senderId) {
+        this.senderId = senderId;
+    }
+
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
     }
 
     public String getText() {
