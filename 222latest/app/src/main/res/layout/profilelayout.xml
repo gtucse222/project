@@ -30,40 +30,30 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                <Button
-                        android:id="@+id/postTest"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:text="Post Test" />
 
-
-                <Button
-                        android:id="@+id/messagingTest"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Messaging test" />
-
-                <Button
-                        android:id="@+id/loginTest"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Login Test" />
-
-                <Button
-                        android:id="@+id/groupMessagingTest"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Group messaging test" />
-
-                <Button
-                    android:id="@+id/profileTest"
+                <TextView
+                    android:id="@+id/name_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
-                    android:text="PROFILE TEST" />
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/surname_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/mail_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/membership_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView" />
 
             </LinearLayout>
         </ScrollView>
