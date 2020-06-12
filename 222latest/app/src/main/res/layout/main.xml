@@ -40,22 +40,16 @@
 
 
                 <Button
-                        android:id="@+id/messagingTest"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Messaging test" />
-
-                <Button
                         android:id="@+id/loginTest"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Login Test" />
 
                 <Button
-                        android:id="@+id/groupMessagingTest"
+                        android:id="@+id/chatTest"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Group messaging test" />
+                        android:text="chat test" />
 
                 <Button
                     android:id="@+id/profileTest"

@@ -27,6 +27,7 @@
         <activity android:name=".sampleActivity" />
         <activity android:name=".selectMembershipActivity" />
         <activity android:name=".signActivity" />
+        <activity android:name=".ProfileActivity" />
     </application>
 
 </manifest>
