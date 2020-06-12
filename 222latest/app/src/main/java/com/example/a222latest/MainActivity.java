@@ -18,11 +18,12 @@ public class MainActivity extends AppCompatActivity {
         Button messagingTest = findViewById(R.id.messagingTest);
         Button loginTest = findViewById(R.id.loginTest);
         Button groupMessagingTest = findViewById(R.id.groupMessagingTest);
-
+        Button profile = findViewById(R.id.profileTest);
 
         messagingTest.setOnClickListener(v -> startActivity(new Intent(this, PrivateMessagingActivity.class)));
         postTest.setOnClickListener(v -> startActivity(new Intent(this, AddPostActivity.class)));
         loginTest.setOnClickListener(v -> startActivity(new Intent(this, LoginMainActivity.class)));
         groupMessagingTest.setOnClickListener(v -> startActivity(new Intent(this, GroupMessagingActivity.class)));
+        profile.setOnClickListener(v -> startActivity(new Intent(this, ProfileActivity.class)));
     }
 }

@@ -10,6 +10,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity android:name=".PrivateMessagingActivity"></activity>
+        <activity android:name=".ProfileActivity" />
         <activity android:name=".GroupMessagingActivity" />
         <activity android:name=".LoginMainActivity" />
         <activity android:name=".AddPostActivity" />
