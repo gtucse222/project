@@ -2,9 +2,6 @@ package com.example.a222latest;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -14,6 +11,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 
 public class GroupMessagingActivity extends MessagingActivity {
+
 
     private String groupName;
     private String groupID;
@@ -53,12 +51,17 @@ public class GroupMessagingActivity extends MessagingActivity {
         });
     }
 
+    @Override
+    protected void initalizeFields() {
+        super.initalizeFields();
+        getSupportActionBar().setTitle(groupName);
+    }
 
 
     @Override
     protected void getFromIntent() {
-        groupID = "this_is_group_id";
-        groupName = "Avengers";
+        this.groupID = "this_is_group_id";
+        this.groupName = "Avengers";
     }
 
     @Override

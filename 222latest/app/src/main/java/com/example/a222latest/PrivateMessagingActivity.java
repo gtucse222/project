@@ -1,11 +1,10 @@
 package com.example.a222latest;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+
 import androidx.annotation.Nullable;
-import android.os.Bundle;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -13,7 +12,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class PrivateMessagingActivity extends MessagingActivity {
 
@@ -55,12 +53,11 @@ public class PrivateMessagingActivity extends MessagingActivity {
         });
     }
 
-
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-////        setContentView(R.layout.messaging);
-//    }
+    @Override
+    protected void initalizeFields() {
+        super.initalizeFields();
+        getSupportActionBar().setTitle(receiverName);
+    }
 
     @Override
     protected void getFromIntent() {
