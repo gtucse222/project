@@ -2,8 +2,6 @@ package com.example.a222latest;
 
 //TODO: add top bar: shows group name or receiver name
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,15 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,7 +23,6 @@ import java.util.Iterator;
 import java.util.List;
 
 public abstract class MessagingActivity extends AppCompatActivity {
-    private FirebaseAuth mAuth;
     protected String currentUserMail;
     protected String currentUserName;
     private Button sendMessageButton;
@@ -56,6 +48,7 @@ public abstract class MessagingActivity extends AppCompatActivity {
     }
 
     protected abstract void getFromIntent();
+
     abstract protected void initalizeMessagesRef();
 
     protected void initalizeFields() {
@@ -66,7 +59,7 @@ public abstract class MessagingActivity extends AppCompatActivity {
         recyclerView.setAdapter(messageAdapter);
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        currentUserMail = emailToId(mAuth.getCurrentUser().getEmail());
+        currentUserMail = emailToId(FirebaseAuth.getInstance().getCurrentUser().getEmail());
 //        currentUserName = mAuth.getCurrentUser().getDisplayName();
         currentUserName = "name surname";//FIXME
         sendMessageButton = findViewById(R.id.sendMessageButton);
@@ -111,17 +104,16 @@ public abstract class MessagingActivity extends AppCompatActivity {
     abstract protected String getConversationKey();
 
     private void logIn() {
-        String email = "deneme@gmail.com";
-        String password = "123456";
-
-        mAuth = FirebaseAuth.getInstance();
-
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                Toast.makeText(this, "logged in", Toast.LENGTH_SHORT).show();
-            } else
-                Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
-        });
+//        String email = "deneme@gmail.com";
+//        String password = "123456";
+//
+//
+//        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+//            if (task.isSuccessful()) {
+//                Toast.makeText(this, "logged in", Toast.LENGTH_SHORT).show();
+//            } else
+//                Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
+//        });
     }
 
     protected void displayMessages(DataSnapshot dataSnapshot) {
@@ -142,7 +134,6 @@ public abstract class MessagingActivity extends AppCompatActivity {
             // scroll to bottom
             recyclerView.smoothScrollToPosition(recyclerView.getAdapter().getItemCount());
         }
-
 
     }
 

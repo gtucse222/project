@@ -3,11 +3,13 @@ package com.example.a222latest;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Calendar;
 import java.util.HashMap;
 
 public class GroupMessagingActivity extends MessagingActivity {
@@ -60,7 +62,9 @@ public class GroupMessagingActivity extends MessagingActivity {
 
     @Override
     protected void getFromIntent() {
-        this.groupID = "this_is_group_id";
+//        this.groupID = "this_is_group_id";
+        this.groupID = getIntent().getStringExtra("groupId");
+//        this.groupName = getIntent().getStringExtra("groupName");
         this.groupName = "Avengers";
     }
 
@@ -77,8 +81,11 @@ public class GroupMessagingActivity extends MessagingActivity {
     @Override
     protected void saveMessageToDatabase(String conversationKey, String message) {
         String messageKey = messagesRef.push().getKey();
-        HashMap<String,Object> messageInfo = buildMessageInfo(message);
+        HashMap<String, Object> messageInfo = buildMessageInfo(message);
         messagesRef.child(messageKey).updateChildren(messageInfo);
+
+        FirebaseDatabase.getInstance().getReference().child("Groups").
+                child(getConversationKey()).child("lastMessageTime").setValue(Calendar.getInstance().getTimeInMillis());
     }
 
 }
