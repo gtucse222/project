@@ -37,6 +37,8 @@ dependencies {
     //Firebase auth kismini gormuyordu massaging de::::::::::::::::::: baran
     implementation 'com.google.firebase:firebase-auth:19.3.1'
     implementation 'com.google.firebase:firebase-core:16.0.4'
+    //cardviev eklenmesi icin show posts kismi icin::::::::::::::::::::baran
+    implementation "androidx.cardview:cardview:1.0.0"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
