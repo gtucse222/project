@@ -1,10 +1,18 @@
 package com.example.a222latest;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,14 +26,17 @@ public class ShowPostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-        //actionBar = getSupportActionBar();
         //actionBar.setTitle("Profile");
         logIn();
         firebaseAuth = FirebaseAuth.getInstance();
 
-        //actionBar.setTitle("Home");
-                getSupportFragmentManager().beginTransaction()
+
+        getSupportFragmentManager().beginTransaction()
                 .add(R.id.content,new HomeFragment()).commit();
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_post);
+        setSupportActionBar(myToolbar);
+        //actionBar.setTitle("Home");
+
     }
 
     private void logIn() {
@@ -51,5 +62,21 @@ public class ShowPostActivity extends AppCompatActivity {
             startActivity(new Intent(ShowPostActivity.this, MainActivity.class));
             finish();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu_post,menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        if (item.getItemId() == R.menu.menu_post)
+            Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
+
+        return super.onOptionsItemSelected(item);
     }
 }

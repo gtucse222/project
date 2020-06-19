@@ -1,10 +1,15 @@
 package com.example.a222latest;
 
+import android.app.SearchManager;
+//import android.content.Context;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,6 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -41,6 +47,8 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView;
     List<ModelPost> postList;
     AdapterPost adapterPost;
+    private SearchView searchView = null;
+    private SearchView.OnQueryTextListener queryTextListener;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -67,7 +75,6 @@ public class HomeFragment extends Fragment {
         //setlayout to recycler
         recyclerView.setLayoutManager(layoutManager);
         //init post list
-
         postList = new ArrayList<>();
 
         loadPosts();
@@ -100,7 +107,7 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void searchPost(String searchQuery){
+    public void searchPost(String searchQuery){
         //path of all posts
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
         ref.addValueEventListener(new ValueEventListener() {
@@ -134,54 +141,102 @@ public class HomeFragment extends Fragment {
     //Check user status
 
 
+  // @RequiresApi(api = Build.VERSION_CODES.M)
    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-  /*      //getMenuInflater().inflate(R.menu.menu_main,menu);
+       inflater.inflate(R.menu.menu_post,menu);
+       MenuItem searchItem = menu.findItem(R.id.post_search);
+       SearchView searchView = (SearchView) MenuItemCompat.getActionView((MenuItem) searchItem);
+       searchView.getQueryHint();
+       SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
 
-        //Searchview to search posts by post title
-        //Menu item = menu.findItem(R.id.action_search);
-        Menu item = null;
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView((MenuItem) item);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                //called when pressed search button
-                if (!TextUtils.isEmpty(query)){
-                    searchPost(query);
-                }else{
-                    loadPosts();
-                }
-                return false;
-            }
+       if (searchItem != null) {
+           searchView = (SearchView) searchItem.getActionView();
+       }
+       if (searchView != null) {
+           searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));}
+       queryTextListener = new SearchView.OnQueryTextListener() {
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                //called as and when user press any letter
-                if (!TextUtils.isEmpty(newText)){
-                    searchPost(newText);
-                }else{
-                    loadPosts();
-                }
-                return false;
-            }
-        });
-*/
+           @Override
+           public boolean onQueryTextSubmit(String query) {
+               //called when pressed search button
+               if (!TextUtils.isEmpty(query)) {
+                   searchPost(query);
+                   return true;
+               } else {
+                   loadPosts();
+               }
+               return false;
+           }
+
+           @Override
+           public boolean onQueryTextChange(String newText) {
+               //called as and when user press any letter
+               if (!TextUtils.isEmpty(newText)) {
+                   searchPost(newText);
+               } else {
+                   loadPosts();
+               }
+               return false;
+           }
+       };
+       //Searchview to search posts by post title
+       /* MenuItem searchItem = menu.findItem(R.id.post_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView((MenuItem) searchItem);
+
+       // searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        //SearchManager  searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+            SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+
+        if (searchItem != null) {
+             searchView = (SearchView) searchItem.getActionView();
+        }
+        if (searchView != null) {
+          searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+
+
+           queryTextListener = new SearchView.OnQueryTextListener() {
+               @Override
+               public boolean onQueryTextSubmit(String query) {
+                   //called when pressed search button
+                   if (!TextUtils.isEmpty(query)) {
+                       searchPost(query);
+                       return true;
+                   } else {
+                       loadPosts();
+                   }
+                   return false;
+               }
+
+               @Override
+               public boolean onQueryTextChange(String newText) {
+                   //called as and when user press any letter
+                   if (!TextUtils.isEmpty(newText)) {
+                       searchPost(newText);
+                   } else {
+                       loadPosts();
+                   }
+                   return false;
+               }
+           };
+           searchView.setOnQueryTextListener(queryTextListener);
+       }
         super.onCreateOptionsMenu(menu,inflater);
-
+*/
     }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState){
-        //setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
+        // setHasOptionsMenu(true);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        // if(id == R.id.action_logout) {
-        //   firebaseAuth.signOut();
-        //   checkUserStatus();
-        //}
-
+         if(id == R.id.post_search) {
+             Toast.makeText(getActivity(),"sad",Toast.LENGTH_LONG).show();
+             return true;
+         }
+        searchView.setOnQueryTextListener(queryTextListener);
         return super.onOptionsItemSelected(item);
     }
     private void logIn() {
