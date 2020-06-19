@@ -66,6 +66,13 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
                 android:text="SHOW POST TEST" />
+                <Button
+                    android:id="@+id/contact"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:text="CONTACT TEST" />
 
             </LinearLayout>
         </ScrollView>

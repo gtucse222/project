@@ -14,7 +14,9 @@
         <activity android:name=".GroupMessagingActivity" />
         <activity android:name=".LoginMainActivity" />
         <activity android:name=".AddPostActivity" />
-        <activity android:name=".ShowPostActivity"></activity>
+        <activity android:name=".ShowPostActivity"/>
+        <activity android:name=".ContactActivity">
+        </activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
