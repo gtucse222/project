@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         Button chatTest = findViewById(R.id.chatTest);
         Button showPostTest = findViewById(R.id.show_post);
         Button contactTest = findViewById(R.id.contact);
+        Button seminarTest = findViewById(R.id.seminar);
 
         postTest.setOnClickListener(v -> startActivity(new Intent(this, AddPostActivity.class)));
         loginTest.setOnClickListener(v -> startActivity(new Intent(this, LoginMainActivity.class)));
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         chatTest.setOnClickListener(v -> startActivity(new Intent(this, ChatHistoryActivity.class)));
         showPostTest.setOnClickListener(v -> startActivity(new Intent(this, ShowPostActivity.class)));
         contactTest.setOnClickListener(v -> startActivity(new Intent(this, ContactActivity.class)));
+        seminarTest.setOnClickListener(v -> startActivity(new Intent(this, ShowSeminarActivity.class)));
 
     }
 }

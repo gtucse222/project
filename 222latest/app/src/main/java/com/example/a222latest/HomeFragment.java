@@ -34,6 +34,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -72,12 +73,12 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         //show newest post first, for this from load last
-        layoutManager.setReverseLayout(true);
-        layoutManager.setReverseLayout(true);
+        layoutManager.setReverseLayout(false);
+        //layoutManager.setReverseLayout(true);
 
         //setlayout to recycler
         //init post list
-        postList = new ArrayList<>();
+        postList = new LinkedList<>();
 
         loadPosts();
         return view;

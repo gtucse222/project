@@ -15,6 +15,7 @@
         <activity android:name=".LoginMainActivity" />
         <activity android:name=".AddPostActivity" />
         <activity android:name=".ShowPostActivity"/>
+        <activity android:name=".ShowSeminarActivity"/>
         <activity android:name=".ContactActivity">
         </activity>
         <activity android:name=".MainActivity">
