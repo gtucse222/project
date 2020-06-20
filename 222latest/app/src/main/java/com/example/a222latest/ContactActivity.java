@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 import java.util.TreeSet;
 
-public class ContactActivity extends AppCompatActivity implements ContactAdapter.OnNoteListener{
+public class ContactActivity extends AppCompatActivity implements ContactAdapter.OnNoteListener {
 
     private DatabaseReference teacherRef;
     private DatabaseReference studentRef;
@@ -41,27 +41,44 @@ public class ContactActivity extends AppCompatActivity implements ContactAdapter
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact);
-        users=new TreeSet<>();
+
+        androidx.appcompat.widget.SearchView searchView = findViewById(R.id.searchButton);
+
+        searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                ca.getFilter().filter(newText);
+                return true;
+            }
+        });
+
+        users = new TreeSet<>();
         rw2 = findViewById(R.id.rw2);
         rw2.setLayoutManager(new LinearLayoutManager(this));
-        studentRef=FirebaseDatabase.getInstance().getReference().child("Members");
-        teacherRef=FirebaseDatabase.getInstance().getReference().child("Members");
+        studentRef = FirebaseDatabase.getInstance().getReference().child("Members");
+        teacherRef = FirebaseDatabase.getInstance().getReference().child("Members");
         teacherRef.child("teacher").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
-                for (DataSnapshot ds:dataSnapshot.getChildren()){
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
-                    Member memb=ds.getValue(Member.class);
+                    Member memb = ds.getValue(Member.class);
 
-                    String a=memb.getName()+" "+memb.getSurname();
-                    String b=memb.getMailAddress();
+                    String a = memb.getName() + " " + memb.getSurname();
+                    String b = memb.getMailAddress();
 
-                        UserC temp=new UserC();
-                        temp.setName(a);
-                        temp.seteMail(b);
-                        users.add(temp);
+                    UserC temp = new UserC();
+                    temp.setName(a);
+                    temp.seteMail(b);
+                    users.add(temp);
 
                 }
                 studentRef.child("student").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -69,15 +86,14 @@ public class ContactActivity extends AppCompatActivity implements ContactAdapter
                     public void onDataChange(@NonNull DataSnapshot dataSnapshott) {
 
 
+                        for (DataSnapshot dss : dataSnapshott.getChildren()) {
 
-                        for (DataSnapshot dss:dataSnapshott.getChildren()){
+                            Member memb = dss.getValue(Member.class);
 
-                            Member memb=dss.getValue(Member.class);
-
-                            String a=memb.getName()+" "+memb.getSurname();
-                            String b=memb.getMailAddress();
-                            UserC temp2=new UserC();
-                            temp2=new UserC();
+                            String a = memb.getName() + " " + memb.getSurname();
+                            String b = memb.getMailAddress();
+                            UserC temp2 = new UserC();
+                            temp2 = new UserC();
                             temp2.setName(a);
                             temp2.seteMail(b);
                             users.add(temp2);
@@ -105,20 +121,22 @@ public class ContactActivity extends AppCompatActivity implements ContactAdapter
 
     }
 
-    public void sendAdapter(){
+    public void sendAdapter() {
         ca = new ContactAdapter(users, group, this);
         rw2.setAdapter(ca);
     }
+
     public void addGroup(View view) {
         group = true;
         ca = new ContactAdapter(users, group, this);
         rw2.setAdapter(ca);
     }
-    public void createGroup(View view){
-        String grpId="group-Id-deneme";
-        GroupDialogFragment gdf=new GroupDialogFragment();
-        gdf.show(getFragmentManager(),"Group Name");
-        myList=ca.getGroup();
+
+    public void createGroup(View view) {
+        String grpId = "group-Id-deneme";
+        GroupDialogFragment gdf = new GroupDialogFragment();
+        gdf.show(getFragmentManager(), "Group Name");
+        myList = ca.getGroup();
         gdf.setMails(myList);
         gdf.setGroupId(grpId);
 
@@ -126,8 +144,6 @@ public class ContactActivity extends AppCompatActivity implements ContactAdapter
         intent.putExtra("groupId",grpId);
         intent.putStringArrayListExtra("emails",myList);
         startActivity(intent); */
-
-
 
 
     }
@@ -142,28 +158,27 @@ public class ContactActivity extends AppCompatActivity implements ContactAdapter
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        getMenuInflater().inflate(R.menu.example_menu,menu);
-        MenuItem item=menu.findItem(R.id.action_search);
-        androidx.appcompat.widget.SearchView searchView= (androidx.appcompat.widget.SearchView) item.getActionView();
-        searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
-
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                ca.getFilter().filter(newText);
-                return true;
-            }
-        });
-
-        return super.onCreateOptionsMenu(menu);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.example_menu, menu);
+//        MenuItem item = menu.findItem(R.id.action_search);
+//        androidx.appcompat.widget.SearchView searchView = (androidx.appcompat.widget.SearchView) item.getActionView();
+//        searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
+//
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                ca.getFilter().filter(newText);
+//                return true;
+//            }
+//        });
+//
+//        return super.onCreateOptionsMenu(menu);
+//    }
 }
 
 

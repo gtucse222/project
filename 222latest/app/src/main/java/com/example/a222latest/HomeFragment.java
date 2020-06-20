@@ -49,6 +49,7 @@ public class HomeFragment extends Fragment {
     AdapterPost adapterPost;
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -81,14 +82,15 @@ public class HomeFragment extends Fragment {
         loadPosts();
         return view;
     }
-    private void loadPosts(){
+
+    private void loadPosts() {
         //path of all posts
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 postList.clear();
-                for (DataSnapshot ds: dataSnapshot.getChildren()){
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     ModelPost modelPost = ds.getValue(ModelPost.class);
 
                     postList.add(modelPost);
@@ -103,22 +105,22 @@ public class HomeFragment extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 //if there is an error
-                Toast.makeText(getActivity(), ""+databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "" + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    public void searchPost(String searchQuery){
+    public void searchPost(String searchQuery) {
         //path of all posts
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 postList.clear();
-                for (DataSnapshot ds: dataSnapshot.getChildren()){
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     ModelPost modelPost = ds.getValue(ModelPost.class);
 
-                    if(modelPost.getpTitle().toLowerCase().contains(searchQuery.toLowerCase())){
+                    if (modelPost.getpTitle().toLowerCase().contains(searchQuery.toLowerCase())) {
                         postList.add(modelPost);
                     }
 
@@ -132,7 +134,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 //if there is an error
-                Toast.makeText(getActivity(), ""+databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "" + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -142,17 +144,17 @@ public class HomeFragment extends Fragment {
     //Check user status
 
 
-  // @RequiresApi(api = Build.VERSION_CODES.M)
-   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-       inflater.inflate(R.menu.menu_post,menu);
+    // @RequiresApi(api = Build.VERSION_CODES.M)
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_post, menu);
         MenuItem item = menu.findItem(R.id.post_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                if (!TextUtils.isEmpty(query.trim())){
+                if (!TextUtils.isEmpty(query.trim())) {
                     searchPost(query);
-                }else{
+                } else {
                     loadPosts();
                 }
                 return false;
@@ -160,18 +162,19 @@ public class HomeFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (!TextUtils.isEmpty(newText.trim())){
+                if (!TextUtils.isEmpty(newText.trim())) {
                     searchPost(newText);
-                }else{
+                } else {
                     loadPosts();
                 }
                 return false;
             }
         });
-       super.onCreateOptionsMenu(menu,inflater);
+        super.onCreateOptionsMenu(menu, inflater);
     }
+
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState){
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
     }
@@ -179,13 +182,14 @@ public class HomeFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-         if(id == R.id.post_search) {
-             Toast.makeText(getActivity(),"sad",Toast.LENGTH_LONG).show();
-             return true;
-         }
+        if (id == R.id.post_search) {
+            Toast.makeText(getActivity(), "sad", Toast.LENGTH_LONG).show();
+            return true;
+        }
         searchView.setOnQueryTextListener(queryTextListener);
         return super.onOptionsItemSelected(item);
     }
+
     private void logIn() {
         String email = "deneme@gmail.com";
         String password = "123456";
@@ -195,10 +199,10 @@ public class HomeFragment extends Fragment {
 
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-               // Toast.makeText(this,"Loggedin",Toast.LENGTH_SHORT).show();
+                // Toast.makeText(this,"Loggedin",Toast.LENGTH_SHORT).show();
             }
             //else
-                //Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
         });
     }
 
