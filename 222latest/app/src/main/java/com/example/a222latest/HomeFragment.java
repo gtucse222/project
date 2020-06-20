@@ -146,7 +146,7 @@ public class HomeFragment extends Fragment {
 
     // @RequiresApi(api = Build.VERSION_CODES.M)
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_post, menu);
+        //inflater.inflate(R.menu.menu_post, menu);
         MenuItem item = menu.findItem(R.id.post_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -181,12 +181,12 @@ public class HomeFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.post_search) {
-            Toast.makeText(getActivity(), "sad", Toast.LENGTH_LONG).show();
-            return true;
-        }
-        searchView.setOnQueryTextListener(queryTextListener);
+       // int id = item.getItemId();
+        //if (id == R.id.post_search) {
+           // Toast.makeText(getActivity(), "", Toast.LENGTH_LONG).show();
+          //  return true;
+        //}
+       // searchView.setOnQueryTextListener(queryTextListener);
         return super.onOptionsItemSelected(item);
     }
 

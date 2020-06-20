@@ -33,8 +33,8 @@ public class ShowPostActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.content,new HomeFragment()).commit();
-        //Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_post);
-        //setSupportActionBar(myToolbar);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_post);
+        setSupportActionBar(myToolbar);
         //actionBar.setTitle("Home");
 
     }
