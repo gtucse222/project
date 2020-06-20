@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 
@@ -31,9 +32,8 @@ import java.util.Iterator;
 public class GroupsFragment extends Fragment {
     private View groupFragmentView;
     private ListView listView;
-    private ArrayAdapter<String> arrayAdapter;
-    private ArrayList<String> groups = new ArrayList<>();
-    ArrayList<String> groupKeys;
+    private ArrayAdapter<Chat> arrayAdapter;
+    private ArrayList<Chat> groups = new ArrayList<>();
     private DatabaseReference groupMessagesRef;
 
     public GroupsFragment() {
@@ -88,20 +88,31 @@ public class GroupsFragment extends Fragment {
         for (DataSnapshot d : dataSnapshot.getChildren()) {
             String groupId = d.getKey();
             String groupName = (String) d.getValue();
-            groups.add(groupName);
-            groupKeys.add(groupId);
+            FirebaseDatabase.getInstance().getReference().child("Groups").child(groupId).child("lastMessageTime").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Long lastMessageTime = (Long) dataSnapshot.getValue();
+                    Chat c = new Chat(groupName, groupId, lastMessageTime);
+                    groups.add(c);
+                    Collections.sort(groups);
+                    arrayAdapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
         }
         arrayAdapter.notifyDataSetChanged();
     }
 
     private void initalizeFields() {
-        groupKeys = new ArrayList<>();
         listView = groupFragmentView.findViewById(R.id.listViewGroups);
         arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, groups);
         listView.setAdapter(arrayAdapter);
         listView.setOnItemClickListener((parent, view, position, id) -> {
-            String key = groupKeys.get(position);
-            Log.e("YOO", key);
+            String key = groups.get(position).id;
             Intent intent = new Intent(getContext(), GroupMessagingActivity.class);
             intent.putExtra("groupId", key);
             startActivity(intent);

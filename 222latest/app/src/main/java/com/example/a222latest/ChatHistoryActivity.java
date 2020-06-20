@@ -17,11 +17,11 @@ public class ChatHistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_history);
 
-        mViewPager = (ViewPager) findViewById(R.id.tabs_pager);
+        mViewPager = findViewById(R.id.tabs_pager);
         mTabsAccessorAdapter = new TabsAccessorAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mTabsAccessorAdapter);
 
-        mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        mTabLayout =  findViewById(R.id.tabLayout);
         mTabLayout.setupWithViewPager(mViewPager);
 
     }

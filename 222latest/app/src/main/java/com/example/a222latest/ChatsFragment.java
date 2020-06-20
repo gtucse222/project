@@ -25,6 +25,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -38,9 +41,8 @@ import java.util.TreeMap;
 public class ChatsFragment extends Fragment {
     private View chatsFragmentView;
     private ListView listView;
-    private ArrayAdapter<String> arrayAdapter;
-    private ArrayList<String> chats;
-    private ArrayList<String> chatKeys;
+    private ArrayAdapter<Chat> arrayAdapter;
+    private ArrayList<Chat> chats;
     private DatabaseReference privateMessagesRef;
 
     public ChatsFragment() {
@@ -96,25 +98,38 @@ public class ChatsFragment extends Fragment {
         for (DataSnapshot d : dataSnapshot.getChildren()) {
             String chatName = (String) d.getValue();
             String chatKey = d.getKey();
-            chats.add(chatName);
-            chatKeys.add(chatKey);
+            FirebaseDatabase.getInstance().getReference().child("Messages").child(chatKey).child("lastMessageTime").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Long lastMessageTime = (Long) dataSnapshot.getValue();
+                    Chat c = new Chat(chatName, chatKey, lastMessageTime);
+                    chats.add(c);
+                    Collections.sort(chats);
+                    arrayAdapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
         }
         arrayAdapter.notifyDataSetChanged();
     }
 
     private void initalizeFields() {
         chats = new ArrayList<>();
-        chatKeys = new ArrayList<>();
         listView = chatsFragmentView.findViewById(R.id.listViewChats);
         arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, chats);
         listView.setAdapter(arrayAdapter);
         listView.setOnItemClickListener((parent, view, position, id) -> {
-            String key = chatKeys.get(position);
-            String name = (String) parent.getItemAtPosition(position);
+            String key = chats.get(position).id;
+            String name = chats.get(position).name;
             Intent intent = new Intent(getContext(), PrivateMessagingActivity.class);
             intent.putExtra("receiverName", name);
             intent.putExtra("messagingKey", key);
             startActivity(intent);
         });
     }
+
 }
