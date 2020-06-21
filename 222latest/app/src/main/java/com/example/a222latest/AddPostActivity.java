@@ -145,6 +145,7 @@ public class AddPostActivity extends AppCompatActivity {
         hashMap.put("pTitle",title);
         hashMap.put("pDescr",description);
         hashMap.put("pTime",time);
+        hashMap.put("pLikes","0");
 
         //path to store post data
         DatabaseReference ref =FirebaseDatabase.getInstance().getReference("Posts");

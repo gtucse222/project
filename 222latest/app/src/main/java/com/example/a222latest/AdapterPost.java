@@ -1,6 +1,7 @@
 package com.example.a222latest;
 
 import android.content.Context;
+import android.os.Build;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -24,10 +32,19 @@ public class AdapterPost extends RecyclerView.Adapter<AdapterPost.MyHolder> {
 
     Context context;
     List<ModelPost> postList;
+    String myUid;
+    private DatabaseReference likesRef; //for database node likes
+    private DatabaseReference postsRef;
+
+
+    boolean mProcessLike = false;
 
     public AdapterPost(Context context, List<ModelPost> postList) {
         this.context = context;
         this.postList = postList;
+        myUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        likesRef = FirebaseDatabase.getInstance().getReference().child("Likes");
+        postsRef = FirebaseDatabase.getInstance().getReference().child("Posts");
     }
 
     @NonNull
@@ -51,6 +68,8 @@ public class AdapterPost extends RecyclerView.Adapter<AdapterPost.MyHolder> {
         String pDescription = postList.get(position).getpDescr();
         //String pTitle = postList.get(i).getUid();
         String pTime = postList.get(position).getpTime();
+        String pLikes = postList.get(position).getpLikes();//contains total number of like for a p;ost
+
 
         //convert timesmp from
         Calendar calendar = Calendar.getInstance(Locale.getDefault());
@@ -62,7 +81,9 @@ public class AdapterPost extends RecyclerView.Adapter<AdapterPost.MyHolder> {
         holder.pTimeTv.setText(pTimeIn);
         holder.pTitleTv.setText(pTitle);
         holder.pDescriptionTv.setText(pDescription);
+        holder.pLikesTv.setText(pLikes+ " Likes");
 
+        setLikes(holder,pId);
         //set here user pic and post IMg
 
         //handle click
@@ -77,17 +98,56 @@ public class AdapterPost extends RecyclerView.Adapter<AdapterPost.MyHolder> {
             @Override
             public void onClick(View v) {
                 //will implement later after profile acivity
-                Toast.makeText(context, "like", Toast.LENGTH_SHORT).show();
-            }
-        });
-        holder.dislikeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //will implement later after profile acivity
-                Toast.makeText(context, "Dislike", Toast.LENGTH_SHORT).show();
+                int pLikes = Integer.parseInt(postList.get(position).getpLikes());
+                mProcessLike= true;
+
+                final String postIdi = postList.get(position).getpId();
+                likesRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (mProcessLike){
+                            if (dataSnapshot.child(postIdi).hasChild(myUid)){
+                                //already liked so
+                                postsRef.child(postIdi).child("pLikes").setValue(""+(pLikes-1));
+                                likesRef.child(postIdi).child(myUid).removeValue();
+                                mProcessLike = false;
+                            }else{
+                                postsRef.child(postIdi).child("pLikes").setValue(""+(pLikes+1));
+                                likesRef.child(postIdi).child(myUid).setValue("Liked");
+                                mProcessLike = false;
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
         });
 
+    }
+
+    private void setLikes(final MyHolder holder, String postKey) {
+        likesRef.addValueEventListener(new ValueEventListener() {
+           // @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child(postKey).hasChild(myUid)){
+                    holder.likeBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_liked,0,0,0);
+                    holder.likeBtn.setText("Liked");
+                }else{
+                    holder.likeBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_like,0,0,0);
+                    holder.likeBtn.setText("Like");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -100,9 +160,9 @@ public class AdapterPost extends RecyclerView.Adapter<AdapterPost.MyHolder> {
 
         //viewvs from row_post.xml
         ImageView uPictureIv, pImageIv;
-        TextView uNameTv, pTimeTv, pTitleTv, pDescriptionTv, pLikesTv,pdisLikesTv;
+        TextView uNameTv, pTimeTv, pTitleTv, pDescriptionTv, pLikesTv;
         ImageButton moreBtn;
-        Button likeBtn, dislikeBtn;
+        Button likeBtn;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
@@ -117,7 +177,6 @@ public class AdapterPost extends RecyclerView.Adapter<AdapterPost.MyHolder> {
             pLikesTv = itemView.findViewById(R.id.pLikesTv);
             moreBtn = itemView.findViewById(R.id.moreBtn);
             likeBtn = itemView.findViewById(R.id.likeBtn);
-            dislikeBtn = itemView.findViewById(R.id.disLikeBtn);
 
 
         }
