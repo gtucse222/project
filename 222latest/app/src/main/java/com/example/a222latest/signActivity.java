@@ -34,28 +34,28 @@ public class signActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign);
         mAuth = FirebaseAuth.getInstance();
-        name=findViewById(R.id.name);
-        surname=findViewById(R.id.surname);
-        mailAddress=findViewById(R.id.mailAddress);
-        password=findViewById(R.id.password);
+        name = findViewById(R.id.name);
+        surname = findViewById(R.id.surname);
+        mailAddress = findViewById(R.id.mailAddress);
+        password = findViewById(R.id.password);
         user = mAuth.getCurrentUser();
         sign = (Button) findViewById(R.id.sign);
 
-        sign.setOnClickListener( new View.OnClickListener() {
+        sign.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 final String userName = name.getText().toString();
-                final String userSurname = surname.getText().toString()   ;
+                final String userSurname = surname.getText().toString();
                 final String userMail = mailAddress.getText().toString();
                 final String userPass = password.getText().toString();
                 final String membership = getIntent().getStringExtra("membership");
 
                 if (!isGtuMail(userMail)) {
-                    Toast.makeText(signActivity.this,"Please enter gtu mail",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(signActivity.this, "Please enter gtu mail", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(signActivity.this, signActivity.class));
 
-                }else {
+                } else {
 
                     mAuth.createUserWithEmailAndPassword(userMail, userPass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
@@ -68,7 +68,10 @@ public class signActivity extends AppCompatActivity {
                             member.setSurname(userSurname);
                             member.setMembership(membership);
                             signRef = FirebaseDatabase.getInstance().getReference("Members");
-                            signRef.child(membership).push().setValue(member);
+                            signRef.child("Members");
+                            String tempMail = MessagingActivity.emailToId(userMail);
+                            signRef.child(tempMail).push().setValue(member);
+
                             Toast.makeText(signActivity.this, "You sign up Succesfully", Toast.LENGTH_LONG).show();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
@@ -82,7 +85,8 @@ public class signActivity extends AppCompatActivity {
             }
         });
     }
-        private boolean isGtuMail(String userMail) {
-            return userMail.endsWith("@gtu.edu.tr");
-        }
+
+    private boolean isGtuMail(String userMail) {
+        return userMail.endsWith("@gtu.edu.tr");
     }
+}

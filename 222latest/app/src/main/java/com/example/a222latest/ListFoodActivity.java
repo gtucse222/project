@@ -23,6 +23,7 @@ public class ListFoodActivity extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
     ImageView imageView;
     TextView textView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +41,7 @@ public class ListFoodActivity extends AppCompatActivity {
 
     }
 
-    public void getData(){
+    public void getData() {
         //System.out.println("ingetdata");
         CollectionReference collectionReference = firebaseFirestore.collection("imagePost");
 
@@ -48,16 +49,16 @@ public class ListFoodActivity extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 //System.out.println(e.getMessage());
-                if( e != null){
+                if (e != null) {
                     System.out.println("HATAA!!" + e.getMessage());
                 }
                 System.out.println("if ici");
-                if (queryDocumentSnapshots != null){
+                if (queryDocumentSnapshots != null) {
                     //System.out.println("if query");
-                    for (DocumentSnapshot snapshot : queryDocumentSnapshots.getDocuments() ){
+                    for (DocumentSnapshot snapshot : queryDocumentSnapshots.getDocuments()) {
 
                         //System.out.println("info");
-                        Map<String,Object> data = snapshot.getData();
+                        Map<String, Object> data = snapshot.getData();
                         String downloadUrl = (String) data.get("downloadUrl");
                         System.out.println("url : " + downloadUrl);
 
