@@ -56,7 +56,7 @@ public class ChatsFragment extends Fragment {
         // Inflate the layout for this fragment
         chatsFragmentView = inflater.inflate(R.layout.fragment_chats, container, false);
 
-        String email = "deneme@gmail.com";
+        String email = "abc@gtu.edu.tr";
         String password = "123456";
 
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
@@ -68,10 +68,12 @@ public class ChatsFragment extends Fragment {
 
 
         //TEST
-        String userId = FirebaseAuth.getInstance().getUid();
+        String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        String userId = MessagingActivity.emailToId(userEmail);
+        Toast.makeText(getContext(), userId, Toast.LENGTH_SHORT).show();
 
         privateMessagesRef = FirebaseDatabase.getInstance().getReference().
-                child("Users").child(userId).child("privateMessages");
+                child("Members").child(userId).child("privateMessages");
         initalizeFields();
 
         retrieveAndDisplayChatHistory();

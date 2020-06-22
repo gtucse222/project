@@ -47,7 +47,7 @@ public class GroupsFragment extends Fragment {
         // Inflate the layout for this fragment
         groupFragmentView = inflater.inflate(R.layout.fragment_groups, container, false);
 
-        String email = "deneme@gmail.com";
+        String email = "abc@gmail.com";
         String password = "123456";
 
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
@@ -57,10 +57,11 @@ public class GroupsFragment extends Fragment {
                 Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
         });
 
-        String userId = FirebaseAuth.getInstance().getUid();
+        String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        String userId = MessagingActivity.emailToId(userEmail);
 
         groupMessagesRef = FirebaseDatabase.getInstance().getReference().
-                child("Users").child(userId).child("groups");
+                child("Members").child(userId).child("groups");
 
         initalizeFields();
 

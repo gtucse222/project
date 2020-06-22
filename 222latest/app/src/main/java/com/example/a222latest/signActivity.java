@@ -70,7 +70,7 @@ public class signActivity extends AppCompatActivity {
                             signRef = FirebaseDatabase.getInstance().getReference("Members");
                             signRef.child("Members");
                             String tempMail = MessagingActivity.emailToId(userMail);
-                            signRef.child(tempMail).push().setValue(member);
+                            signRef.child(tempMail).setValue(member);
 
                             Toast.makeText(signActivity.this, "You sign up Succesfully", Toast.LENGTH_LONG).show();
                         }
