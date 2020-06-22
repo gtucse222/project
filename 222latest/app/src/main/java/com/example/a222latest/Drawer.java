@@ -63,6 +63,9 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
             case R.id.profile:
                 startActivity(new Intent(this, ProfileActivity.class));
                 break;
+            case R.id.map:
+                startActivity(new Intent(this, MapActivity.class));
+                break;
         }
         return false;
     }

@@ -34,6 +34,7 @@
         <activity android:name=".selectMembershipActivity" />
         <activity android:name=".signActivity" />
         <activity android:name=".ProfileActivity" />
+        <activity android:name=".MapActivity" />
     </application>
 
 </manifest>

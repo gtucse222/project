@@ -1,7 +1,5 @@
 package com.example.a222latest;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
@@ -12,10 +10,11 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.davemorrissey.labs.subscaleview.ImageSource;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 
-public class MapActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class MapActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private GTUCampusMap GTUMap = new GTUCampusMap();
     protected Button location_button;
@@ -32,7 +31,7 @@ public class MapActivity extends AppCompatActivity implements AdapterView.OnItem
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_map);
 
         from = findViewById(R.id.from);
         to = findViewById(R.id.to);
@@ -62,7 +61,7 @@ public class MapActivity extends AppCompatActivity implements AdapterView.OnItem
                 to_ = Integer.parseInt(to.getSelectedItem().toString());
                 from_ = Integer.parseInt(from.getSelectedItem().toString());
 
-                if(to_ != from_)
+                if (to_ != from_)
                     location_info.setText(GTUMap.direction_BFS(to_, from_));
                 else
                     location_info.setText("You are already here.");
@@ -70,7 +69,6 @@ public class MapActivity extends AppCompatActivity implements AdapterView.OnItem
                 location_info.setVisibility(View.VISIBLE);
             }
         });
-
 
 
         shortest_button.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +79,7 @@ public class MapActivity extends AppCompatActivity implements AdapterView.OnItem
                 to_ = Integer.parseInt(to.getSelectedItem().toString());
                 from_ = Integer.parseInt(from.getSelectedItem().toString());
 
-                if(to_ != from_)
+                if (to_ != from_)
                     location_info.setText(GTUMap.direction_BFS(to_, from_));
                 else
                     location_info.setText("You are already here.");
