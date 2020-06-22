@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group>
+        <item
+                android:id="@+id/login"
+                android:icon="@drawable/ic_person_black_24dp"
+                android:title="Login (test)" />
+        <item
+                android:id="@+id/posts"
+                android:title="Posts" />
+        <item
+                android:id="@+id/newPost"
+                android:title="New Post" />
+        <item
+                android:id="@+id/chat"
+                android:title="Chats" />
+        <item
+                android:id="@+id/contact"
+                android:title="Contact" />
+        <item
+                android:id="@+id/seminar"
+                android:title="Seminar" />
+        <item
+                android:id="@+id/profile"
+                android:title="Profile" />
+    </group>
+</menu>
