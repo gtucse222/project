@@ -37,6 +37,7 @@
         android:layout_marginTop="37dp"
         android:background="@android:drawable/btn_dropdown" />
 
+    
     <Spinner
         android:id="@+id/from"
         android:layout_width="96dp"
