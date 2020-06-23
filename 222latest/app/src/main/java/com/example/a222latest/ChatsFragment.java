@@ -123,13 +123,14 @@ public class ChatsFragment extends Fragment {
         chats = new ArrayList<>();
         listView = chatsFragmentView.findViewById(R.id.listViewChats);
         arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, chats);
+        String currentUserMail = MessagingActivity.emailToId(FirebaseAuth.getInstance().getCurrentUser().getEmail());
         listView.setAdapter(arrayAdapter);
         listView.setOnItemClickListener((parent, view, position, id) -> {
             String key = chats.get(position).id;
             String name = chats.get(position).name;
             Intent intent = new Intent(getContext(), PrivateMessagingActivity.class);
             intent.putExtra("receiverName", name);
-            intent.putExtra("messagingKey", key);
+            intent.putExtra("messagingKey", key.replace(currentUserMail, "").replace("-", ""));
             startActivity(intent);
         });
     }

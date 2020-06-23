@@ -72,12 +72,12 @@ public class PrivateMessagingActivity extends MessagingActivity {
 //        receiverEmail = emailToId(receiverEmail);
 //        String messagingKey = "deneme-receiver";
         String messagingKey = getIntent().getStringExtra("messagingKey");
-        if (messagingKey.contains("-"))
-            setConversationKey(messagingKey);
-        else {
+        if (messagingKey.contains("@")) {
+            receiverEmail = emailToId(messagingKey);
+        } else {
             receiverEmail = messagingKey;
-            setConversationKey();
         }
+        setConversationKey();
         receiverName = getIntent().getStringExtra("receiverName");
     }
 
@@ -92,18 +92,18 @@ public class PrivateMessagingActivity extends MessagingActivity {
     }
 
     protected void setConversationKey() {
-        currentUserMail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        String sender = emailToId(currentUserMail);
-        String receiver = emailToId(receiverEmail);
+        currentUserMail = emailToId(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        String sender = currentUserMail;
+        String receiver = receiverEmail;
         if (sender.compareTo(receiver) < 0)
             this.conversationKey = sender + "-" + receiver;
         else
             this.conversationKey = receiver + "-" + sender;
     }
 
-    protected void setConversationKey(String key) {
-        this.conversationKey = key;
-    }
+//    protected void setConversationKey(String key) {
+//        this.conversationKey = key;
+//    }
 
     @Override
     protected void initalizeMessagesRef() {
@@ -119,9 +119,9 @@ public class PrivateMessagingActivity extends MessagingActivity {
         messagesRef.child(conversationKey).child("messages").child(messageKey).updateChildren(messageInfo);
         messagesRef.child(conversationKey).child("lastMessageTime").setValue(Calendar.getInstance().getTimeInMillis());
         FirebaseDatabase.getInstance().getReference().child("Members").
-                child(currentUserMail).child("privateMessages").child(getConversationKey()).setValue(emailToId(receiverEmail));
+                child(currentUserMail).child("privateMessages").child(getConversationKey()).setValue(receiverEmail);
         FirebaseDatabase.getInstance().getReference().child("Members").
-                child(emailToId(receiverEmail)).child("privateMessages").child(getConversationKey()).setValue(currentUserMail);
+                child(receiverEmail).child("privateMessages").child(getConversationKey()).setValue(currentUserMail);
     }
 
 
