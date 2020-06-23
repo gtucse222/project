@@ -125,10 +125,7 @@ public class HomeFragment extends Fragment {
                         postList.add(modelPost);
                     }
 
-                    //adapter
-                    adapterPost = new AdapterPost(getActivity(), postList);
-                    //set adapter to recycler
-                    recyclerView.setAdapter(adapterPost);
+                    adapterPost.notifyDataSetChanged();
                 }
             }
 

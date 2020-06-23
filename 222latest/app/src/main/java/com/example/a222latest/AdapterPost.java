@@ -111,8 +111,6 @@ public class AdapterPost extends RecyclerView.Adapter<AdapterPost.MyHolder> {
                         if (mProcessLike) {
                             if (dataSnapshot.child(postIdi).hasChild(myUid)) {
                                 //already liked so
-//                                postList.get(position).setpLikes(String.valueOf(pLikes - 1));
-
                                 Scanner s = new Scanner((String) holder.pLikesTv.getText());
                                 int pLikes = s.nextInt();
                                 holder.pLikesTv.setText((pLikes - 1) + " Likes");
@@ -121,8 +119,6 @@ public class AdapterPost extends RecyclerView.Adapter<AdapterPost.MyHolder> {
                                 likesRef.child(postIdi).child(myUid).removeValue();
                                 mProcessLike = false;
                             } else {
-//                                postList.get(position).setpLikes(String.valueOf(pLikes + 1));
-
                                 Scanner s = new Scanner((String) holder.pLikesTv.getText());
                                 int pLikes = s.nextInt();
                                 holder.pLikesTv.setText((pLikes + 1) + " Likes");
