@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/direction_info"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="31dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
@@ -65,7 +65,7 @@
         android:layout_marginTop="13dp"
         android:layout_marginEnd="301dp"
         android:layout_marginRight="301dp"
-        android:text="@string/to" />
+        android:text="To" />
 
     <TextView
         android:id="@+id/from_"
@@ -77,7 +77,7 @@
         android:layout_marginTop="12dp"
         android:layout_marginEnd="42dp"
         android:layout_marginRight="42dp"
-        android:text="@string/from" />
+        android:text="From" />
 
     <Button
         android:id="@+id/location_button"
@@ -114,7 +114,7 @@
     <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
         android:id="@+id/subsamplingScaleImageView"
         android:layout_width="wrap_content"
-        android:layout_height="597dp"
+        android:layout_height="586dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
@@ -123,7 +123,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="18dp"
         android:layout_marginLeft="18dp"
-        android:layout_marginTop="119dp"
+        android:layout_marginTop="131dp"
         android:layout_marginEnd="14dp"
         android:layout_marginRight="14dp"
         android:layout_marginBottom="15dp"
