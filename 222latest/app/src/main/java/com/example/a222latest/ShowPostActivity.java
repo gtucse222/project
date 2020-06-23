@@ -22,6 +22,7 @@ public class ShowPostActivity extends AppCompatActivity {
 
     FirebaseAuth firebaseAuth;
     ActionBar actionBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +33,7 @@ public class ShowPostActivity extends AppCompatActivity {
 
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.content,new HomeFragment()).commit();
+                .add(R.id.content, new HomeFragment()).commit();
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_post);
         setSupportActionBar(myToolbar);
         //actionBar.setTitle("Home");
@@ -48,17 +49,17 @@ public class ShowPostActivity extends AppCompatActivity {
 
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                Toast.makeText(this,"Loggedin", Toast.LENGTH_SHORT).show();
-            }
-            else
-            Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Loggedin", Toast.LENGTH_SHORT).show();
+            } else
+                Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
         });
     }
-    private void checkUserStatus(){
+
+    private void checkUserStatus() {
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (user != null){
-           // mProfileTv.setText(user.getEmail());
-        }else{
+        if (user != null) {
+            // mProfileTv.setText(user.getEmail());
+        } else {
             startActivity(new Intent(ShowPostActivity.this, MainActivity.class));
             finish();
         }
@@ -67,13 +68,13 @@ public class ShowPostActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.menu_post,menu);
+        getMenuInflater().inflate(R.menu.menu_post, menu);
 
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.menu.menu_post)
             Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
 
