@@ -56,15 +56,15 @@ public class ChatsFragment extends Fragment {
         // Inflate the layout for this fragment
         chatsFragmentView = inflater.inflate(R.layout.fragment_chats, container, false);
 
-        String email = "abc@gtu.edu.tr";
-        String password = "123456";
-
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                Toast.makeText(getContext(), "logged in", Toast.LENGTH_SHORT).show();
-            } else
-                Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
-        });
+//        String email = "abc@gtu.edu.tr";
+//        String password = "123456";
+//
+//        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+//            if (task.isSuccessful()) {
+//                Toast.makeText(getContext(), "logged in", Toast.LENGTH_SHORT).show();
+//            } else
+//                Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
+//        });
 
 
         //TEST

@@ -119,7 +119,9 @@ public class PrivateMessagingActivity extends MessagingActivity {
         messagesRef.child(conversationKey).child("messages").child(messageKey).updateChildren(messageInfo);
         messagesRef.child(conversationKey).child("lastMessageTime").setValue(Calendar.getInstance().getTimeInMillis());
         FirebaseDatabase.getInstance().getReference().child("Members").
-                child(currentUserMail).child("privateMessages").child(getConversationKey()).setValue(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                child(currentUserMail).child("privateMessages").child(getConversationKey()).setValue(emailToId(receiverEmail));
+        FirebaseDatabase.getInstance().getReference().child("Members").
+                child(emailToId(receiverEmail)).child("privateMessages").child(getConversationKey()).setValue(currentUserMail);
     }
 
 

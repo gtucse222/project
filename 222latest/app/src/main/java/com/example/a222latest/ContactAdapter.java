@@ -121,16 +121,6 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ProfileH
     }
 
     private void passData(String item, String item2) {
-
-//        String email = "abc@gtu.edu.tr";
-//        String password = "123456";
-//
-//        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-//            if (task.isSuccessful()) {
-//                Toast.makeText(context, "logged in", Toast.LENGTH_SHORT).show();
-//            } else
-//                Toast.makeText(context, "error", Toast.LENGTH_SHORT).show();
-//        });
         System.out.println("Personal Intent" + item);  //Item = mail
         Intent intent = new Intent(context, PrivateMessagingActivity.class);
         intent.putExtra("receiverName", item2);
