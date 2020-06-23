@@ -13,7 +13,7 @@ import android.view.MenuItem;
 import com.google.android.material.navigation.NavigationView;
 
 public class Drawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    DrawerLayout drawerLayout;
+    protected DrawerLayout drawerLayout;
     ActionBarDrawerToggle drawerToggle;
     Toolbar toolbar;
     NavigationView navigationView;

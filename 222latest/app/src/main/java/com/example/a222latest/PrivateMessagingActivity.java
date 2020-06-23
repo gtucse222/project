@@ -85,14 +85,25 @@ public class PrivateMessagingActivity extends MessagingActivity {
     }
 
     protected void setConversationKey() {
-        if (currentUserMail.compareTo(receiverEmail) < 0) {
+        if (currentUserMail.compareTo(receiverEmail) < 0)
             this.conversationKey = currentUserMail + "-" + receiverEmail;
-        } else
+        else
             this.conversationKey = receiverEmail + "-" + currentUserMail;
     }
 
     protected void setConversationKey(String key) {
-        this.conversationKey = key;
+        if (key.contains("-"))
+            this.conversationKey = key;
+        else
+            this.conversationKey = getMessagingKey(currentUserMail, emailToId(key));
+
+    }
+
+    public static String getMessagingKey(String email1, String email2) {
+        if (email1.compareTo(email2) < 0) {
+            return (email1 + "-" + email2);
+        }
+        return (email2 + "-" + email1);
     }
 
     @Override

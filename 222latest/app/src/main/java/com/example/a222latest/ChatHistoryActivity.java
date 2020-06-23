@@ -1,14 +1,10 @@
 package com.example.a222latest;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 public class ChatHistoryActivity extends AppCompatActivity {

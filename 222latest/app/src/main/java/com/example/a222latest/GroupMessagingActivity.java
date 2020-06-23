@@ -64,8 +64,8 @@ public class GroupMessagingActivity extends MessagingActivity {
     protected void getFromIntent() {
 //        this.groupID = "this_is_group_id";
         this.groupID = getIntent().getStringExtra("groupId");
-//        this.groupName = getIntent().getStringExtra("groupName");
-        this.groupName = "Avengers";
+        this.groupName = getIntent().getStringExtra("groupName");
+//        this.groupName = "Avengers";
     }
 
     @Override
