@@ -70,8 +70,13 @@ public class PrivateMessagingActivity extends MessagingActivity {
 //        receiverEmail = emailToId(receiverEmail);
 //        String messagingKey = "deneme-receiver";
         String messagingKey = getIntent().getStringExtra("messagingKey");
+        if (messagingKey.contains("-"))
+            setConversationKey(messagingKey);
+        else {
+            receiverEmail = messagingKey;
+            setConversationKey();
+        }
         receiverName = getIntent().getStringExtra("receiverName");
-        setConversationKey(messagingKey);
     }
 
     /**
@@ -85,25 +90,16 @@ public class PrivateMessagingActivity extends MessagingActivity {
     }
 
     protected void setConversationKey() {
-        if (currentUserMail.compareTo(receiverEmail) < 0)
-            this.conversationKey = currentUserMail + "-" + receiverEmail;
+        String sender = emailToId(currentUserMail);
+        String receiver = emailToId(receiverEmail);
+        if (sender.compareTo(receiver) < 0)
+            this.conversationKey = sender + "-" + receiver;
         else
-            this.conversationKey = receiverEmail + "-" + currentUserMail;
+            this.conversationKey = receiver + "-" + sender;
     }
 
     protected void setConversationKey(String key) {
-        if (key.contains("-"))
-            this.conversationKey = key;
-        else
-            this.conversationKey = getMessagingKey(currentUserMail, emailToId(key));
-
-    }
-
-    public static String getMessagingKey(String email1, String email2) {
-        if (email1.compareTo(email2) < 0) {
-            return (email1 + "-" + email2);
-        }
-        return (email2 + "-" + email1);
+        this.conversationKey = key;
     }
 
     @Override
