@@ -125,6 +125,10 @@ public class AddPostActivity extends AppCompatActivity {
                     Toast.makeText(AddPostActivity.this,"Enter description...", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if (membership.equalsIgnoreCase("student") && title.contains("seminar")) {
+                    Toast.makeText(AddPostActivity.this, "You are not allowed to share posts as a seminar", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 //post
                 uploadData(title,description);
             }

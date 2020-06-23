@@ -34,9 +34,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.PriorityQueue;
 
 
 /**
@@ -46,8 +48,10 @@ public class HomeFragment extends Fragment {
     FirebaseAuth firebaseAuth;
 
     RecyclerView recyclerView;
-    List<ModelPost> postList;
+    PriorityQueue<ModelPost> postList;
+    List<ModelPost> queueToList=new LinkedList<ModelPost>();
     AdapterPost adapterPost;
+    ModelPost postTemp;
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
 
@@ -56,6 +60,7 @@ public class HomeFragment extends Fragment {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -67,8 +72,8 @@ public class HomeFragment extends Fragment {
         //init
         firebaseAuth = FirebaseAuth.getInstance();
         //init post list
-        postList = new LinkedList<>();
-        adapterPost = new AdapterPost(getActivity(), postList);
+        postList = new PriorityQueue<ModelPost>();
+        adapterPost = new AdapterPost(getActivity(), queueToList);
         //recycler view and its properties
         recyclerView = view.findViewById(R.id.postRecyclerview);
         recyclerView.setHasFixedSize(true);
@@ -100,6 +105,12 @@ public class HomeFragment extends Fragment {
                     //adapter
                     recyclerView.smoothScrollToPosition(recyclerView.getAdapter().getItemCount());
                 }
+                Iterator<ModelPost> iter = postList.iterator();
+                while (iter.hasNext()){
+                    postTemp=iter.next();
+                    queueToList.add(postTemp);
+                }
+                System.out.println(postList+"hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
                 adapterPost.notifyDataSetChanged();
             }
 
@@ -126,6 +137,7 @@ public class HomeFragment extends Fragment {
                     }
 
                     adapterPost.notifyDataSetChanged();
+                    recyclerView.smoothScrollToPosition(recyclerView.getAdapter().getItemCount());
                 }
             }
 
