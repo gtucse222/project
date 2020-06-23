@@ -66,42 +66,41 @@ public class HomeFragment extends Fragment {
 
         //init
         firebaseAuth = FirebaseAuth.getInstance();
-
+        //init post list
+        postList = new LinkedList<>();
+        adapterPost = new AdapterPost(getActivity(), postList);
         //recycler view and its properties
         recyclerView = view.findViewById(R.id.postRecyclerview);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
+        //set adapter to recycler
+        recyclerView.setAdapter(adapterPost);
         //show newest post first, for this from load last
         layoutManager.setReverseLayout(true);
 
         //setlayout to recycler
-        //init post list
-        postList = new LinkedList<>();
+
 
         loadPosts();
         layoutManager.setReverseLayout(true);
-        recyclerView.smoothScrollToPosition(0);
         return view;
     }
 
     private void loadPosts() {
         //path of all posts
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
-        ref.addValueEventListener(new ValueEventListener() {
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 postList.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     ModelPost modelPost = ds.getValue(ModelPost.class);
-
                     postList.add(modelPost);
-
                     //adapter
-                    adapterPost = new AdapterPost(getActivity(), postList);
-                    //set adapter to recycler
-                    recyclerView.setAdapter(adapterPost);
+                    recyclerView.smoothScrollToPosition(recyclerView.getAdapter().getItemCount());
                 }
+                adapterPost.notifyDataSetChanged();
             }
 
             @Override
@@ -183,15 +182,14 @@ public class HomeFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-       // int id = item.getItemId();
+        // int id = item.getItemId();
         //if (id == R.id.post_search) {
-           // Toast.makeText(getActivity(), "", Toast.LENGTH_LONG).show();
-          //  return true;
+        // Toast.makeText(getActivity(), "", Toast.LENGTH_LONG).show();
+        //  return true;
         //}
-       // searchView.setOnQueryTextListener(queryTextListener);
+        // searchView.setOnQueryTextListener(queryTextListener);
         return super.onOptionsItemSelected(item);
     }
-
 
 
 }

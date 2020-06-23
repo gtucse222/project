@@ -26,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Scanner;
 
 public class AdapterPost extends RecyclerView.Adapter<AdapterPost.MyHolder> {
 
@@ -76,16 +77,16 @@ public class AdapterPost extends RecyclerView.Adapter<AdapterPost.MyHolder> {
         //convert timesmp from
         Calendar calendar = Calendar.getInstance(Locale.getDefault());
         calendar.setTimeInMillis(Long.parseLong((pTime)));
-        String pTimeIn = DateFormat.format("dd/MM/yyyy hh:mm aa",calendar).toString();
+        String pTimeIn = DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
 
         //set Data
         holder.uNameTv.setText(uName);
         holder.pTimeTv.setText(pTimeIn);
         holder.pTitleTv.setText(pTitle);
         holder.pDescriptionTv.setText(pDescription);
-        holder.pLikesTv.setText(pLikes+ " Likes");
+        holder.pLikesTv.setText(pLikes + " Likes");
 
-        setLikes(holder,pId);
+        setLikes(holder, pId);
         //set here user pic and post IMg
 
         //handle click
@@ -101,20 +102,33 @@ public class AdapterPost extends RecyclerView.Adapter<AdapterPost.MyHolder> {
             public void onClick(View v) {
                 //will implement later after profile acivity
                 int pLikes = Integer.parseInt(postList.get(position).getpLikes());
-                mProcessLike= true;
+                mProcessLike = true;
 
                 final String postIdi = postList.get(position).getpId();
                 likesRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (mProcessLike){
-                            if (dataSnapshot.child(postIdi).hasChild(myUid)){
+                        if (mProcessLike) {
+                            if (dataSnapshot.child(postIdi).hasChild(myUid)) {
                                 //already liked so
-                                postsRef.child(postIdi).child("pLikes").setValue(""+(pLikes-1));
+//                                postList.get(position).setpLikes(String.valueOf(pLikes - 1));
+
+                                Scanner s = new Scanner((String) holder.pLikesTv.getText());
+                                int pLikes = s.nextInt();
+                                holder.pLikesTv.setText((pLikes - 1) + " Likes");
+
+                                postsRef.child(postIdi).child("pLikes").setValue("" + (pLikes - 1));
                                 likesRef.child(postIdi).child(myUid).removeValue();
                                 mProcessLike = false;
-                            }else{
-                                postsRef.child(postIdi).child("pLikes").setValue(""+(pLikes+1));
+                            } else {
+//                                postList.get(position).setpLikes(String.valueOf(pLikes + 1));
+
+                                Scanner s = new Scanner((String) holder.pLikesTv.getText());
+                                int pLikes = s.nextInt();
+                                holder.pLikesTv.setText((pLikes + 1) + " Likes");
+
+
+                                postsRef.child(postIdi).child("pLikes").setValue("" + (pLikes + 1));
                                 likesRef.child(postIdi).child(myUid).setValue("Liked");
                                 mProcessLike = false;
                             }
@@ -133,14 +147,14 @@ public class AdapterPost extends RecyclerView.Adapter<AdapterPost.MyHolder> {
 
     private void setLikes(final MyHolder holder, String postKey) {
         likesRef.addValueEventListener(new ValueEventListener() {
-           // @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+            // @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child(postKey).hasChild(myUid)){
-                    holder.likeBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_liked,0,0,0);
+                if (dataSnapshot.child(postKey).hasChild(myUid)) {
+                    holder.likeBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_liked, 0, 0, 0);
                     holder.likeBtn.setText("Liked");
-                }else{
-                    holder.likeBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_like,0,0,0);
+                } else {
+                    holder.likeBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_like, 0, 0, 0);
                     holder.likeBtn.setText("Like");
                 }
             }
@@ -158,7 +172,7 @@ public class AdapterPost extends RecyclerView.Adapter<AdapterPost.MyHolder> {
     }
 
     //view hoolder class
-    class MyHolder extends RecyclerView.ViewHolder{
+    class MyHolder extends RecyclerView.ViewHolder {
 
         //viewvs from row_post.xml
         ImageView uPictureIv, pImageIv;
@@ -170,8 +184,8 @@ public class AdapterPost extends RecyclerView.Adapter<AdapterPost.MyHolder> {
             super(itemView);
 
             //init voews
-           // uPictureIv = itemView.findViewById(R.id.uPictureTv);
-           // pImageIv = itemView.findViewById(R.id.pImageIv);
+            // uPictureIv = itemView.findViewById(R.id.uPictureTv);
+            // pImageIv = itemView.findViewById(R.id.pImageIv);
             uNameTv = itemView.findViewById(R.id.uNameTv);
             pTimeTv = itemView.findViewById(R.id.pTimeTv);
             pTitleTv = itemView.findViewById(R.id.pTagTv);
