@@ -1,5 +1,7 @@
 package com.example.a222latest;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
@@ -9,12 +11,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 
-public class MapActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class MapActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     private GTUCampusMap GTUMap = new GTUCampusMap();
     protected Button location_button;
@@ -26,6 +28,7 @@ public class MapActivity extends AppCompatActivity implements AdapterView.OnItem
     protected int to_;
     protected int from_;
     protected SubsamplingScaleImageView campus_image;
+    protected LocationAdapter adapter_location;
 
     @SuppressLint({"WrongViewCast", "ClickableViewAccessibility", "ResourceType"})
     @Override
@@ -33,6 +36,7 @@ public class MapActivity extends AppCompatActivity implements AdapterView.OnItem
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
+        adapter_location = new LocationAdapter();
         from = findViewById(R.id.from);
         to = findViewById(R.id.to);
         location_button = (Button) findViewById(R.id.location_button);
@@ -58,10 +62,11 @@ public class MapActivity extends AppCompatActivity implements AdapterView.OnItem
             @Override
             public void onClick(View v) {
 
-                to_ = Integer.parseInt(to.getSelectedItem().toString());
-                from_ = Integer.parseInt(from.getSelectedItem().toString());
 
-                if (to_ != from_)
+                to_= adapter_location.get_vertex_loca(to.getSelectedItem().toString());
+                from_ = adapter_location.get_vertex_loca(from.getSelectedItem().toString());
+
+                if(to_ != from_)
                     location_info.setText(GTUMap.direction_BFS(to_, from_));
                 else
                     location_info.setText("You are already here.");
@@ -70,16 +75,15 @@ public class MapActivity extends AppCompatActivity implements AdapterView.OnItem
             }
         });
 
-
         shortest_button.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
 
-                to_ = Integer.parseInt(to.getSelectedItem().toString());
-                from_ = Integer.parseInt(from.getSelectedItem().toString());
+                to_= adapter_location.get_vertex_loca(to.getSelectedItem().toString());
+                from_ = adapter_location.get_vertex_loca(from.getSelectedItem().toString());
 
-                if (to_ != from_)
+                if(to_ != from_)
                     location_info.setText(GTUMap.direction_BFS(to_, from_));
                 else
                     location_info.setText("You are already here.");
