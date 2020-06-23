@@ -11,11 +11,27 @@
     <string name="shortest_direction_map">Shortest Direction</string>
 
     <string-array name="numbersForGraph">
-        <item>0</item><item>1</item><item>2</item><item>3</item><item>4</item><item>5</item><item>6</item><item>7</item><item>8</item><item>9</item>
-        <item>10</item><item>11</item><item>12</item><item>13</item><item>14</item><item>15</item><item>16</item><item>17</item><item>18</item><item>19</item>
-        <item>20</item><item>21</item><item>22</item><item>23</item><item>24</item><item>25</item><item>26</item><item>27</item><item>28</item><item>29</item>
-        <item>30</item><item>31</item><item>32</item><item>33</item><item>34</item><item>35</item><item>36</item><item>37</item><item>38</item><item>39</item>
-        <item>40</item>
+        <item>Campus Entry</item>
+        <item>Social and Science Institute</item>
+        <item>Health, culture and sports department</item>
+        <item>Nano Technology Lab</item>
+        <item>KOSGEB</item>
+        <item>Rectors House</item>
+        <item>Foreign Languages Department</item>
+        <item>Materials Science or Mechanical Engineering</item>
+        <item>Architecture</item>
+        <item>Architecture Faculty Office</item>
+        <item>Architecture Classrooms</item>
+        <item>Dining Hall</item>
+        <item>Library</item>
+        <item>Business Faculty</item>
+        <item>Undergraduate Students Classrooms</item>
+        <item>Design and Manufacturing Lab</item><item>Geodetic Engineering</item><item>Math Faculty</item><item>Rectorate Building</item>
+        <item>Construction Works and Technical Department</item><item>Nursery</item><item>Personal Dining Hall</item>
+        <item>Erasmus Office</item><item>Student Affairs Office</item><item>Mosque</item><item>TTO</item><item>Computer Engineering</item>
+        <item>Electronic Engineering</item><item>Chemistry Engineering</item>
+        <item>Molecular Biology and Genetic</item><item>GYM</item><item>Swimming Pool</item><item>Faculty of Basic Sciences</item>
+        <item>34</item><item>35</item><item>36</item><item>0</item>
     </string-array>
 
 </resources>
