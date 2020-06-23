@@ -34,6 +34,8 @@ public class AddPostActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     DatabaseReference userDbRef;
 
+    String emailF,emailS;
+
 
     ActionBar actionbar;
     //views
@@ -41,7 +43,7 @@ public class AddPostActivity extends AppCompatActivity {
     Button uploadBtn;
 
     //userINfo
-    String name, email, uid, dp;
+    String name, email, uid, dp,surname,membership;
 
     //progressbar
     ProgressDialog progressDialog;
@@ -59,7 +61,7 @@ public class AddPostActivity extends AppCompatActivity {
 
 
         //Test
-        logIn();
+        //logIn();
         Toast.makeText(this, "here", Toast.LENGTH_SHORT).show();
         //ctionbar = getSupportActionBar();
         //actionbar.setTitle("Add New Post");
@@ -71,25 +73,29 @@ public class AddPostActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
-       // checkUserStatus();
+        checkUserStatus();
 
         //actionbar.setSubtitle(email);
         //get some info of user to include post
-        userDbRef = FirebaseDatabase.getInstance().getReference("Users");
-        Query query = userDbRef.orderByChild("email").equalTo(email);
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds: dataSnapshot.getChildren()){
-                   name = ""+ds.child("name").getValue();
-                   email =""+ds.child("email").getValue();
-                   // dp = ""+ds.child("image").getValue();
+        uid =email.substring(0, email.indexOf("@")).replace(".", "");
+        userDbRef = FirebaseDatabase.getInstance().getReference("Members");
+        Query query = userDbRef.orderByChild("mailAddress").equalTo(email);
+        String x = uid.length()+"burda";;
+        Toast.makeText(AddPostActivity.this,x, Toast.LENGTH_LONG).show();
+         query.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot ds: dataSnapshot.getChildren()){
+                        name = ""+ds.child("name").getValue();
+                        surname=""+ds.child("surname").getValue();
+                        email =""+ds.child("mailAddress").getValue();
+                        membership =""+ds.child("membership").getValue();
+                        // dp = ""+ds.child("image").getValue();
+                    }
                 }
-            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
 
@@ -101,6 +107,7 @@ public class AddPostActivity extends AppCompatActivity {
 
 
 
+        Toast.makeText(AddPostActivity.this,name, Toast.LENGTH_LONG).show();
         //upload button click listener
         uploadBtn.setOnClickListener( new View.OnClickListener() {
             //get data(Title DECC)
@@ -137,8 +144,8 @@ public class AddPostActivity extends AppCompatActivity {
 
         HashMap<Object,String>  hashMap = new HashMap<>();
 
-        hashMap.put("uid",uid);
-        hashMap.put("uName",name);
+        hashMap.put("uid",/*email.substring(0,email.indexOf("@"))*/uid);
+        hashMap.put("uName",name+" "+surname);
         hashMap.put("uEmail",email);
         //hashMap.put("uDp",dp);
         hashMap.put("pId",time);
@@ -146,6 +153,7 @@ public class AddPostActivity extends AppCompatActivity {
         hashMap.put("pDescr",description);
         hashMap.put("pTime",time);
         hashMap.put("pLikes","0");
+        hashMap.put("membership",membership);
 
         //path to store post data
         DatabaseReference ref =FirebaseDatabase.getInstance().getReference("Posts");
@@ -197,6 +205,7 @@ public class AddPostActivity extends AppCompatActivity {
             //user is signed in stay here
             email = user.getEmail();
             uid = user.getUid();
+
         }else{
             //user not signed in go to main activity
             startActivity(new Intent(this,MainActivity.class));
@@ -228,19 +237,5 @@ public class AddPostActivity extends AppCompatActivity {
         //}
 
         return super.onOptionsItemSelected(item);
-    }
-    private void logIn() {
-        String email = "deneme@gmail.com";
-        String password = "123456";
-
-
-        firebaseAuth = FirebaseAuth.getInstance();
-
-        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                Toast.makeText(this, "logged in", Toast.LENGTH_SHORT).show();
-            } else
-                Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
-        });
     }
 }
