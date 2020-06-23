@@ -4,10 +4,11 @@
     <string name="open_drawer">Open Drawer</string>
     <string name="close_drawer">Close Drawer</string>
 
-    <string name="to">to_button</string>
-    <string name="from">from_button_map</string>
-    <string name="get_direction">get_direction_map</string>
-    <string name="shortest_direction">shortest_direct_map</string>
+    <string name="to_map">To</string>
+    <string name="from_map">From</string>
+    <string name="location_message">location_message</string>
+    <string name="get_direction_map">Get Direction</string>
+    <string name="shortest_direction_map">Shortest Direction</string>
 
     <string-array name="numbersForGraph">
         <item>0</item><item>1</item><item>2</item><item>3</item><item>4</item><item>5</item><item>6</item><item>7</item><item>8</item><item>9</item>

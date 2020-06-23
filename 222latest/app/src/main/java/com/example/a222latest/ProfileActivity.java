@@ -27,7 +27,7 @@ public class ProfileActivity extends AppCompatActivity {
     private String memberMail;
     public String someString;
     DatabaseReference memberRef;
-    String currentUserMail = "aaa@gtu.edu.tr";
+    String currentUserMail = "elif.goral2017@gtu.edu.tr";
     String legacymemberShip;
     String legacyname;
     String legacysurname;
@@ -40,7 +40,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         foundMember = 0;
 
-        memberRef = FirebaseDatabase.getInstance().getReference().child("Members").child("student");
+        memberRef = FirebaseDatabase.getInstance().getReference().child("Members");
         memberRef.addListenerForSingleValueEvent( new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -49,30 +49,33 @@ public class ProfileActivity extends AppCompatActivity {
                     Iterator iterator = dataSnapshot.getChildren().iterator();
 
                     while (iterator.hasNext()) {
-                        Iterator iterator2 = ((DataSnapshot) iterator.next()).getChildren().iterator();
-                        while(iterator2.hasNext()){
-                            String mailAdress = (String) ((DataSnapshot) iterator2.next()).getValue();
-                            String memberShip = (String) ((DataSnapshot) iterator2.next()).getValue();
-                            String name = (String) ((DataSnapshot) iterator2.next()).getValue();
-                            String password = (String) ((DataSnapshot) iterator2.next()).getValue();
-                            String surname = (String) ((DataSnapshot) iterator2.next()).getValue();
-                            if(mailAdress.equals(currentUserMail)){
-                                System.out.println("Mail adress is " + mailAdress + " and compared to " + currentUserMail);
-                                foundMember = 1;
-                                legacyname = name;
-                                legacysurname = surname;
-                                legacymemberShip = memberShip;
-                            }
+                        DataSnapshot current = (DataSnapshot) iterator.next();
+                        String mailAdress = (String) current.child("mailAddress").getValue();
+                        String memberShip = (String)  current.child("membership").getValue();
+                        String name = (String)  current.child("name").getValue();
+                        String surname = (String)  current.child("surname").getValue();
+                        System.out.println("Mail adress is " + mailAdress + " and compared to " + currentUserMail);
+                        if(mailAdress.equals(currentUserMail)){
+                            System.out.println("Mail adress is " + mailAdress + " and compared to " + currentUserMail);
+                            foundMember = 1;
+                            legacyname = name;
+                            legacysurname = surname;
+                            legacymemberShip = memberShip;
                         }
+
                     }
                     System.out.println("Found member is " + foundMember);
                     if(foundMember == 1){
+                        legacyname = "Name: " + legacyname;
                         TextView t = (TextView)findViewById(R.id.name_text);
                         t.setText(legacyname);
+                        legacysurname = "Surname: " + legacysurname;
                         TextView t1 = (TextView)findViewById(R.id.surname_text);
                         t1.setText(legacysurname);
+                        legacymemberShip = "Membership: " +    legacymemberShip;
                         TextView t2 = (TextView)findViewById(R.id.membership_text);
                         t2.setText(legacymemberShip);
+                        currentUserMail = "Mail: " + currentUserMail;
                         TextView t3 = (TextView)findViewById(R.id.mail_text);
                         t3.setText(currentUserMail);
                     }

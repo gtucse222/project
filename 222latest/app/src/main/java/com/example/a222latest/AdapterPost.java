@@ -62,6 +62,8 @@ public class AdapterPost extends RecyclerView.Adapter<AdapterPost.MyHolder> {
         String uid = postList.get(position).getUid();
         String uEmail = postList.get(position).getuEmail();
         String uName = postList.get(position).getuName();
+        String uSurname = postList.get(position).getuSurname();
+
         //String uDp = postList.get(i).getUid();
         String pId = postList.get(position).getpId();
         String pTitle = postList.get(position).getpTitle();

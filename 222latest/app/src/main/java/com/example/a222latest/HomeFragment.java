@@ -60,7 +60,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        logIn();
+        //logIn();
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
@@ -73,14 +73,15 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         //show newest post first, for this from load last
-        layoutManager.setReverseLayout(false);
-        //layoutManager.setReverseLayout(true);
+        layoutManager.setReverseLayout(true);
 
         //setlayout to recycler
         //init post list
         postList = new LinkedList<>();
 
         loadPosts();
+        layoutManager.setReverseLayout(true);
+        recyclerView.smoothScrollToPosition(0);
         return view;
     }
 
@@ -191,20 +192,6 @@ public class HomeFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private void logIn() {
-        String email = "deneme@gmail.com";
-        String password = "123456";
 
-
-        firebaseAuth = FirebaseAuth.getInstance();
-
-        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                // Toast.makeText(this,"Loggedin",Toast.LENGTH_SHORT).show();
-            }
-            //else
-            //Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
-        });
-    }
 
 }

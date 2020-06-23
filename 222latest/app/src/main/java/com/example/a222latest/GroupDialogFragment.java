@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class GroupDialogFragment extends DialogFragment {
@@ -21,6 +22,7 @@ public class GroupDialogFragment extends DialogFragment {
     TextView textView;
     String groupName;
     DatabaseReference groupRef;
+    DatabaseReference memberGroupRef;
     ArrayList<String> mails;
     String grpId;
     @Override
@@ -39,19 +41,24 @@ public class GroupDialogFragment extends DialogFragment {
 
 
                     groupRef=FirebaseDatabase.getInstance().getReference("Groups");
-                    groupRef.child(grpId).child("GroupName").push().setValue(groupName);
+                    memberGroupRef=FirebaseDatabase.getInstance().getReference("Members");
+                    groupRef.child(groupName).child("GroupName").push().setValue(groupName);
                     Message msg=new Message();
                     Message msg2=new Message();
                     Message msg3=new Message();
                     msg.setText("deneme msg1");
                     msg2.setText("deneme msg2");
                     msg3.setText("deneme msg3");
-                    groupRef.child(grpId).child("Messages").push().setValue(msg);
-                    groupRef.child(grpId).child("Messages").push().setValue(msg2);
-                    groupRef.child(grpId).child("Messages").push().setValue(msg3);
+                    groupRef.child(groupName).child("Messages").push().setValue(msg);
+                    groupRef.child(groupName).child("Messages").push().setValue(msg2);
+                    groupRef.child(groupName).child("Messages").push().setValue(msg3);
 
                     for (int i=0;i<mails.size();i++){
-                        groupRef.child(grpId).child("members").push().setValue(mails.get(i));
+                        groupRef.child(groupName).child("members").push().setValue(mails.get(i));
+                        String chl=mails.get(i).substring(0,mails.get(i).indexOf("@")).replace(".","");
+                        HashMap<Object,String> hashMap=new HashMap<>();
+                        hashMap.put("name",groupName);
+                        memberGroupRef.child(chl).child("group").child(groupName).setValue(hashMap);
                     }
                     getDialog().dismiss();
                 }else{

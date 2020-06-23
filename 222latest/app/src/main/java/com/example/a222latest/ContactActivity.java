@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -27,10 +28,10 @@ import java.util.TreeSet;
 public class ContactActivity extends AppCompatActivity implements ContactAdapter.OnNoteListener {
 
     private DatabaseReference teacherRef;
-    private DatabaseReference studentRef;
+
     private FirebaseDatabase database;
     private FirebaseAuth mAuth;
-
+    private Button button2;
     ArrayList<String> myList = new ArrayList<>();
     TreeSet<UserC> users;
     ContactAdapter ca;
@@ -61,9 +62,10 @@ public class ContactActivity extends AppCompatActivity implements ContactAdapter
         users = new TreeSet<>();
         rw2 = findViewById(R.id.rw2);
         rw2.setLayoutManager(new LinearLayoutManager(this));
-        studentRef = FirebaseDatabase.getInstance().getReference().child("Members");
+        button2=findViewById(R.id.button);
+        button2.setEnabled(false);
         teacherRef = FirebaseDatabase.getInstance().getReference().child("Members");
-        teacherRef.child("teacher").addListenerForSingleValueEvent(new ValueEventListener() {
+        teacherRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -81,38 +83,8 @@ public class ContactActivity extends AppCompatActivity implements ContactAdapter
                     users.add(temp);
 
                 }
-                studentRef.child("student").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshott) {
-
-
-                        for (DataSnapshot dss : dataSnapshott.getChildren()) {
-
-                            Member memb = dss.getValue(Member.class);
-
-                            String a = memb.getName() + " " + memb.getSurname();
-                            String b = memb.getMailAddress();
-                            UserC temp2 = new UserC();
-                            temp2 = new UserC();
-                            temp2.setName(a);
-                            temp2.seteMail(b);
-                            users.add(temp2);
-                        }
-                        sendAdapter();
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseErrorr) {
-                        System.out.println("student");
-                    }
-                });
-
-
-                //----------------------------------------------
-
-
+                sendAdapter();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 System.out.println("teacher");
@@ -128,12 +100,14 @@ public class ContactActivity extends AppCompatActivity implements ContactAdapter
 
     public void addGroup(View view) {
         group = true;
+        button2.setEnabled(true);
         ca = new ContactAdapter(users, group, this);
         rw2.setAdapter(ca);
     }
 
     public void createGroup(View view) {
         String grpId = "group-Id-deneme";
+        button2.setEnabled(false);
         GroupDialogFragment gdf = new GroupDialogFragment();
         gdf.show(getFragmentManager(), "Group Name");
         myList = ca.getGroup();
@@ -158,27 +132,7 @@ public class ContactActivity extends AppCompatActivity implements ContactAdapter
 
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.example_menu, menu);
-//        MenuItem item = menu.findItem(R.id.action_search);
-//        androidx.appcompat.widget.SearchView searchView = (androidx.appcompat.widget.SearchView) item.getActionView();
-//        searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
-//
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                ca.getFilter().filter(newText);
-//                return true;
-//            }
-//        });
-//
-//        return super.onCreateOptionsMenu(menu);
-//    }
+
 }
 
 

@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/direction_info"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="31dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
@@ -20,7 +20,7 @@
         android:layout_marginTop="91dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
-        android:text="@string/textview"
+        android:text="@string/location_message"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -65,7 +65,7 @@
         android:layout_marginTop="13dp"
         android:layout_marginEnd="301dp"
         android:layout_marginRight="301dp"
-        android:text="@string/to" />
+        android:text="@string/to_map" />
 
     <TextView
         android:id="@+id/from_"
@@ -77,7 +77,8 @@
         android:layout_marginTop="12dp"
         android:layout_marginEnd="42dp"
         android:layout_marginRight="42dp"
-        android:text="@string/from" />
+        android:text="@string/from_map"
+        tools:ignore="RelativeOverlap" />
 
     <Button
         android:id="@+id/location_button"
@@ -93,7 +94,7 @@
         android:layout_marginTop="13dp"
         android:layout_marginEnd="116dp"
         android:layout_marginRight="116dp"
-        android:text="@string/get_direction" />
+        android:text="@string/get_direction_map" />
 
     <Button
         android:id="@+id/shortest_button"
@@ -109,12 +110,12 @@
         android:layout_marginTop="53dp"
         android:layout_marginEnd="116dp"
         android:layout_marginRight="116dp"
-        android:text="@string/shortest_direction" />
+        android:text="@string/shortest_direction_map" />
 
     <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
         android:id="@+id/subsamplingScaleImageView"
         android:layout_width="wrap_content"
-        android:layout_height="597dp"
+        android:layout_height="586dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
@@ -123,7 +124,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="18dp"
         android:layout_marginLeft="18dp"
-        android:layout_marginTop="119dp"
+        android:layout_marginTop="131dp"
         android:layout_marginEnd="14dp"
         android:layout_marginRight="14dp"
         android:layout_marginBottom="15dp"

@@ -2,7 +2,7 @@ package com.example.a222latest;
 
 public class ModelPost {
     //use same name given while uploading post
-    String pId, pTitle,pDescr,pLikes,pTime,uid,uEmail,uName,uDp;
+    String pId, pTitle,pDescr,pLikes,pTime,uid,uEmail,uName,uDp,uSurname,membership;
     public ModelPost(){
 
     }
@@ -15,7 +15,7 @@ public class ModelPost {
         this.pLikes = pLikes;
     }
 
-    public ModelPost(String pId, String pTitle, String pDescr, String pTime, String uid, String uEmail, String uName, String uDp,String pLikes) {
+    public ModelPost(String pId, String pTitle, String pDescr, String pTime, String uid, String uEmail, String uName, String uDp,String pLikes,String uSurname,String membership) {
         this.pId = pId;
         this.pTitle = pTitle;
         this.pDescr = pDescr;
@@ -25,6 +25,24 @@ public class ModelPost {
         this.uEmail = uEmail;
         this.uName = uName;
         this.uDp = uDp;
+        this.uSurname = uSurname;
+        this.membership=membership;
+    }
+
+    public String getMembership() {
+        return membership;
+    }
+
+    public void setMembership(String membership) {
+        this.membership = membership;
+    }
+
+    public String getuSurname() {
+        return uSurname;
+    }
+
+    public void setuSurname(String uSurname) {
+        this.uSurname = uSurname;
     }
 
     public String getpId() {
