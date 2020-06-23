@@ -32,28 +32,29 @@ public class GroupDialogFragment extends DialogFragment {
     ArrayList<String> mails;
     String groupId;
     Context x;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view =inflater.inflate(R.layout.groupdialog_fragment,container,false);
-        editText=(EditText)view.findViewById(R.id.editText);
-        textView=(TextView)view.findViewById(R.id.textView2);
+        View view = inflater.inflate(R.layout.groupdialog_fragment, container, false);
+        editText = (EditText) view.findViewById(R.id.editText);
+        textView = (TextView) view.findViewById(R.id.textView2);
 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                groupName=editText.getText().toString();
-                if ((!groupName.equals(""))){
-                    Toast.makeText(getActivity(),"Group created",Toast.LENGTH_SHORT).show();
+                groupName = editText.getText().toString();
+                if ((!groupName.equals(""))) {
+                    Toast.makeText(getActivity(), "Group created", Toast.LENGTH_SHORT).show();
 
 
-                    groupRef=FirebaseDatabase.getInstance().getReference("Groups");
-                    memberGroupRef=FirebaseDatabase.getInstance().getReference("Members");
+                    groupRef = FirebaseDatabase.getInstance().getReference("Groups");
+                    memberGroupRef = FirebaseDatabase.getInstance().getReference("Members");
 
                     groupRef.child(groupId).child("GroupName").setValue(groupName);
-                    Message msg=new Message();
-                    Message msg2=new Message();
-                    Message msg3=new Message();
+                    Message msg = new Message();
+                    Message msg2 = new Message();
+                    Message msg3 = new Message();
                     msg.setText("deneme msg1");
                     msg2.setText("deneme msg2");
                     msg3.setText("deneme msg3");
@@ -61,33 +62,30 @@ public class GroupDialogFragment extends DialogFragment {
                     groupRef.child(groupId).child("Messages").push().setValue(msg2);
                     groupRef.child(groupId).child("Messages").push().setValue(msg3);
 
-                    for (int i=0;i<mails.size();i++){
-                        groupRef.child(groupId).child("members").child("name"+(i+1)).setValue(mails.get(i));
-                        String chl=mails.get(i).substring(0,mails.get(i).indexOf("@")).replace(".","");
-                        HashMap<Object,String> hashMap=new HashMap<>();
-                        hashMap.put("name",groupName);
+                    for (int i = 0; i < mails.size(); i++) {
+                        groupRef.child(groupId).child("members").child("name" + (i + 1)).setValue(mails.get(i));
+                        String chl = mails.get(i).substring(0, mails.get(i).indexOf("@")).replace(".", "");
+                        HashMap<Object, String> hashMap = new HashMap<>();
+                        hashMap.put("name", groupName);
                         memberGroupRef.child(chl).child("group").child(groupId).setValue(hashMap);
                     }
 
                     mAuth = FirebaseAuth.getInstance().getCurrentUser();
-                    groupRef.child(groupId).child("members").child("name"+(mails.size()+1)).setValue(mAuth.getEmail());
-                    HashMap<Object,String> hashMap=new HashMap<>();
-                    hashMap.put("name",groupName);
-                    memberGroupRef.child((mAuth.getEmail().substring(0,mAuth.getEmail().indexOf("@")).replace(".","")))
+                    groupRef.child(groupId).child("members").child("name" + (mails.size() + 1)).setValue(mAuth.getEmail());
+                    HashMap<Object, String> hashMap = new HashMap<>();
+                    hashMap.put("name", groupName);
+                    memberGroupRef.child((mAuth.getEmail().substring(0, mAuth.getEmail().indexOf("@")).replace(".", "")))
                             .child("group").child(groupId).setValue(hashMap);
                     getDialog().dismiss();
 
 
+                    Intent intent = new Intent(getActivity(), GroupMessagingActivity.class);    //GROUP INTENT
+                    intent.putExtra("groupId", groupId);
+                    intent.putExtra("groupName", groupName);
+                    startActivity(intent);
 
-                    /*Intent intent=new Intent(getActivity(),GroupMessagingActivity.class);    //GROUP INTENT
-                    intent.putExtra("groupId",groupId);
-                    intent.putExtra("groupName",groupName);
-                    startActivity(intent);  */
-
-
-
-                }else{
-                    Toast.makeText(getActivity(),"Invalid Group Name",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "Invalid Group Name", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -96,11 +94,18 @@ public class GroupDialogFragment extends DialogFragment {
 
         return view;
     }
-    public void setMails(ArrayList<String> myList){
-        mails=myList;
+
+    public void setMails(ArrayList<String> myList) {
+        mails = myList;
     }
-    public void setGroupId(String grpId){this.groupId=grpId;}
-    public void setContext(Context x){this.x=x;}
+
+    public void setGroupId(String grpId) {
+        this.groupId = grpId;
+    }
+
+    public void setContext(Context x) {
+        this.x = x;
+    }
 
     public String getGroupName() {
         return groupName;

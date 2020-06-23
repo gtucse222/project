@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 
 import androidx.annotation.Nullable;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -90,6 +92,7 @@ public class PrivateMessagingActivity extends MessagingActivity {
     }
 
     protected void setConversationKey() {
+        currentUserMail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         String sender = emailToId(currentUserMail);
         String receiver = emailToId(receiverEmail);
         if (sender.compareTo(receiver) < 0)
@@ -114,8 +117,9 @@ public class PrivateMessagingActivity extends MessagingActivity {
         String messageKey = messagesRef.push().getKey();
         HashMap<String, Object> messageInfo = buildMessageInfo(message);
         messagesRef.child(conversationKey).child("messages").child(messageKey).updateChildren(messageInfo);
-
         messagesRef.child(conversationKey).child("lastMessageTime").setValue(Calendar.getInstance().getTimeInMillis());
+        FirebaseDatabase.getInstance().getReference().child("Members").
+                child(currentUserMail).child("privateMessages").child(getConversationKey()).setValue(FirebaseAuth.getInstance().getCurrentUser().getEmail());
     }
 
 

@@ -154,7 +154,7 @@ public class HomeFragment extends Fragment {
     //Check user status
 
 
-    // @RequiresApi(api = Build.VERSION_CODES.M)
+//     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         //inflater.inflate(R.menu.menu_post, menu);
         MenuItem item = menu.findItem(R.id.post_search);

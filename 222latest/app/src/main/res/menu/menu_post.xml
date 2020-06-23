@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context = ".ShowPostActivity">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".ShowPostActivity">
 
 
     <item
-        android:id="@+id/post_search"
-        android:icon="@drawable/ic_search_post"
-        android:title="Search"
-        app:showAsAction="always|collapseActionView"
-        app:actionViewClass="android.widget.SearchView"/>
+            android:id="@+id/post_search"
+            android:icon="@drawable/ic_search_post"
+            android:title="Search"
+            app:actionViewClass="android.widget.SearchView"
+            app:showAsAction="always|collapseActionView" />
 </menu>

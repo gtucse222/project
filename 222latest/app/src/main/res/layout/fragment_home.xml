@@ -6,6 +6,7 @@
         tools:context=".HomeFragment">
 
 
+
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/postRecyclerview"
             android:layout_width="match_parent"
