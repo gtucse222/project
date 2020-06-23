@@ -1,7 +1,5 @@
 package com.example.a222latest;
 
-//TODO: add top bar: shows group name or receiver name
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -60,8 +58,7 @@ public abstract class MessagingActivity extends AppCompatActivity {
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         currentUserMail = emailToId(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-//        currentUserName = mAuth.getCurrentUser().getDisplayName();
-        currentUserName = "name surname";//FIXME
+        currentUserName = currentUserMail;
         sendMessageButton = findViewById(R.id.sendMessageButton);
         editMessage = findViewById(R.id.editMessage);
         sendMessageButton.setOnClickListener(v -> {

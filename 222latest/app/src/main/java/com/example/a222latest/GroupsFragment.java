@@ -47,21 +47,21 @@ public class GroupsFragment extends Fragment {
         // Inflate the layout for this fragment
         groupFragmentView = inflater.inflate(R.layout.fragment_groups, container, false);
 
-        String email = "abc@gmail.com";
-        String password = "123456";
-
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                Toast.makeText(getContext(), "logged in", Toast.LENGTH_SHORT).show();
-            } else
-                Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
-        });
+//        String email = "abc@gmail.com";
+//        String password = "123456";
+//
+//        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+//            if (task.isSuccessful()) {
+//                Toast.makeText(getContext(), "logged in", Toast.LENGTH_SHORT).show();
+//            } else
+//                Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
+//        });
 
         String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         String userId = MessagingActivity.emailToId(userEmail);
 
         groupMessagesRef = FirebaseDatabase.getInstance().getReference().
-                child("Members").child(userId).child("groups");
+                child("Members").child(userId).child("group");
 
         initalizeFields();
 
@@ -114,8 +114,10 @@ public class GroupsFragment extends Fragment {
         listView.setAdapter(arrayAdapter);
         listView.setOnItemClickListener((parent, view, position, id) -> {
             String key = groups.get(position).id;
+            String name = groups.get(position).name;
             Intent intent = new Intent(getContext(), GroupMessagingActivity.class);
             intent.putExtra("groupId", key);
+            intent.putExtra("groupName", name);
             startActivity(intent);
         });
     }

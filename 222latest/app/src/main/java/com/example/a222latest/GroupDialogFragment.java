@@ -51,31 +51,18 @@ public class GroupDialogFragment extends DialogFragment {
                     groupRef = FirebaseDatabase.getInstance().getReference("Groups");
                     memberGroupRef = FirebaseDatabase.getInstance().getReference("Members");
 
-                    groupRef.child(groupId).child("GroupName").setValue(groupName);
-                    Message msg = new Message();
-                    Message msg2 = new Message();
-                    Message msg3 = new Message();
-                    msg.setText("deneme msg1");
-                    msg2.setText("deneme msg2");
-                    msg3.setText("deneme msg3");
-                    groupRef.child(groupId).child("Messages").push().setValue(msg);
-                    groupRef.child(groupId).child("Messages").push().setValue(msg2);
-                    groupRef.child(groupId).child("Messages").push().setValue(msg3);
+                    groupRef.child(groupId).child("groupName").setValue(groupName);
 
                     for (int i = 0; i < mails.size(); i++) {
                         groupRef.child(groupId).child("members").child("name" + (i + 1)).setValue(mails.get(i));
                         String chl = mails.get(i).substring(0, mails.get(i).indexOf("@")).replace(".", "");
-                        HashMap<Object, String> hashMap = new HashMap<>();
-                        hashMap.put("name", groupName);
-                        memberGroupRef.child(chl).child("group").child(groupId).setValue(hashMap);
+                        memberGroupRef.child(chl).child("group").child(groupId).setValue(groupName);
                     }
 
                     mAuth = FirebaseAuth.getInstance().getCurrentUser();
                     groupRef.child(groupId).child("members").child("name" + (mails.size() + 1)).setValue(mAuth.getEmail());
-                    HashMap<Object, String> hashMap = new HashMap<>();
-                    hashMap.put("name", groupName);
                     memberGroupRef.child((mAuth.getEmail().substring(0, mAuth.getEmail().indexOf("@")).replace(".", "")))
-                            .child("group").child(groupId).setValue(hashMap);
+                            .child("group").child(groupId).setValue(groupName);
                     getDialog().dismiss();
 
 
