@@ -1,6 +1,6 @@
 package com.example.a222latest;
 
-public class UserC implements Comparable{
+public class UserC implements Comparable<UserC> {
     private String name;
     private String eMail;
 
@@ -20,8 +20,10 @@ public class UserC implements Comparable{
         this.eMail = eMail;
     }
 
+
+
     @Override
-    public int compareTo(Object o) {
+    public int compareTo(UserC o) {
         return name.compareTo(((UserC)o).getName());
     }
 }

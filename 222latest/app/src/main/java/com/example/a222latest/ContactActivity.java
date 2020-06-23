@@ -24,16 +24,17 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import java.util.TreeSet;
+import java.util.UUID;
 
 public class ContactActivity extends AppCompatActivity implements ContactAdapter.OnNoteListener {
 
     private DatabaseReference teacherRef;
 
     private FirebaseDatabase database;
-    private FirebaseAuth mAuth;
     private Button button2;
     ArrayList<String> myList = new ArrayList<>();
-    TreeSet<UserC> users;
+    //TreeSet<UserC> users;
+    RedBlackTree<UserC> users;
     ContactAdapter ca;
     RecyclerView rw2;
     boolean group = false;
@@ -59,7 +60,8 @@ public class ContactActivity extends AppCompatActivity implements ContactAdapter
             }
         });
 
-        users = new TreeSet<>();
+        //users = new TreeSet<>();
+        users = new RedBlackTree<>();
         rw2 = findViewById(R.id.rw2);
         rw2.setLayoutManager(new LinearLayoutManager(this));
         button2=findViewById(R.id.button);
@@ -106,19 +108,14 @@ public class ContactActivity extends AppCompatActivity implements ContactAdapter
     }
 
     public void createGroup(View view) {
-        String grpId = "group-Id-deneme";
+
         button2.setEnabled(false);
         GroupDialogFragment gdf = new GroupDialogFragment();
         gdf.show(getFragmentManager(), "Group Name");
         myList = ca.getGroup();
         gdf.setMails(myList);
-        gdf.setGroupId(grpId);
-
-        /*Intent intent=new Intent(this,Message.class);
-        intent.putExtra("groupId",grpId);
-        intent.putStringArrayListExtra("emails",myList);
-        startActivity(intent); */
-
+        UUID uuid=UUID.randomUUID();
+        gdf.setGroupId(String.valueOf(uuid));
 
     }
 

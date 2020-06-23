@@ -2,6 +2,7 @@ package com.example.a222latest;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,30 +20,35 @@ import java.util.TreeSet;
 
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ProfileHolder> implements Filterable {
     private boolean group;
-    private TreeSet<UserC> names;
-    private TreeSet<UserC> namesAll;
-    private Iterator<UserC> iterForName;
+    // private TreeSet<UserC> names;
+    //private TreeSet<UserC> namesAll;
+
+    private RedBlackTree<UserC> names;
+    private RedBlackTree<UserC> namesAll;
+    //private Iterator<UserC> iterForName;
+    private Iterator<BinaryTree.Node> iterForName;
     private OnNoteListener mOnNoteListener;
     private ArrayList<String> emailss=new ArrayList<>();
-
     Context context;
 
+    // public ContactAdapter(TreeSet<UserC> names,boolean group,OnNoteListener onNoteListener)
 
-    public ContactAdapter(TreeSet<UserC> names,boolean group,OnNoteListener onNoteListener) {
+    public ContactAdapter(RedBlackTree<UserC> names,boolean group,OnNoteListener onNoteListener) {
 
         this.names = names;
         this.mOnNoteListener=onNoteListener;
         this.group=group;
-        this.namesAll=new TreeSet<>();
+        //this.namesAll=new TreeSet<>();
+        this.namesAll=new RedBlackTree<>();
         iterForName=names.iterator();
         while (true){
             if (!iterForName.hasNext())break;
-            else namesAll.add(iterForName.next());
+                //else namesAll.add(iterForName.next());
+            else namesAll.add((UserC) iterForName.next().data);
         }
         iterForName=names.iterator();
 
-
-
+        
     }
 
     @NonNull
@@ -56,17 +62,20 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ProfileH
     @Override
     public void onBindViewHolder(@NonNull ProfileHolder holder, int position) {
         if(iterForName.hasNext()){
-            UserC temp=iterForName.next();
+
+            // UserC temp=iterForName.next();
+            UserC temp= (UserC) iterForName.next().data;
             final String b=temp.geteMail();
             final String a=temp.getName();
+            System.out.println(a+"  "+b);
             holder.name.setText(a);
             holder.email.setText(b);
+
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(group==false){
                         emailss.clear();
-
                         context=v.getContext();
                         passData(b);
                     }
@@ -75,6 +84,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ProfileH
                         if(!emailss.contains(b)) {
                             Toast.makeText(v.getContext(),"Added",Toast.LENGTH_SHORT).show();
                             emailss.add(b);
+                            holder.name.setTextColor(Color.RED);
+                            holder.email.setTextColor(Color.RED);
                         }else{
                             Toast.makeText(v.getContext(), "Member already added",Toast.LENGTH_SHORT).show();
                         }
@@ -86,12 +97,15 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ProfileH
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    Toast.makeText(v.getContext(),"Sended profile",Toast.LENGTH_SHORT).show();
-                //    Intent intent=new Intent(v.getContext(),Profile.class);
-                  //  intent.putExtra("name",a);
-                   // intent.putExtra("email",b);
-                   // v.getContext().startActivity(intent);
-                    return false;
+                    if (holder.name.getCurrentTextColor()==Color.RED){
+                        Toast.makeText(v.getContext(),"Removed From Group ",Toast.LENGTH_SHORT).show();
+                        holder.name.setTextColor(-1979711488);
+                        holder.email.setTextColor(-1979711488);
+
+                        emailss.remove(holder.email.getText());
+
+                    }
+                    return true;
                 }
             });
 
@@ -106,17 +120,15 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ProfileH
     }
 
     private void passData(String item){
-
-       // Intent intent=new Intent(context,Message.class);   MessageActivity send
-       // emailss.add(item);
-
-       // intent.putStringArrayListExtra("mails",emailss);
+        System.out.println("Personal Intent"+item);  //Item = mail
+        //Intent intent=new Intent(context,Message.class);
+        //intent.putExtra("receiverName",item);
         //context.startActivity(intent);
 
     }
     public void sendGroup(){
-      //  Intent intent=new Intent(context,Message.class);       MessageActivity send
-       // intent.putStringArrayListExtra("mails",emailss);
+        //  Intent intent=new Intent(context,Message.class);       MessageActivity send
+        // intent.putStringArrayListExtra("mails",emailss);
         group=false;
         //context.startActivity(intent);
         //emailss.clear();
@@ -132,16 +144,18 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ProfileH
     Filter filter=new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            TreeSet<UserC> filteredList=new TreeSet<>();
-
-            Iterator<UserC> iterForNameAll;
+            //TreeSet<UserC> filteredList=new TreeSet<>();
+            RedBlackTree<UserC> filteredList=new RedBlackTree<>();
+            //Iterator<UserC> iterForNameAll;
+            Iterator<BinaryTree.Node> iterForNameAll;
             if(constraint.toString().isEmpty()){
                 iterForNameAll =namesAll.iterator();
                 UserC temp;
                 while (true){
                     if (!iterForNameAll.hasNext()) break;
                     else{
-                        temp= iterForNameAll.next();
+                        //temp= iterForNameAll.next();
+                        temp= (UserC) iterForNameAll.next().data;
                         filteredList.add(temp);
                     }
                 }
@@ -153,7 +167,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ProfileH
                 while(true){
                     if (!iterForNameAll.hasNext())break;
                     else{
-                        temp= iterForNameAll.next();
+                        // temp= iterForNameAll.next();
+                        temp= (UserC) iterForNameAll.next().data;
                         a=temp.getName();
                         if (a.toLowerCase().contains(constraint.toString().toLowerCase())){
 
@@ -174,15 +189,18 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ProfileH
 
             names.clear();
 
-            TreeSet<UserC> tempp= (TreeSet<UserC>) results.values;
+            // TreeSet<UserC> tempp= (TreeSet<UserC>) results.values;
+            RedBlackTree<UserC> tempp= (RedBlackTree<UserC>) results.values;
             System.out.println(tempp.size());
 
-            Iterator<UserC> tempIter=tempp.iterator();
+            //Iterator<UserC> tempIter=tempp.iterator();
+            Iterator<BinaryTree.Node> tempIter=tempp.iterator();
             UserC temp2;
             while(true){
                 if (!tempIter.hasNext())break;
                 else{
-                    temp2=tempIter.next();
+                    // temp2=tempIter.next();
+                    temp2= (UserC) tempIter.next().data;
                     //System.out.println(temp2.getName());
                     names.add(temp2);
 
