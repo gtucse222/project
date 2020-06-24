@@ -51,10 +51,11 @@ public class LocationAdapter
         faculty_to_vertex.put("GYM", 31);
         faculty_to_vertex.put("Swimming Pool", 32);
         faculty_to_vertex.put("Faculty of Basic Sciences", 33);
-        faculty_to_vertex.put("Will be Added", 34);
-        faculty_to_vertex.put("Will be Added2", 35);
-        faculty_to_vertex.put("Will be Added3", 36);
-        faculty_to_vertex.put("Will be Added4", 0);
+        faculty_to_vertex.put("Marmaray Exit", 34);
+        faculty_to_vertex.put("Rector Underpass", 35);
+        faculty_to_vertex.put("Marmaray Entry", 36);
+        faculty_to_vertex.put("Underpass", 0);
+        faculty_to_vertex.put("Faculty of Basic Sciences Underpass", 37);
     }
 
     public Integer get_vertex_loca(String key) {
