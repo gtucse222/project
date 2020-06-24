@@ -11,6 +11,7 @@ public class LocationAdapter
     public LocationAdapter()
     {
         faculty_to_vertex = new HashMap<>();
+        vertex_to_pixel_point = new HashMap<>();
         createStructure_vertex();
         createStructure_pixel();
     }
