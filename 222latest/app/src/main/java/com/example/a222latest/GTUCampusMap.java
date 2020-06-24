@@ -75,18 +75,16 @@ public class GTUCampusMap
         int[] direction_arr = GraphSearch.BreadthFirstSearch(GTUCampus, from);
 
         sb.append(to);
-        sb.append("->");
-        sb.append(direction_arr[to]);
-        sb.append("  ");
+        sb.append(" ");
         int index = direction_arr[to];
 
         while(index != from) {
+            sb.append(" ");
             sb.append(index);
-            sb.append("->");
-            sb.append(direction_arr[index]);
-            sb.append("  ");
             index = direction_arr[index];
         }
+        sb.append(" ");
+        sb.append(from);
 
         return sb.toString();
     }
