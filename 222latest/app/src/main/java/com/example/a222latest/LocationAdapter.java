@@ -59,6 +59,7 @@ public class LocationAdapter
         faculty_to_vertex.put("Marmaray Entry", 36);
         faculty_to_vertex.put("Underpass", 0);
         faculty_to_vertex.put("Faculty of Basic Sciences Underpass", 37);
+        faculty_to_vertex.put("Electronic Back Underpass", 38);
     }
 
     private void createStructure_pixel() {
@@ -104,6 +105,7 @@ public class LocationAdapter
         vertex_to_pixel_point.put("35", new Point2D(1212, 501));
         vertex_to_pixel_point.put("36", new Point2D(1153, 754));
         vertex_to_pixel_point.put("37", new Point2D(980, 733));
+        vertex_to_pixel_point.put("38", new Point2D(418, 533));
     }
 
     public Integer get_vertex_loca(String key) {
