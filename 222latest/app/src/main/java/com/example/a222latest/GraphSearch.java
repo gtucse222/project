@@ -5,8 +5,17 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * Search adapter class
+ */
 public class GraphSearch
 {
+    /**
+     * static function helps for breadt first search algorithm
+     * @param graph, graph
+     * @param start, start vertex
+     * @return result array of BFS
+     */
     public static int[] BreadthFirstSearch(Graph graph, int start) {
 
         Queue<Integer> queue = new LinkedList<>();
@@ -38,56 +47,5 @@ public class GraphSearch
         }
 
         return parent;
-    }
-
-    public static String dijkstrasAlgorithm(Graph graph, int start, int[] pred, double[] dist) {
-
-        int numv = graph.getNumV();
-        HashSet<Integer> vMinusS = new HashSet<>(numv);
-
-        for(int i = 0 ; i < numv ; ++i)
-            if(i != start) vMinusS.add(i);
-
-        for(int v : vMinusS) {
-            pred[v] = start;
-            dist[v] = graph.getEdge(start, v).getWeight();
-        }
-
-        while(vMinusS.size() != 0) {
-
-            double minDist = Double.POSITIVE_INFINITY;
-            int u = -1;
-
-            for(int v : vMinusS) {
-                if(dist[v] < minDist) {
-                    minDist = dist[v];
-                    u = v;
-                }
-            }
-
-            vMinusS.remove(u);
-
-            for(int v : vMinusS) {
-                if(graph.isEdge(u, v)) {
-
-                    double weight = graph.getEdge(u, v).getWeight();
-                    if(dist[u] + weight < dist[v]) {
-                        dist[v] = dist[u] + weight;
-                        pred[v] = u;
-                    }
-                }
-            }
-        }
-
-        return pathToString(pred, start);
-    }
-
-    private static String pathToString(int[] path, int start) {
-
-        StringBuilder sb = new StringBuilder();
-
-
-
-        return sb.toString();
     }
 }
