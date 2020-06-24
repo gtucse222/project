@@ -1,10 +1,13 @@
 package com.example.a222latest;
 
+/**
+ * Message class, mainly used by message adapter
+ */
 public class Message {
     private String senderId, text, date, time, senderName;
 
-    // don' delete this constructor, message adapter need this
     public Message() {
+        // don' delete this constructor, message adapter need this
     }
 
     public Message(String senderId, String senderName, String text, String date, String time) {

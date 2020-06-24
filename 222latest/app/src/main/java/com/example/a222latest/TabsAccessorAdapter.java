@@ -6,6 +6,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+/**
+ * Tabs in chat menu. Creates an returns necessary fragment
+ */
 public class TabsAccessorAdapter extends FragmentPagerAdapter {
     public TabsAccessorAdapter(@NonNull FragmentManager fm) {
         super(fm);
@@ -32,6 +35,9 @@ public class TabsAccessorAdapter extends FragmentPagerAdapter {
         return 2;
     }
 
+    /**
+     * Tab titles
+     */
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {

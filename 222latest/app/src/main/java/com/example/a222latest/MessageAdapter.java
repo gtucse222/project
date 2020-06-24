@@ -4,7 +4,6 @@ import android.graphics.Typeface;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
 
 import java.util.List;
 
+/**
+ * To display single messages in both private chats and group chats
+ */
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
     private List<Message> messageList;
     private FirebaseAuth mAuth;
@@ -35,6 +36,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     }
 
+    /**
+     * Constructor
+     *
+     * @param messageList list of messages
+     */
     public MessageAdapter(List<Message> messageList) {
         this.messageList = messageList;
     }
@@ -49,6 +55,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         return new MessageViewHolder(view);
     }
 
+    /**
+     * Sets text and visibility by getting the message according to sender or receiver
+     *
+     * @param holder   view that displays messages
+     * @param position position in the adapter
+     */
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
         String currentUserMail = mAuth.getCurrentUser().getEmail();
@@ -82,6 +94,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     }
 
+    /**
+     * Returns number of items in message list
+     *
+     * @return number of items
+     */
     @Override
     public int getItemCount() {
         return messageList.size();

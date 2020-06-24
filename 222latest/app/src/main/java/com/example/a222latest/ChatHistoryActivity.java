@@ -7,6 +7,9 @@ import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
 
+/**
+ * Chats history activity
+ */
 public class ChatHistoryActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private TabLayout mTabLayout;

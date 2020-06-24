@@ -11,6 +11,12 @@ public class Chat implements Comparable<Chat> {
         this.lastMessageTime = lastMessageTime;
     }
 
+    /**
+     * Compares chat history by last message time in that chat
+     *
+     * @param o
+     * @return
+     */
     @Override
     public int compareTo(Chat o) {
         if (o.lastMessageTime != null && this.lastMessageTime != null)

@@ -20,11 +20,23 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Abstract class of messaging that includes base methods.
+ */
 public abstract class MessagingActivity extends AppCompatActivity {
+    /**
+     * users mail, for some methods it used as first part of email (before @)
+     */
     protected String currentUserMail;
+    /**
+     * username of the user to identify (mail)
+     */
     protected String currentUserName;
     private Button sendMessageButton;
     private EditText editMessage;
+    /**
+     * Firebase database reference to save and retrieve messages
+     */
     protected DatabaseReference messagesRef;
     private final List<Message> messageList = new ArrayList<>();
     private LinearLayoutManager linearLayoutManager;
@@ -37,8 +49,6 @@ public abstract class MessagingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.messaging);
 
-        // TEST
-
         getFromIntent();
         initalizeFields();
         initalizeMessagesRef();
@@ -48,6 +58,9 @@ public abstract class MessagingActivity extends AppCompatActivity {
 
     abstract protected void initalizeMessagesRef();
 
+    /**
+     * finds view from layouts and initialize fields
+     */
     protected void initalizeFields() {
         messageAdapter = new MessageAdapter(messageList);
         recyclerView = findViewById(R.id.messageList);
@@ -66,6 +79,11 @@ public abstract class MessagingActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * saves message to database and removes the text from text field
+     *
+     * @param message message from text view
+     */
     private void sendMessage(String message) {
         if (message.isEmpty()) return;
         saveMessageToDatabase(getConversationKey(), message);
@@ -74,6 +92,12 @@ public abstract class MessagingActivity extends AppCompatActivity {
 
     protected abstract void saveMessageToDatabase(String conversationKey, String message);
 
+    /**
+     * Builds message information with sender id, sender name, message, date and time.
+     *
+     * @param message entered message
+     * @return HashMap to push database
+     */
     protected HashMap<String, Object> buildMessageInfo(String message) {
         HashMap<String, Object> messageInfo = new HashMap<>();
         messageInfo.put("senderId", currentUserMail);
@@ -84,22 +108,35 @@ public abstract class MessagingActivity extends AppCompatActivity {
         return messageInfo;
     }
 
+    /**
+     * Gets current time
+     *
+     * @return current time (hour : minute)
+     */
     private String getCurrentTime() {
         Calendar calForTime = Calendar.getInstance();
         SimpleDateFormat currentTimeFormat = new SimpleDateFormat("HH:mm");
         return currentTimeFormat.format(calForTime.getTime());
     }
 
+    /**
+     * Gets current date
+     *
+     * @return current date (Month(first 3 letters) day, year)
+     */
     private String getCurrentDate() {
         Calendar calForDate = Calendar.getInstance();
         SimpleDateFormat currentDateFormat = new SimpleDateFormat("MMM dd, yyyy");
         return currentDateFormat.format(calForDate.getTime());
     }
 
-
     abstract protected String getConversationKey();
 
-
+    /**
+     * Shows message from database by iterating through every message and putting into adapter
+     *
+     * @param dataSnapshot datasnapshot retrieved from database
+     */
     protected void displayMessages(DataSnapshot dataSnapshot) {
         Iterator iterator = dataSnapshot.getChildren().iterator();
 
@@ -121,6 +158,13 @@ public abstract class MessagingActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Returns an id by getting the part before @ from emails, and removed . characters.
+     * This process is required by firebase database, since it doesn't allow such characters as keys.
+     *
+     * @param email email
+     * @return id
+     */
     public static String emailToId(String email) {
         //firebase doesn't allow @ and . characters
         return email.substring(0, email.indexOf("@")).replace(".", "");

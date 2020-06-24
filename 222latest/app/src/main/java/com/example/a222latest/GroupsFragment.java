@@ -6,13 +6,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -23,11 +21,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 
 
 /**
  * A simple {@link Fragment} subclass.
+ * Shows groups chat in chats menu
  */
 public class GroupsFragment extends Fragment {
     private View groupFragmentView;
@@ -47,16 +45,6 @@ public class GroupsFragment extends Fragment {
         // Inflate the layout for this fragment
         groupFragmentView = inflater.inflate(R.layout.fragment_groups, container, false);
 
-//        String email = "abc@gmail.com";
-//        String password = "123456";
-//
-//        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-//            if (task.isSuccessful()) {
-//                Toast.makeText(getContext(), "logged in", Toast.LENGTH_SHORT).show();
-//            } else
-//                Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
-//        });
-
         String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         String userId = MessagingActivity.emailToId(userEmail);
 
@@ -67,10 +55,12 @@ public class GroupsFragment extends Fragment {
 
         retrieveAndDisplayChatHistory();
 
-
         return groupFragmentView;
     }
 
+    /**
+     * calls update chats when data changes (new message detected) in database
+     */
     private void retrieveAndDisplayChatHistory() {
         groupMessagesRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -85,6 +75,11 @@ public class GroupsFragment extends Fragment {
         });
     }
 
+    /**
+     * Shows posts from database
+     *
+     * @param dataSnapshot datanapshot retrieved from database
+     */
     private void updateChats(DataSnapshot dataSnapshot) {
         for (DataSnapshot d : dataSnapshot.getChildren()) {
             String groupId = d.getKey();
@@ -108,6 +103,9 @@ public class GroupsFragment extends Fragment {
         arrayAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * initilaze fields by finding them from layouts
+     */
     private void initalizeFields() {
         listView = groupFragmentView.findViewById(R.id.listViewGroups);
         arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, groups);

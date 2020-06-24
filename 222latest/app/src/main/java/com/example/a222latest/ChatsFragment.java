@@ -4,20 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,14 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.TreeMap;
 
 
 /**
@@ -56,18 +45,6 @@ public class ChatsFragment extends Fragment {
         // Inflate the layout for this fragment
         chatsFragmentView = inflater.inflate(R.layout.fragment_chats, container, false);
 
-//        String email = "abc@gtu.edu.tr";
-//        String password = "123456";
-//
-//        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-//            if (task.isSuccessful()) {
-//                Toast.makeText(getContext(), "logged in", Toast.LENGTH_SHORT).show();
-//            } else
-//                Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
-//        });
-
-
-        //TEST
         String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         String userId = MessagingActivity.emailToId(userEmail);
         Toast.makeText(getContext(), userId, Toast.LENGTH_SHORT).show();
@@ -82,6 +59,9 @@ public class ChatsFragment extends Fragment {
     }
 
 
+    /**
+     * calls update method when any change detected in database reference
+     */
     private void retrieveAndDisplayChatHistory() {
         privateMessagesRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -96,6 +76,11 @@ public class ChatsFragment extends Fragment {
         });
     }
 
+    /**
+     * Updates message history entries and sorts by last message time
+     *
+     * @param dataSnapshot
+     */
     private void updateChats(DataSnapshot dataSnapshot) {
         for (DataSnapshot d : dataSnapshot.getChildren()) {
             String chatName = (String) d.getValue();

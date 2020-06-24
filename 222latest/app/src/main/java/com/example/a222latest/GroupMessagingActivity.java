@@ -3,7 +3,6 @@ package com.example.a222latest;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -12,12 +11,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.Calendar;
 import java.util.HashMap;
 
+/**
+ * Group messaging activity extends from abstract messaging activity
+ */
 public class GroupMessagingActivity extends MessagingActivity {
-
 
     private String groupName;
     private String groupID;
 
+    /**
+     * calls super on start and adds value event listener to database reference
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -60,14 +64,20 @@ public class GroupMessagingActivity extends MessagingActivity {
     }
 
 
+    /**
+     * gets group name and id from intent
+     */
     @Override
     protected void getFromIntent() {
-//        this.groupID = "this_is_group_id";
         this.groupID = getIntent().getStringExtra("groupId");
         this.groupName = getIntent().getStringExtra("groupName");
-//        this.groupName = "Avengers";
     }
 
+    /**
+     * Conversation key (group id for groups)
+     *
+     * @return unique conversation key
+     */
     @Override
     protected String getConversationKey() {
         return this.groupID;
@@ -78,6 +88,12 @@ public class GroupMessagingActivity extends MessagingActivity {
                 .child(groupID).child("Messages");
     }
 
+    /**
+     * Saves message to database and updates last message time
+     *
+     * @param conversationKey group id
+     * @param message         message text
+     */
     @Override
     protected void saveMessageToDatabase(String conversationKey, String message) {
         String messageKey = messagesRef.push().getKey();
