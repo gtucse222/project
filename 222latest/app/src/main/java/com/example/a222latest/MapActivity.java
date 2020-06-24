@@ -20,14 +20,12 @@ public class MapActivity extends AppCompatActivity implements AdapterView.OnItem
 
     private GTUCampusMap GTUMap = new GTUCampusMap();
     protected Button location_button;
-    protected Button shortest_button;
     protected TextView location_info;
     protected Spinner from;
     protected Spinner to;
     protected ImageView map_image;
     protected int to_;
     protected int from_;
-    protected SubsamplingScaleImageView campus_image;
     protected LocationAdapter adapter_location;
 
     @SuppressLint({"WrongViewCast", "ClickableViewAccessibility", "ResourceType"})
@@ -40,9 +38,9 @@ public class MapActivity extends AppCompatActivity implements AdapterView.OnItem
         from = findViewById(R.id.from);
         to = findViewById(R.id.to);
         location_button = (Button) findViewById(R.id.location_button);
-        shortest_button = (Button) findViewById(R.id.shortest_button);
         location_info = (TextView) findViewById(R.id.direction_info);
-        campus_image = findViewById(R.drawable.gtu_map);
+        map_image = (ImageView) findViewById(R.id.campus_map);
+        map_image.setImageResource(R.drawable.gtu_map);
 
         ArrayAdapter<CharSequence> adapter =
                 ArrayAdapter.createFromResource(this, R.array.numbersForGraph, android.R.layout.simple_spinner_item);
@@ -62,23 +60,6 @@ public class MapActivity extends AppCompatActivity implements AdapterView.OnItem
             @Override
             public void onClick(View v) {
 
-
-                to_= adapter_location.get_vertex_loca(to.getSelectedItem().toString());
-                from_ = adapter_location.get_vertex_loca(from.getSelectedItem().toString());
-
-                if(to_ != from_)
-                    location_info.setText(GTUMap.direction_BFS(to_, from_));
-                else
-                    location_info.setText("You are already here.");
-
-                location_info.setVisibility(View.VISIBLE);
-            }
-        });
-
-        shortest_button.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View v) {
 
                 to_= adapter_location.get_vertex_loca(to.getSelectedItem().toString());
                 from_ = adapter_location.get_vertex_loca(from.getSelectedItem().toString());
