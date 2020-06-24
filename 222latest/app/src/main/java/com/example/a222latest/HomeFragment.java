@@ -49,12 +49,14 @@ public class HomeFragment extends Fragment {
 
     RecyclerView recyclerView;
     PriorityQueue<ModelPost> postList;
-    List<ModelPost> queueToList=new LinkedList<ModelPost>();
-    List<ModelPost> searchList=new LinkedList<ModelPost>();
+    List<ModelPost> queueToList = new LinkedList<ModelPost>();
+    List<ModelPost> searchList = new LinkedList<ModelPost>();
     AdapterPost adapterPost;
     ModelPost postTemp;
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
+
+    LinearLayoutManager layoutManager;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -74,14 +76,12 @@ public class HomeFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         //init post list
         postList = new PriorityQueue<ModelPost>();
-        adapterPost = new AdapterPost(getActivity(), queueToList);
         //recycler view and its properties
         recyclerView = view.findViewById(R.id.postRecyclerview);
         recyclerView.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         //set adapter to recycler
-        recyclerView.setAdapter(adapterPost);
         //show newest post first, for this from load last
         layoutManager.setReverseLayout(true);
 
@@ -94,7 +94,10 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadPosts() {
+        adapterPost = new AdapterPost(getActivity(), queueToList);
+        recyclerView.setAdapter(adapterPost);
         //path of all posts
+        layoutManager.setReverseLayout(true);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -107,12 +110,12 @@ public class HomeFragment extends Fragment {
                     recyclerView.smoothScrollToPosition(recyclerView.getAdapter().getItemCount());
                 }
                 Iterator<ModelPost> iter = postList.iterator();
-                while (iter.hasNext()){
-                    postTemp=iter.next();
+                while (iter.hasNext()) {
+                    postTemp = iter.next();
                     queueToList.add(postTemp);
                 }
                 recyclerView.smoothScrollToPosition(recyclerView.getAdapter().getItemCount());
-                System.out.println(postList+"hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+                System.out.println(postList + "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
                 adapterPost.notifyDataSetChanged();
             }
 
@@ -126,32 +129,21 @@ public class HomeFragment extends Fragment {
 
     public void searchPost(String searchQuery) {
         //path of all posts
+        searchList.clear();
+        adapterPost = new AdapterPost(getActivity(), searchList);
+        recyclerView.setAdapter(adapterPost);
+        layoutManager.setReverseLayout(false);
+        //path of all posts
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                searchList.clear();
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    ModelPost modelPost = ds.getValue(ModelPost.class);
+        for (ModelPost modelPost : queueToList) {
 
-                    if (modelPost.getpTitle().toLowerCase().contains(searchQuery.toLowerCase())) {
-                        searchList.add(modelPost);
-                    }
-                    adapterPost = new AdapterPost(getActivity(), searchList);
-                    recyclerView.setAdapter(adapterPost);
-                    recyclerView.smoothScrollToPosition(recyclerView.getAdapter().getItemCount());
-                }
-                //recyclerView.setAdapter(new AdapterPost(getActivity(), queueToList));
+            if (modelPost.getpTitle().toLowerCase().contains(searchQuery.toLowerCase())) {
+                searchList.add(modelPost);
             }
-
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                //if there is an error
-                Toast.makeText(getActivity(), "" + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+//                    recyclerView.setAdapter(adapterPost);
+            adapterPost.notifyDataSetChanged();
+            recyclerView.smoothScrollToPosition(recyclerView.getAdapter().getItemCount());
+        }
 
 
     }

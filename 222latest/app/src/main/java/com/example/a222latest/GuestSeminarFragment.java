@@ -69,6 +69,7 @@ public class GuestSeminarFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         //show newest post first, for this from load last
         layoutManager.setReverseLayout(false);
+        recyclerView.setAdapter(adapterPost);
         //layoutManager.setReverseLayout(true);
 
         //setlayout to recycler
@@ -92,10 +93,10 @@ public class GuestSeminarFragment extends Fragment {
                     if (modelPost.getpTitle().toLowerCase().contains(searchQuery.toLowerCase())) {
                         postList.add(modelPost);
                     }
+                    adapterPost.notifyDataSetChanged();
 
                     //adapter
                     //set adapter to recycler
-                    recyclerView.setAdapter(adapterPost);
                 }
                 Iterator<ModelPost> iter = postList.iterator();
                 while (iter.hasNext()){
