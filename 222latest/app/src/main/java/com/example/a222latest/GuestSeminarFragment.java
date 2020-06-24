@@ -2,20 +2,14 @@ package com.example.a222latest;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,6 +26,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 
+/**
+ * seminar fragment to show data of seminar which is tagged by seminar
+ */
 public class GuestSeminarFragment extends Fragment {
     FirebaseAuth firebaseAuth;
 
@@ -47,7 +44,13 @@ public class GuestSeminarFragment extends Fragment {
         // Required empty public constructor
     }
 
-
+    /**
+     * cereates the view of fragment
+     * @param inflater for the taking fragment
+     * @param container container to vieving
+     * @param savedInstanceState passing data between various Android activities.
+     * @return returns the viev of fragment
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -79,6 +82,11 @@ public class GuestSeminarFragment extends Fragment {
         return view;
     }
 
+    /**
+     * loadss the post first we store them in a priority queue after that we put them in an linked list to send adapter and
+     *
+     * @param searchQuery search query to search seminar posts in posts
+     */
     private void loadPosts(String searchQuery) {
         //path of all posts
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");

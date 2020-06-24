@@ -27,6 +27,10 @@ import java.util.ArrayList;
 import java.util.TreeSet;
 import java.util.UUID;
 
+/**
+ * Class that retrieves data from the database and keeps it in a balanced tree
+ * @author zafer
+ */
 public class ContactActivity extends AppCompatActivity implements ContactAdapter.OnNoteListener {
 
     private DatabaseReference teacherRef;
@@ -41,6 +45,10 @@ public class ContactActivity extends AppCompatActivity implements ContactAdapter
     RecyclerView rw2;
     boolean group = false;
 
+    /**
+     * The method we take from the database in real-time and add to the balanced tree we created
+     * @param savedInstanceState savedInstance
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +78,12 @@ public class ContactActivity extends AppCompatActivity implements ContactAdapter
         button2.setEnabled(false);
         teacherRef = FirebaseDatabase.getInstance().getReference().child("Members");
         teacherRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            /**
+             * The method that runs the changes when there are any changes in the database.
+             * I add the information we receive as a reference to a temporary reference and add it to the tree.
+             * @param dataSnapshot snapshot
+             */
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -98,11 +112,18 @@ public class ContactActivity extends AppCompatActivity implements ContactAdapter
 
     }
 
+    /**
+     * I send it to the adapter class that I created in order to display the tree that I created from the database.
+     */
     public void sendAdapter() {
         ca = new ContactAdapter(users, group, this);
         rw2.setAdapter(ca);
     }
 
+    /**
+     * When the create group button is clicked, the method that allows people to add to the group instead of sending it for chat when they select the contacts
+     * @param view view
+     */
     public void addGroup(View view) {
         group = true;
         button2.setEnabled(true);
@@ -110,6 +131,10 @@ public class ContactActivity extends AppCompatActivity implements ContactAdapter
         rw2.setAdapter(ca);
     }
 
+    /**
+     * After pressing the group done button, the method that generates a special id for the group and calls fragment to get the name of the group.
+     * @param view view
+     */
     public void createGroup(View view) {
 
         button2.setEnabled(false);

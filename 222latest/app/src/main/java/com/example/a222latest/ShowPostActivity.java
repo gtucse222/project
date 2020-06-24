@@ -19,6 +19,9 @@ import com.google.android.material.navigation.NavigationView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * calls the fragment of home to show psots
+ */
 public class ShowPostActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     protected DrawerLayout drawerLayout;
     ActionBarDrawerToggle drawerToggle;
@@ -27,6 +30,12 @@ public class ShowPostActivity extends AppCompatActivity implements NavigationVie
     FirebaseAuth firebaseAuth;
     Boolean guest;
 
+    /**
+     * get insances of user and shows the posts
+     * if the user is guest it doesnt shown in home screen of guest
+     * @param savedInstanceState to send and get other activities
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +78,11 @@ public class ShowPostActivity extends AppCompatActivity implements NavigationVie
 
     }
 
+    /**
+     * to show other options on drawer
+     * @param item menu item selected
+     * @return returnsfalse or true according to operation
+     */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
@@ -104,6 +118,11 @@ public class ShowPostActivity extends AppCompatActivity implements NavigationVie
         return false;
     }
 
+    /**
+     * first create calls
+     * @param menu menu layout
+     * @return retuens super class to create menu options
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -113,6 +132,11 @@ public class ShowPostActivity extends AppCompatActivity implements NavigationVie
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * when chosed an item in menu
+     * @param item item of menu
+     * @return returns the super class
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.menu.menu_post)

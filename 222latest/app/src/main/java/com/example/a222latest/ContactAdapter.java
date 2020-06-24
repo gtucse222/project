@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.TreeSet;
 
+/**
+ * Adapter that allows us to see the data taken from the database on the screen in a loop
+ */
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ProfileHolder> implements Filterable {
     private boolean group;
     // private TreeSet<UserC> names;
@@ -35,6 +38,13 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ProfileH
 
     // public ContactAdapter(TreeSet<UserC> names,boolean group,OnNoteListener onNoteListener)
 
+    /**
+     *
+     * @param names The tree that holds the data from the database
+     * @param group Variable that determines whether the add group button is pressed
+     * @param onNoteListener onNoteListener
+     * Class defining iterator for incoming tree
+     */
     public ContactAdapter(RedBlackTree<UserC> names, boolean group, OnNoteListener onNoteListener) {
 
         this.names = names;
@@ -61,18 +71,22 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ProfileH
         return new ProfileHolder(view, mOnNoteListener);
     }
 
+    /**
+     *The class that determines the location of objects on the screen for recycleview,
+     *  the method that sends an intent for chat when clicked on any of them
+     * @param holder  Maintained Item
+     * @param position Maintained Item position
+     */
     @Override
     public void onBindViewHolder(@NonNull ProfileHolder holder, int position) {
         if (iterForName.hasNext()) {
-
             // UserC temp=iterForName.next();
             UserC temp = (UserC) iterForName.next().data;
             final String b = temp.geteMail();
             final String a = temp.getName();
-            System.out.println(a + "  " + b);
+           // System.out.println(a + "  " + b);
             holder.name.setText(a);
             holder.email.setText(b);
-
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -115,11 +129,20 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ProfileH
 
     }
 
+    /**
+     * Number of elements in the tree
+     * @return return
+     */
     @Override
     public int getItemCount() {
         return names.size();
     }
 
+    /**
+     * Provide intent for private chat
+     * @param item mail
+     * @param item2 name
+     */
     private void passData(String item, String item2) {
         System.out.println("Personal Intent" + item);  //Item = mail
         Intent intent = new Intent(context, PrivateMessagingActivity.class);
@@ -129,13 +152,14 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ProfileH
     }
 
     public void sendGroup() {
-        //  Intent intent=new Intent(context,Message.class);       MessageActivity send
-        // intent.putStringArrayListExtra("mails",emailss);
+
         group = false;
-        //context.startActivity(intent);
-        //emailss.clear();
     }
 
+    /**
+     * member mails list of the group
+     * @return new group list
+     */
     public ArrayList<String> getGroup() {
         return new ArrayList<>(emailss);
     }
@@ -145,7 +169,17 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ProfileH
         return filter;
     }
 
+    /**
+     * Filter for search
+     */
     Filter filter = new Filter() {
+        /**
+         * The method that filters the search,
+         * looks at all the elements and adds the string
+         * if element has searched string  and adds them to the new list.
+         * @param constraint searched name
+         * @return new list
+         */
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             //TreeSet<UserC> filteredList=new TreeSet<>();
@@ -188,6 +222,11 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ProfileH
             return filterResults;
         }
 
+        /**
+         * Show the searched list
+         * @param constraint searched string
+         * @param results new list
+         */
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
 
@@ -218,7 +257,9 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ProfileH
         }
     };
 
-
+    /**
+     *Reads the mails and names of people standing in the specific area of ​​the screen if clicked
+     */
     class ProfileHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView name;
         TextView email;

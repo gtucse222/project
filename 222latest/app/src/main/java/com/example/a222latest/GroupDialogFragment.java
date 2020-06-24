@@ -20,7 +20,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
-
+/**
+ * If the group is created, the notification screen displayed to get its name
+ */
 public class GroupDialogFragment extends DialogFragment {
 
     EditText editText;
@@ -33,6 +35,13 @@ public class GroupDialogFragment extends DialogFragment {
     String groupId;
     Context x;
 
+    /**
+     *
+     * @param inflater inflater
+     * @param container container
+     * @param savedInstanceState savedInstanceState
+     * @return fragment view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.groupdialog_fragment, container, false);
@@ -40,6 +49,11 @@ public class GroupDialogFragment extends DialogFragment {
         textView = (TextView) view.findViewById(R.id.textView2);
 
         textView.setOnClickListener(new View.OnClickListener() {
+            /**
+             *  If the current group enters the name, the class that adds it to the list,
+             *  adds it to the database, and sends the list as an intent.
+             * @param v Image for entering fragment name
+             */
             @Override
             public void onClick(View v) {
 

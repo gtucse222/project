@@ -9,9 +9,17 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * shows seminar for guests calls guest fragment
+ */
 public class ShowSeminarActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     ActionBar actionBar;
+
+    /**
+     * when first call
+     * @param savedInstanceState if takes action from other activities
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -43,6 +43,7 @@ import java.util.PriorityQueue;
 
 /**
  * A simple {@link Fragment} subclass.
+ * home fragment to view all posts
  */
 public class HomeFragment extends Fragment {
     FirebaseAuth firebaseAuth;
@@ -58,11 +59,20 @@ public class HomeFragment extends Fragment {
 
     LinearLayoutManager layoutManager;
 
+    /**
+     * no parameter constructor
+     */
     public HomeFragment() {
         // Required empty public constructor
     }
 
-
+    /**
+     *To view fragment
+     * @param inflater to get layout of home fragment
+     * @param container of the datas
+     * @param savedInstanceState used for passing data between various Android activities
+     * @return returns the view of fragment
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -93,6 +103,10 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    /**
+     * loads the post and from database
+     * first collect the into priority queue according to time then send it to adapter with in linkedlist
+     */
     private void loadPosts() {
         adapterPost = new AdapterPost(getActivity(), queueToList);
         recyclerView.setAdapter(adapterPost);
@@ -127,6 +141,9 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    /**
+     * search posts witin linked list which is loaded from load post
+     */
     public void searchPost(String searchQuery) {
         //path of all posts
         searchList.clear();
@@ -150,7 +167,11 @@ public class HomeFragment extends Fragment {
 
     //Check user status
 
-
+    /**
+     * menu to creating search bar
+     * @param menu menu layout
+     * @param inflater to get menu layout
+     */
     //     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         //inflater.inflate(R.menu.menu_post, menu);
@@ -180,12 +201,21 @@ public class HomeFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    /**
+     * initial state sets the menu options true
+     * @param savedInstanceState to passing  data another activity or class
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * calls super method of menu seleted
+     * @param item the item in menu
+     * @return the super method
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         // int id = item.getItemId();

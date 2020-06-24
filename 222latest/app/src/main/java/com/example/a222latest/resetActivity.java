@@ -22,6 +22,10 @@ public class resetActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
 
+    /**
+     * That method takes the e-mail and send reset e-mail to given mail.
+     * @param savedInstanceState instance
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

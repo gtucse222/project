@@ -29,6 +29,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
+/**
+ * Activity to adding new post
+ */
 public class AddPostActivity extends AppCompatActivity {
 
     FirebaseAuth firebaseAuth;
@@ -48,6 +51,10 @@ public class AddPostActivity extends AppCompatActivity {
     //progressbar
     ProgressDialog progressDialog;
 
+    /**
+     * gets the related user and takes the information and uploads it to database
+     * @param savedInstanceState bundle data
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,6 +141,12 @@ public class AddPostActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * uploading the data firs store in hash map and sends it to db
+     * @param title post title or tag
+     * @param description post description
+     */
     private void uploadData(String title, final String description){
         progressDialog.setMessage("Publishing post...");
         progressDialog.show();
@@ -190,18 +203,27 @@ public class AddPostActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * on start action in add post
+     */
     @Override
     protected void onStart() {
         super.onStart();
         checkUserStatus();
     }
 
+    /**
+     * android resume method
+     */
     @Override
     protected void onResume() {
         super.onResume();
         checkUserStatus();
     }
 
+    /**
+     * checks the user status by using firebase methods
+     */
     public void checkUserStatus(){
         //get current user
         FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -217,12 +239,21 @@ public class AddPostActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * it decides to back pressed option
+     * @return
+     */
     @Override
     public boolean onSupportNavigateUp(){
         onBackPressed();//go to previous activity
         return super.onSupportNavigateUp();
     }
 
+    /**
+     * creates menu
+     * @param menu menu
+     * @return returns the super method
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //getMenuInflater().inflate(R.menu.menu_main,menu);
@@ -232,6 +263,11 @@ public class AddPostActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * to show menu options
+     * @param item menu item
+     * @return returns the super class
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();

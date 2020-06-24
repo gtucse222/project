@@ -22,14 +22,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-
 /**
- * Shows current user name surname email and membership
+ * Shows profile infos
  */
 public class ProfileActivity extends AppCompatActivity {
 
     DatabaseReference memberRef;
 
+    /**
+     * takes the user information from data base and sends it to layout to viev
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -28,6 +28,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
+/**
+ * post adapter class to show the post informations in home screen it basically store the post data and sends it
+ * to row post layouts
+ */
 public class AdapterPost extends RecyclerView.Adapter<AdapterPost.MyHolder> {
 
 
@@ -40,6 +44,11 @@ public class AdapterPost extends RecyclerView.Adapter<AdapterPost.MyHolder> {
 
     boolean mProcessLike = false;
 
+    /**
+     * constructor given params comes from load post whichis home fragment includes posts
+     * @param context
+     * @param postList
+     */
     public AdapterPost(Context context, List<ModelPost> postList) {
         this.context = context;
         this.postList = postList;
@@ -57,6 +66,11 @@ public class AdapterPost extends RecyclerView.Adapter<AdapterPost.MyHolder> {
         return new MyHolder(view);
     }
 
+    /**
+     * holder class to store post datas for row by row
+     * @param holder to send changes to layout
+     * @param position to add posts
+     */
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
         //get data
@@ -141,6 +155,11 @@ public class AdapterPost extends RecyclerView.Adapter<AdapterPost.MyHolder> {
 
     }
 
+    /**
+     * Like button action changes sto color and increases or decreases number of likes
+     * @param holder to store posts
+     * @param postKey to access post taken from hashmap
+     */
     private void setLikes(final MyHolder holder, String postKey) {
         likesRef.addValueEventListener(new ValueEventListener() {
             // @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -168,6 +187,10 @@ public class AdapterPost extends RecyclerView.Adapter<AdapterPost.MyHolder> {
     }
 
     //view hoolder class
+
+    /**
+     * holder class to show the posts on screen
+     */
     class MyHolder extends RecyclerView.ViewHolder {
 
         //viewvs from row_post.xml
@@ -176,6 +199,10 @@ public class AdapterPost extends RecyclerView.Adapter<AdapterPost.MyHolder> {
         ImageButton moreBtn;
         Button likeBtn;
 
+        /**
+         * vieving elements on screen
+         * @param itemView for eachpost unique
+         */
         public MyHolder(@NonNull View itemView) {
             super(itemView);
 

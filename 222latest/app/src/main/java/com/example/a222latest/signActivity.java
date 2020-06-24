@@ -34,6 +34,15 @@ public class signActivity extends AppCompatActivity {
     DatabaseReference signRef;
     SkipList<String> skipList = new SkipList<String>();
 
+    /**
+     *  That method takes the information about the member such as name,surname,mail address,password.
+     *  Firstly check the mail is GTU mail or not.  If mail address is not GTU, direct to signActivity.
+     *  If mail address is GTU, firstly control the e-mail and password is valid. If it is valid, send the mail verification.
+     *  Then create a member object and sets the information to the member object. If  member's membership is student,
+     *  we allow the sign. If the membership is teacher, We control the mail address is valid or not. For this purpose we pull the teacher mails from GTU website and put the skiplist.
+     *  If the skiplist contains the mail, we allow the sign, otherwise we don't allow to sign.
+     * @param savedInstanceState get class or data from other activities.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +114,9 @@ public class signActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * That method reads the TeacherMails file,and add to skipList.
+     */
     private void readTeachers() {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(getAssets().open("TeacherMails")));
@@ -118,6 +130,11 @@ public class signActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * That method checks the mail address is GTU mail or not.
+     * @param userMail mail address which will be controll.
+     * @return If mail address is GTU, return true; otherwise return false.
+     */
     private boolean isGtuMail(String userMail) {
         return userMail.endsWith("@gtu.edu.tr");
     }

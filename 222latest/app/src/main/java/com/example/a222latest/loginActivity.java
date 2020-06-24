@@ -22,6 +22,10 @@ public class loginActivity extends AppCompatActivity {
     EditText password;
     private FirebaseUser user;
 
+    /**
+     * Sets the email and password.
+     * @param savedInstanceState instance
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,8 +35,12 @@ public class loginActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
     }
 
+    /**
+     * That method takes the mail and password information. If the that informations are valid, direct the user to the show post activity.
+     * If the informations are invalid, send message.
+     * @param view view.
+     */
     public void sample(View view) {
-//        Intent intent = new Intent(this, sampleActivity.class);
 
         String mail = email.getText().toString();
         String pass = password.getText().toString();
@@ -55,6 +63,11 @@ public class loginActivity extends AppCompatActivity {
         });
     }
 
+
+    /**
+     *  That method direct the user to the reset activity to reset his/her password.
+     * @param view view.
+     */
     public void resetPassword(View view) {
         Intent intent = new Intent(this, resetActivity.class);
         startActivity(intent);
