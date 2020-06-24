@@ -4,7 +4,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
     <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_drawer"
             android:layout_width="match_parent"
@@ -28,6 +27,16 @@
             android:layout_weight="1">
 
     </FrameLayout>
+
+    <TextView
+            android:id="@+id/guestSeePost"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:visibility="invisible"
+            android:gravity="center"
+            android:text="You need to login to see posts."
+            android:textSize="19dp" />
 
 
 </RelativeLayout>

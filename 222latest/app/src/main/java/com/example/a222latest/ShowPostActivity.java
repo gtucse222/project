@@ -12,6 +12,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -50,16 +51,17 @@ public class ShowPostActivity extends AppCompatActivity implements NavigationVie
         navigationView = findViewById(R.id.navigationView);
         navigationView.setNavigationItemSelectedListener(this);
 
-        if (!guest) {
+        if (!guest)
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.content2, new HomeFragment()).commit();
-        }
 
 
         if (guest) {
+            findViewById(R.id.guestSeePost).setVisibility(View.VISIBLE);
             navigationView = (NavigationView) findViewById(R.id.navigationView);
             Menu nav_Menu = navigationView.getMenu();
             nav_Menu.findItem(R.id.chat).setVisible(false);
+            nav_Menu.findItem(R.id.profile).setVisible(false);
             nav_Menu.findItem(R.id.posts).setVisible(false);
             nav_Menu.findItem(R.id.newPost).setVisible(false);
             nav_Menu.findItem(R.id.contact).setVisible(false);

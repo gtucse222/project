@@ -35,6 +35,7 @@
         <activity android:name=".signActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".MapActivity" />
+        <activity android:name=".ListFoodActivity" />
     </application>
 
 </manifest>

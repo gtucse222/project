@@ -16,7 +16,6 @@
             android:theme="@style/AppTheme.Toolbar"></androidx.appcompat.widget.Toolbar>
 
 
-
     <FrameLayout
             android:id="@+id/content"
             android:layout_width="match_parent"
@@ -25,8 +24,14 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_weight="1">
-
     </FrameLayout>
 
+    <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="19dp"
+            android:text="You need to login to see posts." />
 
 </RelativeLayout>
