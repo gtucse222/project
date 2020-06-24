@@ -39,7 +39,8 @@ public class GTUCampusMap
         GTUCampus.insert(new Edge(8, 35, 13.0));
         GTUCampus.insert(new Edge(36, 1, 11.5));
         GTUCampus.insert(new Edge(34, 36, 5.0));
-        GTUCampus.insert(new Edge(33, 0, 28.0));
+        GTUCampus.insert(new Edge(33, 37, 14.0));
+        GTUCampus.insert(new Edge(37, 0, 14.0));
         GTUCampus.insert(new Edge(13, 0, 10.0));
         GTUCampus.insert(new Edge(32, 31, 2.0));
         GTUCampus.insert(new Edge(31, 29, 9.0));
