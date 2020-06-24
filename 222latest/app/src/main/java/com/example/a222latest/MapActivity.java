@@ -55,11 +55,11 @@ public class MapActivity extends AppCompatActivity implements AdapterView.OnItem
 
         location_info.setVisibility(View.INVISIBLE);
 
-        location_button.setOnClickListener(new View.OnClickListener() {
+           location_button.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
-                
+
                 to_= adapter_location.get_vertex_loca(to.getSelectedItem().toString());
                 from_ = adapter_location.get_vertex_loca(from.getSelectedItem().toString());
 
@@ -72,12 +72,11 @@ public class MapActivity extends AppCompatActivity implements AdapterView.OnItem
                     dir_str.append(" ");
                     for(int i = 1 ; i < dir_path.length ; ++i) {
                         dir_str.append(dir_path[i]);
-                        dir_str.append(dir_path[0]);
                         dir_str.append(" ");
 
                         Point2D start = adapter_location.get_vertex_pixel(dir_path[i-1]);
                         Point2D finish = adapter_location.get_vertex_pixel(dir_path[i]);
-                        
+
                         /*
                             To be added draw functions
                         */
