@@ -4,11 +4,11 @@
         xmlns:tools="http://schemas.android.com/tools"
         tools:context=".ShowPostActivity">
 
-
     <item
             android:id="@+id/post_search"
-            android:icon="@drawable/ic_search_post"
+            android:icon="@drawable/ic_search"
             android:title="Search"
+            android:iconTint="@color/white"
             app:actionViewClass="android.widget.SearchView"
             app:showAsAction="always|collapseActionView" />
 </menu>

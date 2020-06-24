@@ -14,7 +14,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintEnd_toStartOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:theme="@style/AppTheme.Toolbar"
+            app:titleTextColor="@color/white" />
 
     <FrameLayout
             android:id="@+id/content2"

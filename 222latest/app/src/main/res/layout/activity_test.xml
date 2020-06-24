@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:background="@color/colorPrimary"
-            android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"></androidx.appcompat.widget.Toolbar>
+            android:theme="@style/AppTheme.Toolbar"></androidx.appcompat.widget.Toolbar>
 
 
 
