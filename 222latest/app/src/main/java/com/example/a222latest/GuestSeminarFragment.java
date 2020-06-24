@@ -68,7 +68,7 @@ public class GuestSeminarFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         //show newest post first, for this from load last
-        layoutManager.setReverseLayout(false);
+        layoutManager.setReverseLayout(true);
         recyclerView.setAdapter(adapterPost);
         //layoutManager.setReverseLayout(true);
 
