@@ -59,13 +59,20 @@ public class MapActivity extends AppCompatActivity implements AdapterView.OnItem
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
-
-
+                
                 to_= adapter_location.get_vertex_loca(to.getSelectedItem().toString());
                 from_ = adapter_location.get_vertex_loca(from.getSelectedItem().toString());
 
-                if(to_ != from_)
-                    location_info.setText(GTUMap.direction_BFS(to_, from_));
+                if(to_ != from_) {
+
+                    StringBuilder test = new StringBuilder();
+                    String[] dir_path =  GTUMap.direction_BFS(to_, from_).split("\\s+");
+
+                    for (String s : dir_path) {
+                        test.append(s);
+                    }
+                    location_info.setText(test.toString());
+                }
                 else
                     location_info.setText("You are already here.");
 
