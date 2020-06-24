@@ -87,7 +87,7 @@ public class MapActivity extends AppCompatActivity implements AdapterView.OnItem
     /**
      * thickness for drawing location
      */
-    private static final int THICKNESS = 20;
+    private static final int THICKNESS = 40;
 
     /**
      * touch tag
