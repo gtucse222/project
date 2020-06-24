@@ -3,11 +3,25 @@ package com.example.a222latest;
 import java.util.HashMap;
 import java.util.Objects;
 
+/*
+    Adapter class 
+    The class convert string(location) to vertex number and point2d object
+ */
 public class LocationAdapter
 {
+    /**
+     * String to vertex number
+     */
     private HashMap<String, Integer> faculty_to_vertex;
+
+    /**
+     * String to pixel point
+     */
     private HashMap<String, Point2D> vertex_to_pixel_point;
 
+    /**
+     * constructor
+     */
     public LocationAdapter()
     {
         faculty_to_vertex = new HashMap<>();
@@ -16,6 +30,9 @@ public class LocationAdapter
         createStructure_pixel();
     }
 
+    /**
+     * create string to vertex hashmap
+     */
     private void createStructure_vertex() {
 
         faculty_to_vertex.put("Campus Entry", 1);
@@ -62,6 +79,9 @@ public class LocationAdapter
         faculty_to_vertex.put("Electronic Back Underpass", 38);
     }
 
+    /**
+     * create vertex number(string) to pixel
+     */
     private void createStructure_pixel() {
 
         vertex_to_pixel_point.put("0", new Point2D(835, 530));
@@ -108,11 +128,21 @@ public class LocationAdapter
         vertex_to_pixel_point.put("38", new Point2D(418, 533));
     }
 
+    /**
+     * get vertex name to vertex number
+     * @param key, vertex name 
+     * @return vertex number
+     */
     public Integer get_vertex_loca(String key) {
 
         return faculty_to_vertex.get(key);
     }
 
+    /**
+     * get vertex number's name to vertex Pixel Point
+     * @param key, vertex number's name 
+     * @return vertex pixel point
+     */
     public Point2D get_vertex_pixel(String key) {
 
         return vertex_to_pixel_point.get(key);
