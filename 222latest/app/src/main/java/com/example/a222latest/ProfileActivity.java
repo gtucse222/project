@@ -23,6 +23,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 
+/**
+ * Shows current user name surname email and membership
+ */
 public class ProfileActivity extends AppCompatActivity {
 
     DatabaseReference memberRef;
