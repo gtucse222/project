@@ -71,6 +71,7 @@ public class GTUCampusMap
         GTUCampus.insert(new Edge(38, 28, 7.0));
         GTUCampus.insert(new Edge(38, 31, 5.0));
         GTUCampus.insert(new Edge(30, 28, 7.0));
+        GTUCampus.insert(new Edge(33, 30, 8.0));
     }
 
     public String direction_BFS(int to, int from) {
