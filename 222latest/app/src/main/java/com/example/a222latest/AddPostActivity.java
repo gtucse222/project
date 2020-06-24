@@ -82,17 +82,17 @@ public class AddPostActivity extends AppCompatActivity {
         Query query = userDbRef.orderByChild("mailAddress").equalTo(email);
         String x = uid.length()+"burda";;
         Toast.makeText(AddPostActivity.this,x, Toast.LENGTH_LONG).show();
-         query.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot ds: dataSnapshot.getChildren()){
-                        name = ""+ds.child("name").getValue();
-                        surname=""+ds.child("surname").getValue();
-                        email =""+ds.child("mailAddress").getValue();
-                        membership =""+ds.child("membership").getValue();
-                        // dp = ""+ds.child("image").getValue();
-                    }
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds: dataSnapshot.getChildren()){
+                    name = ""+ds.child("name").getValue();
+                    surname=""+ds.child("surname").getValue();
+                    email =""+ds.child("mailAddress").getValue();
+                    membership =""+ds.child("membership").getValue();
+                    // dp = ""+ds.child("image").getValue();
                 }
+            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -235,9 +235,9 @@ public class AddPostActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-       // if(id == R.id.action_logout) {
-         //   firebaseAuth.signOut();
-         //   checkUserStatus();
+        // if(id == R.id.action_logout) {
+        //   firebaseAuth.signOut();
+        //   checkUserStatus();
         //}
 
         return super.onOptionsItemSelected(item);

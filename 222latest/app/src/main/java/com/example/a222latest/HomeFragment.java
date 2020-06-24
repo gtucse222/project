@@ -50,6 +50,7 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView;
     PriorityQueue<ModelPost> postList;
     List<ModelPost> queueToList=new LinkedList<ModelPost>();
+    List<ModelPost> searchList=new LinkedList<ModelPost>();
     AdapterPost adapterPost;
     ModelPost postTemp;
     private SearchView searchView = null;
@@ -110,6 +111,7 @@ public class HomeFragment extends Fragment {
                     postTemp=iter.next();
                     queueToList.add(postTemp);
                 }
+                recyclerView.smoothScrollToPosition(recyclerView.getAdapter().getItemCount());
                 System.out.println(postList+"hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
                 adapterPost.notifyDataSetChanged();
             }
@@ -124,22 +126,25 @@ public class HomeFragment extends Fragment {
 
     public void searchPost(String searchQuery) {
         //path of all posts
+
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                postList.clear();
+                searchList.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     ModelPost modelPost = ds.getValue(ModelPost.class);
 
                     if (modelPost.getpTitle().toLowerCase().contains(searchQuery.toLowerCase())) {
-                        postList.add(modelPost);
+                        searchList.add(modelPost);
                     }
-
-                    adapterPost.notifyDataSetChanged();
+                    adapterPost = new AdapterPost(getActivity(), searchList);
+                    recyclerView.setAdapter(adapterPost);
                     recyclerView.smoothScrollToPosition(recyclerView.getAdapter().getItemCount());
                 }
+                //recyclerView.setAdapter(new AdapterPost(getActivity(), queueToList));
             }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -154,7 +159,7 @@ public class HomeFragment extends Fragment {
     //Check user status
 
 
-//     @RequiresApi(api = Build.VERSION_CODES.M)
+    //     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         //inflater.inflate(R.menu.menu_post, menu);
         MenuItem item = menu.findItem(R.id.post_search);

@@ -122,16 +122,16 @@ public class ModelPost implements Comparable<ModelPost> {
 
     @Override
     public int compareTo(ModelPost o) {
-      Long timeVal = Long.parseLong(this.getpId());
-      Long likes = Long.parseLong(this.getpLikes());
+        Long timeVal = Long.parseLong(this.getpId());
+        Long likes = Long.parseLong(this.getpLikes());
 
-      Long timeVal2 = Long.parseLong(o.getpId());
-      Long likes2 = Long.parseLong(o.getpLikes());
-      Long result = ((likes+1) * priorityEf)/(timeVal+1);
-      Long result2 = ((likes2+1) * priorityEf) / (timeVal2+1);
+        Long timeVal2 = Long.parseLong(o.getpId());
+        Long likes2 = Long.parseLong(o.getpLikes());
+        Long result = ((likes+1) * priorityEf)/(timeVal+1);
+        Long result2 = ((likes2+1) * priorityEf) / (timeVal2+1);
 
-      return (int) (result-result2);
-
+        //return (int) (result-result2);
+        return this.getpId().compareTo(o.getpId());
       /*  int first= 0;int second=0;
         if(Long.parseDouble(this.pId)-Long.parseDouble(o.pId)>)
             first++;
@@ -163,12 +163,11 @@ public class ModelPost implements Comparable<ModelPost> {
         }
            return  this.getpId().compareTo(o.getpId());
 */
-
     }
 
     @Override
     public boolean equals(@Nullable Object obj) {
-    ModelPost o =(ModelPost) obj;
+        ModelPost o =(ModelPost) obj;
         return o.getpId().equals(this.getpId());
     }
 

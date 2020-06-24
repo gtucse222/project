@@ -96,12 +96,12 @@ public class GuestSeminarFragment extends Fragment {
                     //adapter
                     //set adapter to recycler
                     recyclerView.setAdapter(adapterPost);
-                    recyclerView.smoothScrollToPosition(recyclerView.getAdapter().getItemCount());
                 }
                 Iterator<ModelPost> iter = postList.iterator();
                 while (iter.hasNext()){
                     postTemp=iter.next();
                     queueToList.add(postTemp);
+                    recyclerView.smoothScrollToPosition(recyclerView.getAdapter().getItemCount());
                 }
                 System.out.println(postList+"hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
                 adapterPost.notifyDataSetChanged();

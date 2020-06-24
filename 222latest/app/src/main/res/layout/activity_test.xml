@@ -15,16 +15,6 @@
             android:background="@color/colorPrimary"
             android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"></androidx.appcompat.widget.Toolbar>
 
-    <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchButtonPost"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:title="Search"
-            app:actionViewClass="androidx.appcompat.widget.SearchView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:showAsAction="always|collapseActionView" />
 
 
     <FrameLayout
