@@ -17,7 +17,7 @@ public class ShowSeminarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seminar);
         //actionBar.setTitle("Profile");
-        logIn();
+//        logIn();
         firebaseAuth = FirebaseAuth.getInstance();
 
 
@@ -29,19 +29,19 @@ public class ShowSeminarActivity extends AppCompatActivity {
 
     }
 
-    private void logIn() {
-        String email = "deneme@gmail.com";
-        String password = "123456";
-
-
-        firebaseAuth = FirebaseAuth.getInstance();
-
-        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                Toast.makeText(this,"Loggedin", Toast.LENGTH_SHORT).show();
-            }
-            else
-                Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
-        });
-    }
+//    private void logIn() {
+//        String email = "deneme@gmail.com";
+//        String password = "123456";
+//
+//
+//        firebaseAuth = FirebaseAuth.getInstance();
+//
+//        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+//            if (task.isSuccessful()) {
+//                Toast.makeText(this,"Loggedin", Toast.LENGTH_SHORT).show();
+//            }
+//            else
+//                Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
+//        });
+//    }
 }

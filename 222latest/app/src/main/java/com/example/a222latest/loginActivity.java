@@ -3,6 +3,7 @@ package com.example.a222latest;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -31,28 +32,31 @@ public class loginActivity extends AppCompatActivity {
     }
 
     public void sample(View view) {
-        Intent intent = new Intent(this,sampleActivity.class);
+//        Intent intent = new Intent(this, sampleActivity.class);
 
         String mail = email.getText().toString();
         String pass = password.getText().toString();
+        Context context = this;
 
-        mAuth.signInWithEmailAndPassword(mail,pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+        mAuth.signInWithEmailAndPassword(mail, pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                    Toast.makeText(loginActivity.this,"You login Succesfully", Toast.LENGTH_LONG).show();
+                Toast.makeText(loginActivity.this, "You login Succesfully", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(context, ShowPostActivity.class);
+                intent.putExtra("guest", false);
+                startActivity(intent);
             }
 
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(loginActivity.this,e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+                Toast.makeText(loginActivity.this, e.getLocalizedMessage().toString(), Toast.LENGTH_LONG).show();
             }
         });
-        startActivity(intent);
     }
 
     public void resetPassword(View view) {
-        Intent intent = new Intent(this,resetActivity.class);
+        Intent intent = new Intent(this, resetActivity.class);
         startActivity(intent);
     }
 }

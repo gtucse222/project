@@ -53,7 +53,7 @@ public class GuestSeminarFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        logIn();
+//        logIn();
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_seminar, container, false);
 
@@ -122,20 +122,20 @@ public class GuestSeminarFragment extends Fragment {
 
 
 
-
-    private void logIn() {
-        String email = "deneme@gmail.com";
-        String password = "123456";
-
-
-        firebaseAuth = FirebaseAuth.getInstance();
-
-        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                // Toast.makeText(this,"Loggedin",Toast.LENGTH_SHORT).show();
-            }
-            //else
-            //Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
-        });
-    }
+//
+//    private void logIn() {
+//        String email = "deneme@gmail.com";
+//        String password = "123456";
+//
+//
+//        firebaseAuth = FirebaseAuth.getInstance();
+//
+//        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+//            if (task.isSuccessful()) {
+//                // Toast.makeText(this,"Loggedin",Toast.LENGTH_SHORT).show();
+//            }
+//            //else
+//            //Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
+//        });
+//    }
 }

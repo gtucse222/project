@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,109 +25,47 @@ import java.util.Iterator;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private String memberMail;
-    public String someString;
     DatabaseReference memberRef;
-    String currentUserMail = "elif.goral2017@gtu.edu.tr";
-    String legacymemberShip;
-    String legacyname;
-    String legacysurname;
-    int foundMember;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profilelayout);
 
-        foundMember = 0;
+        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        String id = MessagingActivity.emailToId(email);
+        TextView mailTV;
+        TextView nameTV;
+        TextView surnameTV;
+        TextView memberTV;
 
-        memberRef = FirebaseDatabase.getInstance().getReference().child("Members");
-        memberRef.addListenerForSingleValueEvent( new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    long size = dataSnapshot.getChildrenCount();
-                    String data;
-                    Iterator iterator = dataSnapshot.getChildren().iterator();
+        memberRef = FirebaseDatabase.getInstance().getReference().child("Members").child(id);
 
-                    while (iterator.hasNext()) {
-                        DataSnapshot current = (DataSnapshot) iterator.next();
-                        String mailAdress = (String) current.child("mailAddress").getValue();
-                        String memberShip = (String)  current.child("membership").getValue();
-                        String name = (String)  current.child("name").getValue();
-                        String surname = (String)  current.child("surname").getValue();
-                        System.out.println("Mail adress is " + mailAdress + " and compared to " + currentUserMail);
-                        if(mailAdress.equals(currentUserMail)){
-                            System.out.println("Mail adress is " + mailAdress + " and compared to " + currentUserMail);
-                            foundMember = 1;
-                            legacyname = name;
-                            legacysurname = surname;
-                            legacymemberShip = memberShip;
-                        }
+        mailTV = findViewById(R.id.mail_text);
+        memberTV = findViewById(R.id.membership_text);
+        surnameTV = findViewById(R.id.surname_text);
+        nameTV = findViewById(R.id.name_text);
 
-                    }
-                    System.out.println("Found member is " + foundMember);
-                    if(foundMember == 1){
-                        legacyname = "Name: " + legacyname;
-                        TextView t = (TextView)findViewById(R.id.name_text);
-                        t.setText(legacyname);
-                        legacysurname = "Surname: " + legacysurname;
-                        TextView t1 = (TextView)findViewById(R.id.surname_text);
-                        t1.setText(legacysurname);
-                        legacymemberShip = "Membership: " +    legacymemberShip;
-                        TextView t2 = (TextView)findViewById(R.id.membership_text);
-                        t2.setText(legacymemberShip);
-                        currentUserMail = "Mail: " + currentUserMail;
-                        TextView t3 = (TextView)findViewById(R.id.mail_text);
-                        t3.setText(currentUserMail);
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    //handle databaseError
-                }
-            });
-            foundMember = 0;
-            memberRef = FirebaseDatabase.getInstance().getReference().child("Members").child("teacher");
-            memberRef.addListenerForSingleValueEvent( new ValueEventListener() {
+        memberRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                long size = dataSnapshot.getChildrenCount();
-                String data;
-                Iterator iterator = dataSnapshot.getChildren().iterator();
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String mail = (String) dataSnapshot.child("mailAddress").getValue();
+                String name = (String) dataSnapshot.child("name").getValue();
+                String surname = (String) dataSnapshot.child("surname").getValue();
+                String membership = (String) dataSnapshot.child("membership").getValue();
 
-                while (iterator.hasNext()) {
-                    Iterator iterator2 = ((DataSnapshot) iterator.next()).getChildren().iterator();
-                    while(iterator2.hasNext()){
-                        String mailAdress = (String) ((DataSnapshot) iterator2.next()).getValue();
-                        String memberShip = (String) ((DataSnapshot) iterator2.next()).getValue();
-                        String name = (String) ((DataSnapshot) iterator2.next()).getValue();
-                        String password = (String) ((DataSnapshot) iterator2.next()).getValue();
-                        String surname = (String) ((DataSnapshot) iterator2.next()).getValue();
-                        if(mailAdress.equals(currentUserMail)){
-                            foundMember = 1;
-                            legacyname = name;
-                            legacysurname = surname;
-                            legacymemberShip = memberShip;
-                        }
-                    }
-                    System.out.println("Found member is " + foundMember);
-                    if(foundMember == 1){
-                        TextView t = (TextView)findViewById(R.id.name_text);
-                        t.setText(legacyname);
-                        TextView t1 = (TextView)findViewById(R.id.surname_text);
-                        t1.setText(legacysurname);
-                        TextView t2 = (TextView)findViewById(R.id.membership_text);
-                        t2.setText(legacymemberShip);
-                        TextView t3 = (TextView)findViewById(R.id.mail_text);
-                        t3.setText(currentUserMail);
-                    }
-                }
+                mailTV.setText(mail);
+                memberTV.setText(membership);
+                surnameTV.setText(surname);
+                nameTV.setText(name);
+
             }
+
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                //handle databaseError
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
     }
+
 }

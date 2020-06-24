@@ -3,11 +3,8 @@
 
     <group>
         <item
-                android:id="@+id/login"
-                android:icon="@drawable/ic_person_black_24dp"
-                android:title="Login (test)" />
-        <item
                 android:id="@+id/posts"
+                android:icon="@drawable/ic_person_black_24dp"
                 android:title="Posts" />
         <item
                 android:id="@+id/newPost"
@@ -27,5 +24,8 @@
         <item
                 android:id="@+id/profile"
                 android:title="Profile" />
+        <item
+                android:id="@+id/foodlist"
+                android:title="Food List" />
     </group>
 </menu>

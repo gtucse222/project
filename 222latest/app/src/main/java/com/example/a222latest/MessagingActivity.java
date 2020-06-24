@@ -38,7 +38,6 @@ public abstract class MessagingActivity extends AppCompatActivity {
         setContentView(R.layout.messaging);
 
         // TEST
-        logIn();
 
         getFromIntent();
         initalizeFields();
@@ -100,18 +99,6 @@ public abstract class MessagingActivity extends AppCompatActivity {
 
     abstract protected String getConversationKey();
 
-    private void logIn() {
-//        String email = "deneme@gmail.com";
-//        String password = "123456";
-//
-//
-//        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-//            if (task.isSuccessful()) {
-//                Toast.makeText(this, "logged in", Toast.LENGTH_SHORT).show();
-//            } else
-//                Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
-//        });
-    }
 
     protected void displayMessages(DataSnapshot dataSnapshot) {
         Iterator iterator = dataSnapshot.getChildren().iterator();
