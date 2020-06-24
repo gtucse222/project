@@ -75,7 +75,9 @@ public class ShowPostActivity extends AppCompatActivity implements NavigationVie
         switch (item.getItemId()) {
             case R.id.posts:
 //                drawerLayout.closeDrawers();
-                startActivity(new Intent(this, ShowPostActivity.class));
+                Intent intent = new Intent(this, ShowPostActivity.class);
+                intent.putExtra("guest", guest);
+                startActivity(intent);
                 break;
             case R.id.newPost:
                 startActivity(new Intent(this, AddPostActivity.class));
