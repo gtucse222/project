@@ -1,15 +1,27 @@
 package com.example.a222latest;
 
+/**
+ * keeps GTUCampus map graph information
+ */
 public class GTUCampusMap
 {
+    /**
+     * Campus's vertex
+     */
     private Graph GTUCampus;
 
+    /**
+     * constructor
+     */
     public GTUCampusMap() {
 
         GTUCampus = new ListGraph(40, false);
         buildGraph();
     }
 
+    /**
+     * building graph
+     */
     private void buildGraph() {
         GTUCampus.insert(new Edge(32, 33, 25.0));
         GTUCampus.insert(new Edge(33, 13, 10.0));
@@ -74,6 +86,12 @@ public class GTUCampusMap
         GTUCampus.insert(new Edge(33, 30, 8.0));
     }
 
+    /**
+     * find direction with breadth first search algorithm
+     * @param to, to location
+     * @param from, from location
+     * @return get location as string
+     */
     public String direction_BFS(int to, int from) {
 
         StringBuilder sb = new StringBuilder();
@@ -94,3 +112,4 @@ public class GTUCampusMap
         return sb.toString();
     }
 }
+
