@@ -65,13 +65,25 @@ public class MapActivity extends AppCompatActivity implements AdapterView.OnItem
 
                 if(to_ != from_) {
 
-                    StringBuilder test = new StringBuilder();
+                    StringBuilder dir_str = new StringBuilder();
                     String[] dir_path =  GTUMap.direction_BFS(to_, from_).split("\\s+");
 
-                    for (String s : dir_path) {
-                        test.append(s);
+                    dir_str.append(dir_path[0]);
+                    dir_str.append(" ");
+                    for(int i = 1 ; i < dir_path.length ; ++i) {
+                        dir_str.append(dir_path[i]);
+                        dir_str.append(dir_path[0]);
+                        dir_str.append(" ");
+
+                        Point2D start = adapter_location.get_vertex_pixel(dir_path[i-1]);
+                        Point2D finish = adapter_location.get_vertex_pixel(dir_path[i]);
+                        
+                        /*
+                            To be added draw functions
+                        */
                     }
-                    location_info.setText(test.toString());
+
+                    location_info.setText(dir_str.toString());
                 }
                 else
                     location_info.setText("You are already here.");
