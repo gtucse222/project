@@ -23,7 +23,7 @@ public class LocationAdapter
         faculty_to_vertex.put("Health, culture and sports department", 3);
         faculty_to_vertex.put("Nano Technology Lab", 4);
         faculty_to_vertex.put("KOSGEB", 5);
-        faculty_to_vertex.put("Rector's House", 6);
+        faculty_to_vertex.put("Rectors House", 6);
         faculty_to_vertex.put("Foreign Languages Department", 7);
         faculty_to_vertex.put("Materials Science or Mechanical Engineering", 8);
         faculty_to_vertex.put("Architecture", 9);
