@@ -23,46 +23,132 @@ import android.widget.Toast;
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 
+/**
+ * Main MapActivity
+ */
 public class MapActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnTouchListener{
 
+    /**
+     * Graph structure
+     */
     private GTUCampusMap GTUMap = new GTUCampusMap();
 
+    /**
+     * get location button object
+     */
     protected Button location_button;
 
+    /**
+     * direction info view
+     */
     protected TextView location_info;
 
+    /**
+     * combobox input for from
+     */
     protected Spinner from;
+
+    /**
+     * combobox input for to
+     */
     protected Spinner to;
 
+    /**
+     * Imageview object for campus image
+     */
     protected ImageView map_image;
 
+    /**
+     * location adapter object that helps get location to pixel
+     * and get location to vertex number
+     */
     protected LocationAdapter adapter_location;
 
+    /**
+     * bitmap object for read campus image
+     */
     protected Bitmap map;
+
+    /**
+     * bitmap copy for build mutable bitmap
+     */
     protected Bitmap map_copy;
 
+    /**
+     * to information
+     */
     protected int to_;
+
+    /**
+     * from information
+     */
     protected int from_;
+
+    /**
+     * thickness for drawing location
+     */
     private static final int THICKNESS = 20;
 
+    /**
+     * touch tag
+     */
     private static final String TAG = "Touch";
 
+    /**
+     * Zoom scale
+     */
     @SuppressWarnings("unused")
     private static final float MIN_ZOOM = 1f,MAX_ZOOM = 1f;
 
-    // These matrices will be used to scale points of the image
+    /**
+     * These matrices will be used to scale points of the image
+     */
     protected Matrix matrix = new Matrix();
+
+    /**
+     * These matrices will be saved to scale points of the image
+     */
     protected Matrix savedMatrix = new Matrix();
 
+    /**
+     * none touch
+     */
     protected static final int NONE = 0;
+
+    /**
+     * if the user drag
+     */
     protected static final int DRAG = 1;
+
+    /**
+     * if the user zoom
+     */
     protected static final int ZOOM = 2;
+
+    /**
+     * current mode NONE
+     */
     protected int mode = NONE;
 
+    /**
+     * PointF object for dragging or zooming
+     */
     protected PointF start = new PointF();
+
+    /**
+     * PointF object for dragging or zooming
+     */
     protected PointF mid = new PointF();
+
+    /**
+     * PointF object keeps old distance after dragging or zooming
+     */
     protected float oldDist = 1f;
 
+    /**
+     * datas is builded by onCreate method
+     * @param savedInstanceState, helps building
+     */
     @SuppressLint({"WrongViewCast", "ClickableViewAccessibility", "ResourceType"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +216,15 @@ public class MapActivity extends AppCompatActivity implements AdapterView.OnItem
         });
     }
 
+    /**
+     * drawing line method
+     * @param map, bitmap object
+     * @param thickness, thickness of line
+     * @param x1, start_x
+     * @param y1, start_y
+     * @param x2, finish_x
+     * @param y2, finish_y
+     */
     private void drawLine(Bitmap map, int thickness ,int x1, int y1, int x2, int y2) {
 
         if(x1 <= x2) {
@@ -175,6 +270,14 @@ public class MapActivity extends AppCompatActivity implements AdapterView.OnItem
         }
     }
 
+    /**
+     * The slope of between 2 points
+     * @param x1, start_x
+     * @param y1, start_y
+     * @param x2, finish_x
+     * @param y2, finish_y
+     * @return The slope of between 2 points
+     */
     private double slope(int x1, int y1, int x2, int y2) {
 
         int diff_y = y2 - y1;
@@ -183,6 +286,15 @@ public class MapActivity extends AppCompatActivity implements AdapterView.OnItem
         return (double) (diff_y / diff_x);
     }
 
+    /**
+     * function to obtain y value with x value
+     * @param x, x
+     * @param x1, start_x
+     * @param y1, start_y
+     * @param x2, finish_x
+     * @param y2, finish_y
+     * @return y value
+     */
     private int get_point_vector_scaleY(int x, int x1, int y1, int x2, int y2) {
 
         return (int)(slope(x1, y1, x2, y2)*(x-x1)) + y1;
@@ -198,18 +310,24 @@ public class MapActivity extends AppCompatActivity implements AdapterView.OnItem
 
     }
 
+    /**
+     * On touch method for image zoom or dragging
+     * @param v, image view
+     * @param event, NONE, ZOOM or DRAG
+     * @return true
+     */
     @SuppressLint("ClickableViewAccessibility")
     @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        
+    public boolean onTouch(View v, MotionEvent event)
+    {
         ImageView view = (ImageView) v;
         view.setScaleType(ImageView.ScaleType.MATRIX);
         float scale;
 
         dumpEvent(event);
 
-        switch (event.getAction() & MotionEvent.ACTION_MASK) {
-                
+        switch (event.getAction() & MotionEvent.ACTION_MASK)
+        {
             case MotionEvent.ACTION_DOWN:
                 savedMatrix.set(matrix);
                 start.set(event.getX(), event.getY());
@@ -237,15 +355,17 @@ public class MapActivity extends AppCompatActivity implements AdapterView.OnItem
 
             case MotionEvent.ACTION_MOVE:
 
-                if (mode == DRAG) {                 
+                if (mode == DRAG)
+                {
                     matrix.set(savedMatrix);
                     matrix.postTranslate(event.getX() - start.x, event.getY() - start.y);
                 }
-                else if (mode == ZOOM) {
+                else if (mode == ZOOM)
+                {
                     float newDist = spacing(event);
                     Log.d(TAG, "newDist=" + newDist);
-                    
-                    if (newDist > 5f) {
+                    if (newDist > 5f)
+                    {
                         matrix.set(savedMatrix);
                         scale = newDist / oldDist;
                         matrix.postScale(scale, scale, mid.x, mid.y);
@@ -259,37 +379,50 @@ public class MapActivity extends AppCompatActivity implements AdapterView.OnItem
         return true;
     }
 
-    private float spacing(MotionEvent event) {
-        
+    /**
+     * It allows the points to change according to a certain scale in any movement.
+     * @param event, NONE,ZOOM or DRAG
+     * @return float new spacing
+     */
+    private float spacing(MotionEvent event)
+    {
         float x = event.getX(0) - event.getX(1);
         float y = event.getY(0) - event.getY(1);
         return (float) Math.sqrt(x * x + y * y);
     }
 
-    private void midPoint(PointF point, MotionEvent event) {
-        
+    /**
+     * It allows the points to change according to a certain scale in any movement.
+     * @param point, new point
+     * @param event, NONE ZOOM or DRAG
+     */
+    private void midPoint(PointF point, MotionEvent event)
+    {
         float x = event.getX(0) + event.getX(1);
         float y = event.getY(0) + event.getY(1);
         point.set(x / 2, y / 2);
     }
 
-    /** Show an event in the LogCat view, for debugging */
-    private void dumpEvent(MotionEvent event) {
-        
+    /** 
+     * Show an event in the LogCat view, for debugging 
+     * */
+    private void dumpEvent(MotionEvent event)
+    {
         String[] names = { "DOWN", "UP", "MOVE", "CANCEL", "OUTSIDE","POINTER_DOWN", "POINTER_UP", "7?", "8?", "9?" };
         StringBuilder sb = new StringBuilder();
         int action = event.getAction();
         int actionCode = action & MotionEvent.ACTION_MASK;
         sb.append("event ACTION_").append(names[actionCode]);
 
-        if (actionCode == MotionEvent.ACTION_POINTER_DOWN || actionCode == MotionEvent.ACTION_POINTER_UP) {
-            
+        if (actionCode == MotionEvent.ACTION_POINTER_DOWN || actionCode == MotionEvent.ACTION_POINTER_UP)
+        {
             sb.append("(pid ").append(action >> MotionEvent.ACTION_POINTER_ID_SHIFT);
             sb.append(")");
         }
 
         sb.append("[");
-        for (int i = 0; i < event.getPointerCount(); i++) {
+        for (int i = 0; i < event.getPointerCount(); i++)
+        {
             sb.append("#").append(i);
             sb.append("(pid ").append(event.getPointerId(i));
             sb.append(")=").append((int) event.getX(i));
@@ -302,3 +435,4 @@ public class MapActivity extends AppCompatActivity implements AdapterView.OnItem
         Log.d("Touch Events ---------", sb.toString());
     }
 }
+
