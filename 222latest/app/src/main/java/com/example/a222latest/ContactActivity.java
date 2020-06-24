@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,6 +35,7 @@ public class ContactActivity extends AppCompatActivity implements ContactAdapter
     private Button button2;
     ArrayList<String> myList = new ArrayList<>();
     //TreeSet<UserC> users;
+    private FirebaseUser mAuth;
     RedBlackTree<UserC> users;
     ContactAdapter ca;
     RecyclerView rw2;
@@ -59,7 +61,7 @@ public class ContactActivity extends AppCompatActivity implements ContactAdapter
                 return true;
             }
         });
-
+        mAuth = FirebaseAuth.getInstance().getCurrentUser();
         //users = new TreeSet<>();
         users = new RedBlackTree<>();
         rw2 = findViewById(R.id.rw2);
@@ -76,13 +78,14 @@ public class ContactActivity extends AppCompatActivity implements ContactAdapter
 
                     Member memb = ds.getValue(Member.class);
 
-                    String a = memb.getName() + " " + memb.getSurname();
-                    String b = memb.getMailAddress();
-
-                    UserC temp = new UserC();
-                    temp.setName(a);
-                    temp.seteMail(b);
-                    users.add(temp);
+                    if(!mAuth.getEmail().equals(memb.getMailAddress())){
+                        String a = memb.getName() + " " + memb.getSurname();
+                        String b = memb.getMailAddress();
+                        UserC temp = new UserC();
+                        temp.setName(a);
+                        temp.seteMail(b);
+                        users.add(temp);
+                    }
 
                 }
                 sendAdapter();

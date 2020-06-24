@@ -96,6 +96,7 @@ public class signActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(signActivity.this, e.getLocalizedMessage().toString(), Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(signActivity.this, signActivity.class));
                         }
                     });
                     startActivity(new Intent(signActivity.this, loginActivity.class));
